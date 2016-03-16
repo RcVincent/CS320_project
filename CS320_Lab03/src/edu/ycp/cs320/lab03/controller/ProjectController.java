@@ -7,4 +7,9 @@ public class ProjectController {
 		return null;
 	}
 
+	public Double createAccount(String firstName, String lastName, String userName, String password, String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
