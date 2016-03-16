@@ -31,9 +31,9 @@
 					<td class="label">Password: </td>
 					<td><input type="text" name="second" size="12" value="${password}" /></td>
 				</tr>
-				<a href="/CS320_Lab03/war/_view/Homepage.jsp/">Login to Homepage</a>
+				<a href="/lab03/Homepage"><button type="button">Login to Homepage</a>
 				<br />
-				<a href="/CS320_Lab03/war/_view/CreateAccount.jsp/">Click to create account</a>
+				<a href="/lab03/CreateAccount"><button type="button">Click to create account</a>
 			</table>
 		</form>
 	</body>
