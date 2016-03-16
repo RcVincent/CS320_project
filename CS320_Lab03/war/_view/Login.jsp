@@ -31,10 +31,15 @@
 					<td class="label">Password: </td>
 					<td><input type="text" name="second" size="12" value="${password}" /></td>
 				</tr>
-				<a href="/lab03/Homepage"><button type="button">Login to Homepage</a>
-				<br />
-				<a href="/lab03/CreateAccount"><button type="button">Click to create account</a>
+				
 			</table>
+			<div>
+				<a href="/lab03/Homepage"><button type="button">Login to Homepage</a>
+			</div>
+			<div>
+				<a href="/lab03/CreateAccount"><button type="button">Click to create account</a>
+			</div>
+		
 		</form>
 	</body>
 </html>
