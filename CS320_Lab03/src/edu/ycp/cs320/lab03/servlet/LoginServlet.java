@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 		}
 		
 		// Add parameters as request attributes
-		req.setAttribute("usename", req.getParameter("username"));
+		req.setAttribute("username", req.getParameter("username"));
 		req.setAttribute("password", req.getParameter("password"));
 		
 		// Add result objects as request attributes
