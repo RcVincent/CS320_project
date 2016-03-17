@@ -15,7 +15,7 @@ public class HomepageServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/addNumbers.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/Homepage.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -48,7 +48,7 @@ public class HomepageServlet extends HttpServlet {
 		req.setAttribute("result", result);
 		
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/addNumbers.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/Homepage.jsp").forward(req, resp);
 	}
 
 	private Double getDoubleFromParameter(String s) {

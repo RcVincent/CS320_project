@@ -36,6 +36,7 @@ public class CreateAccountServlet extends HttpServlet {
 			if (userName == null || password == null || email == null
 					|| firstName == null || lastName == null) {
 				errorMessage = "Please fill in all fields";
+				
 			} else {
 				ProjectController controller = new ProjectController();
 				//create the new account in the controller
@@ -57,7 +58,7 @@ public class CreateAccountServlet extends HttpServlet {
 
 
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/CreateAccount.jsp").forward(req, resp);
+		req.getRequestDispatcher("/lab03/Homepage").forward(req, resp);
 	}
 
 
