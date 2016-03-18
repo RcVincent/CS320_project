@@ -10,19 +10,35 @@ public class User {
 	private String lastName;
 	private UserType type;
 	private boolean status = false;
-	
+
 
 	public User(String fN, String lN, String userName, String pswd, String email){
-		this.userName = userName;
+		this.setUserName(userName);
 		this.passWord = pswd;
 		this.firstName = fN;
 		this.lastName = lN;
 		this.email = email;
-		
-		
+
+
 	}
-	public boolean getStatus(User userName) {return status;}
-	public void setStatus(boolean status)	{this.status = status;}
-	
+	public boolean getStatus(User userName) {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public UserType getType() {
+		return type;
+	}
+	public void setType(UserType type) {
+		this.type = type;
+	}
+
 }
 
