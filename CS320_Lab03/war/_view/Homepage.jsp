@@ -64,7 +64,7 @@
 				Search
 			</div>
 			<div id = "ContactBody">
-			<input type="search" name="search">
+			<input type="search" name="search" value="${search}">
 			</div>
 		</div>
 		</form>
