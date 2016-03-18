@@ -29,7 +29,7 @@ public class HomepageServlet extends HttpServlet {
 		try {
 			
 			search = req.getParameter("search");
-			if (search.equals(null)) {
+			if (search== null) {
 				errorMessage = "Please a restaurant name or genre to actually find one >|-^(";
 			} else {
 				ProjectController controller = new ProjectController();

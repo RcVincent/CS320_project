@@ -37,7 +37,7 @@
 				<input type="Submit" name="submit" value="Login"/>
 			</div>
 			<div>
-				<a href="/lab03/CreateAccount"><button type="button">Click to create account</a>
+				<a href="/lab03/CreateAccount"><type = "button">Click to create account</a>
 			</div>
 		
 		</form>
