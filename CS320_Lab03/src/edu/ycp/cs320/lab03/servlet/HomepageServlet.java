@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.lab03.controller.AddNumbersController;
+
 import edu.ycp.cs320.lab03.controller.ProjectController;
 
 public class HomepageServlet extends HttpServlet {
@@ -29,7 +29,7 @@ public class HomepageServlet extends HttpServlet {
 		try {
 			
 			search = req.getParameter("search");
-			if (search.equals(null)) {
+			if (search == null) {
 				errorMessage = "Please a restaurant name or genre to actually find one >|-^(";
 			} else {
 				ProjectController controller = new ProjectController();

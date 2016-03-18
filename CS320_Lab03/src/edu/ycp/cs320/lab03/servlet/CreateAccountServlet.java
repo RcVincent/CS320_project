@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.lab03.controller.AddNumbersController;
 import edu.ycp.cs320.lab03.controller.ProjectController;
 import edu.ycp.cs320.lab03.controller.User;
-import edu.ycp.cs320.lab03.controller.UserType;
+
 
 public class CreateAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,13 +29,11 @@ public class CreateAccountServlet extends HttpServlet {
 		String errorMessage = null;
 
 		try {
-			UserType UT;
 			String firstName = req.getParameter("firstName");
 			String lastName = req.getParameter("lastName");
 			String userName = req.getParameter("userName");
 			String password = req.getParameter("passowrd");
 			String email = req.getParameter("email address");
-			String type = req.getParameter("type");
 			
 
 			if (userName == null || password == null || email == null

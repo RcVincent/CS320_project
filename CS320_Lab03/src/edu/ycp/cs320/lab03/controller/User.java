@@ -8,7 +8,6 @@ public class User {
 	private String email;
 	private String firstName;
 	private String lastName;
-	private UserType type;
 	private boolean status = false;
 
 
@@ -33,12 +32,7 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public UserType getType() {
-		return type;
-	}
-	public void setType(UserType type) {
-		this.type = type;
-	}
+
 
 }
 
