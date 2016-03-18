@@ -27,8 +27,9 @@ public class HomepageServlet extends HttpServlet {
 		String errorMessage = null;
 		String search = null;
 		try {
+			
 			search = req.getParameter("search");
-			if (search == null) {
+			if (search.equals(null)) {
 				errorMessage = "Please a restaurant name or genre to actually find one >|-^(";
 			} else {
 				ProjectController controller = new ProjectController();

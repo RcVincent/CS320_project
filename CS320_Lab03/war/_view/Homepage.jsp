@@ -75,16 +75,9 @@
 				Search
 			</div>
 			<div id = "ContactBody">
-			<c:if test="${! empty errorMessage}">
-				<div class="error">${errorMessage}</div>
-			</c:if>
-			<table>
-				<tr>
-					<td class="label"></td>
-					<td><input type="text" name="search" size="12" value="${search}" /></td>
-				</tr>
-			</table>
-			<input type="Submit" name="submit" value="Search">
+
+			<input type="search" name="search" value="${search}">
+
 			</div>
 		</div>
 		<div class = "absolute">
