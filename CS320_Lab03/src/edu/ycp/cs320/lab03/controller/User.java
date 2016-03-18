@@ -8,7 +8,8 @@ public class User {
 	String email;
 	String firstName;
 	String lastName;
-	boolean loggedIn;
+	boolean status = false;
+	
 
 	public User(String fN, String lN, String userName, String pswd, String email){
 		this.userName = userName;
@@ -16,8 +17,18 @@ public class User {
 		this.firstName = fN;
 		this.lastName = lN;
 		this.email = email;
-		loggedIn = true;
+		
 	}
-	
+	public boolean LogIn(User userName){
+		if(!status){
+			status = true;
+		}
+		return status;
+	}
+	public boolean LogOut(User userName){
+		if(status)
+			status = false;
+		return status;
+	}
 }
 

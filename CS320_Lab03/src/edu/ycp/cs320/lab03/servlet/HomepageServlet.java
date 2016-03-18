@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab03.controller.AddNumbersController;
+import edu.ycp.cs320.lab03.controller.ProjectController;
 
 public class HomepageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,38 +25,32 @@ public class HomepageServlet extends HttpServlet {
 		
 		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
-		Double result = null;
+		
 		try {
-			Double first = getDoubleFromParameter(req.getParameter("first"));
-			Double second = getDoubleFromParameter(req.getParameter("second"));
-
-			if (first == null || second == null) {
-				errorMessage = "Please specify two numbers";
+			
+			String search = req.getParameter("search");
+			if (search == null) {
+				errorMessage = "Please a restaurant name or genre to actually find one >|-^(";
 			} else {
-				AddNumbersController controller = new AddNumbersController();
-				result = controller.add(first, second);
+				ProjectController controller = new ProjectController();
+				controller.searchRestaurants(search);
+				
 			}
 		} catch (NumberFormatException e) {
-			errorMessage = "Invalid double";
+			errorMessage = "Invalid value";
 		}
 		
 		// Add parameters as request attributes
-		req.setAttribute("first", req.getParameter("first"));
-		req.setAttribute("second", req.getParameter("second"));
+		req.setAttribute("search", req.getParameter("search"));
+		
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("result", result);
+		
 		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/Homepage.jsp").forward(req, resp);
 	}
 
-	private Double getDoubleFromParameter(String s) {
-		if (s == null || s.equals("")) {
-			return null;
-		} else {
-			return Double.parseDouble(s);
-		}
-	}
+	
 }

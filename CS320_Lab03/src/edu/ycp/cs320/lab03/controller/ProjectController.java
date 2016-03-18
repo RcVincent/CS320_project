@@ -13,4 +13,10 @@ public class ProjectController {
 		User newAccount = new User(firstName, lastName, userName, password, email);
 	}
 
+	public void searchRestaurants(String search) {
+		// TODO Auto-generated method stub
+		//gonna search the database 
+		
+	}
+
 }
