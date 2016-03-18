@@ -46,14 +46,25 @@
 			margin-top: 13px;
 			width: 800px;
 		}
-		#ContentBody{
-			margin-top: 13px;
-			font-size: 100%;
 		
+		div.absolute{
+			location: absolute;
+			right: 10px;
+			bottom: 10px;
+		}	
+		.error {
+			color: red;
+		}
+		
+		td.label {
+			text-align: right;
 		}
 		</style>
 	</head>
+
 	<body>
+		
+	
 	<form action="${pageContext.servletContext.contextPath}/Homepage" method="post">
 		<div id = "SiteName">
 			Track N Snack
@@ -64,10 +75,22 @@
 				Search
 			</div>
 			<div id = "ContactBody">
-			<input type="search" name="search">
+			<c:if test="${! empty errorMessage}">
+				<div class="error">${errorMessage}</div>
+			</c:if>
+			<table>
+				<tr>
+					<td class="label"></td>
+					<td><input type="text" name="search" size="12" value="${search}" /></td>
+				</tr>
+			</table>
+			<input type="Submit" name="submit" value="Search">
 			</div>
 		</div>
-		</form>
-	</body>
+		<div class = "absolute">
+			<a href="/lab03/Login"><button type="button">Logout</a>
+		</div>
+	</form>
+</body>
 	
 </html>

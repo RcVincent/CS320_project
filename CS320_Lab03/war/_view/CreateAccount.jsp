@@ -37,11 +37,11 @@
 				</tr>
 				<tr>
 					<td class="label">New password:</td>
-					<td><input type="text" name="password" size="12" value="${password}" required/></td>
+					<td><input type="password" name="password" size="12" value="${password}" required/></td>
 				</tr>
 				<tr>
 					<td class="label">email address:</td>
-					<td><input type="text" name="email" size="12" value="${email}" required/></td>
+					<td><input type="email" name="email" size="12" value="${email}" required/></td>
 				</tr>
 		
 			</table>
