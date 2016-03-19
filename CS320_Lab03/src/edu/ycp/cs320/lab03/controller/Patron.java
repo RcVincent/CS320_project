@@ -27,5 +27,19 @@ public class Patron {
 	public void setPat(User pat) {
 		this.pat = pat;
 	}
+	public void addTofavorites(Restaurant rest){
+		favorites.add(rest);
+	}
+	public Restaurant seeFavoriteRestaurantProfile(Restaurant r){
+		for(int i = 0; i < favorites.size(); i++){
+			if(favorites.get(i).getName().equals(r.getName())){
+				return favorites.get(i);
+			}
+		}
+		return null;
+	}
 	
+	public void addToSavedOrders(Order o){
+		savedOrders.add(o);
+	}
 }

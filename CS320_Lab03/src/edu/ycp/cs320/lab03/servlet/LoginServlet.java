@@ -12,6 +12,7 @@ import org.eclipse.jetty.server.Request;
 
 import edu.ycp.cs320.lab03.controller.AddNumbersController;
 import edu.ycp.cs320.lab03.controller.ProjectController;
+import edu.ycp.cs320.lab03.controller.User;
 
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -31,15 +32,19 @@ public class LoginServlet extends HttpServlet {
 		
 		
 		try {
-			String username = req.getParameter("username");
-			String password = req.getParameter("password");
+			
+			User u = null;
+			u.setUserName(req.getParameter("username"));
+			
+			u.setPassWord(req.getParameter("password"));
 
-			if (username == null || password == null || username == "" || password == "") {
+
+			if (u.getUserName() == null || u.getUserName() == null) {
 				errorMessage = "Please enter a username/pswd combo";
 				
 			} else {
 				ProjectController controller = new ProjectController();
-				controller.Login(username, password);
+				controller.LogIn(u, u.getUserName());
 				
 			}
 		} catch (NumberFormatException e) {

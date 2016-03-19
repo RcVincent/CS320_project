@@ -53,5 +53,5 @@ public class HomepageServlet extends HttpServlet {
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/Homepage.jsp").forward(req, resp);
 	}
-	
+
 }

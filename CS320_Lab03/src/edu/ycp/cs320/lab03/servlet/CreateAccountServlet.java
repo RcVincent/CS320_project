@@ -63,14 +63,7 @@ public class CreateAccountServlet extends HttpServlet {
 		req.getRequestDispatcher("/lab03/Homepage").forward(req, resp);
 	}
 
-	private Integer getIntegerParameter(String s) {
-		if (s == null || s.equals("")) {
-			return null;
-		} else {
-			return Integer.parseInt(s);
-		}
-	}
-
+	
 
 }
 
