@@ -33,10 +33,10 @@ public abstract class User {
 	}
 
 	
-	//use database for this too
-//	public boolean isOwner(String username){
-//		
-//	}
+//	//use database for this too
+	public boolean isOwner(String username){
+		throw new UnsupportedOperationException();
+	}
 
 
 }
