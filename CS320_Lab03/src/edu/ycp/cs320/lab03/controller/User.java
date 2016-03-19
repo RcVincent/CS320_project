@@ -1,8 +1,7 @@
 package edu.ycp.cs320.lab03.controller;
 
 
-public class User {
-
+public abstract class User {
 	private String userName;
 	private String passWord;
 	private String email;
@@ -11,38 +10,33 @@ public class User {
 	private boolean status = false;
 
 
-	public User(String fN, String lN, String userName, String pswd, String email){
-		this.setUserName(userName);
-		this.setPassWord(pswd);
-		this.firstName = fN;
-		this.lastName = lN;
-		this.email = email;
-
-
-	}
-	public boolean getStatus(User userName) {
-		return status;
-	}
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
+	public User(String userName, String password, String firstName, String lastName, String email) {
+		// TODO Auto-generated method stub
 		this.userName = userName;
+		this.passWord = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
 	}
-	public String getPassWord() {
-		return passWord;
-	}
-	public void setPassWord(String passWord) {
-		this.passWord = passWord;
-	}
-	//available usernames/pswd's for authentication method
-	public boolean authenticate(){
+	
+	public boolean logIn(String username, String password) {
+		// TODO Auto-generated method stub
+		if(!status)
+			status = true;
 		return status;
-		//TODO: hard code usernames and pswd's to send to the website
 	}
+
+	//will update after presentation with SQL
+	public boolean authenticate(String username, String password) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
+	//use database for this too
+//	public boolean isOwner(String username){
+//		
+//	}
 
 
 }

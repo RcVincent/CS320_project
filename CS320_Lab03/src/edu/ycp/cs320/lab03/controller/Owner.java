@@ -1,5 +1,25 @@
 package edu.ycp.cs320.lab03.controller;
 
-public class Owner {
+import java.util.ArrayList;
 
+public class Owner extends User {
+	public ArrayList<Restaurant> myRestaurants = new ArrayList<Restaurant>();
+	
+	public Owner(String userName, String password, String firstName, String lastName, String email) {
+		super(userName, password, firstName, lastName, email);
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public void addToRestaurants(Restaurant rest){
+		myRestaurants.add(rest);
+	}
+	public Restaurant seeFavoriteRestaurantProfile(Restaurant r){
+		for(int i = 0; i < myRestaurants.size(); i++){
+			if(myRestaurants.get(i).getName().equals(r.getName())){
+				return myRestaurants.get(i);
+			}
+		}
+		return null;
+	}
 }

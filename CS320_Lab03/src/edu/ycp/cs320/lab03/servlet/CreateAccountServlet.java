@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab03.controller.AddNumbersController;
+import edu.ycp.cs320.lab03.controller.Patron;
 import edu.ycp.cs320.lab03.controller.ProjectController;
 import edu.ycp.cs320.lab03.controller.User;
 
@@ -42,7 +43,7 @@ public class CreateAccountServlet extends HttpServlet {
 				
 			} else {
 				ProjectController controller = new ProjectController();
-				User newUser = new User(firstName, lastName, userName, password, email);
+				User newUser = new Patron(firstName, lastName, userName, password, email);
 			}
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid parameters";

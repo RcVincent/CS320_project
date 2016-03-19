@@ -11,17 +11,12 @@ public class ProjectController {
 		//gonna search the database 
 
 	}
-	public void LogIn(User userName, String name){
-		userName.setStatus(true);
-	}
-	public void LogOut(User userName){
-		userName.setStatus(false);
-	}
+
 	
 	public boolean authenticate(String u, String p)
 	{
 		boolean real = false;
-		if(u == "meeps" && p == "peeps"){
+		if(u.equals("meeps") && p.equals("peeps")){
 			real = true;
 		}
 		
