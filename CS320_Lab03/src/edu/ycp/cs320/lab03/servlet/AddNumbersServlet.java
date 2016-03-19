@@ -31,6 +31,7 @@ public class AddNumbersServlet extends HttpServlet {
 
 			if (first == null || second == null) {
 				errorMessage = "Please specify two numbers";
+				req.getRequestDispatcher("/_view/addNumbers.jsp").forward(req, resp);
 			} else {
 				AddNumbersController controller = new AddNumbersController();
 				result = controller.add(first, second);
@@ -48,7 +49,7 @@ public class AddNumbersServlet extends HttpServlet {
 		req.setAttribute("result", result);
 		
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/addNumbers.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/Homepage.jsp").forward(req, resp);
 	}
 
 	private Double getDoubleFromParameter(String s) {

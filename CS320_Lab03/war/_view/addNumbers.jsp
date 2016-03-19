@@ -17,7 +17,9 @@
 	</head>
 
 	<body>
-		
+		<c:if test="${! empty errorMessage}">
+			<div class="error">${errorMessage}</div>
+		</c:if>
 	
 		<form action="${pageContext.servletContext.contextPath}/addNumbers" method="post">
 			<table>

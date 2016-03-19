@@ -2,10 +2,13 @@ package edu.ycp.cs320.lab03.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.eclipse.jetty.server.Request;
 
 import edu.ycp.cs320.lab03.controller.AddNumbersController;
 import edu.ycp.cs320.lab03.controller.ProjectController;
@@ -26,12 +29,14 @@ public class LoginServlet extends HttpServlet {
 		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
 		
+		
 		try {
 			String username = req.getParameter("username");
 			String password = req.getParameter("password");
 
-			if (username == null || password == null) {
+			if (username == null || password == null || username == "" || password == "") {
 				errorMessage = "Please enter a username/pswd combo";
+				
 			} else {
 				ProjectController controller = new ProjectController();
 				controller.Login(username, password);
@@ -50,7 +55,9 @@ public class LoginServlet extends HttpServlet {
 		
 		
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("_view/Login.jsp").forward(req, resp);
+		RequestDispatcher rd = req.getRequestDispatcher("Homepage");
+		rd.forward(req, resp);
+		
 	}
 
 }

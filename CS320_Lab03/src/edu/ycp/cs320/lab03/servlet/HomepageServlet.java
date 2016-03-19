@@ -25,14 +25,14 @@ public class HomepageServlet extends HttpServlet {
 		
 		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
-		String search = null;
+	
 		try {
 			
-			search = req.getParameter("search");
+			String search = req.getParameter("search");
 
 			if (search == null) {
 
-				errorMessage = "Please a restaurant name or genre to actually find one >|-^(";
+				errorMessage = "Please enter a restaurant name or genre to actually find one >|-^(";
 			} else {
 				ProjectController controller = new ProjectController();
 				controller.searchRestaurants(search);
@@ -53,6 +53,5 @@ public class HomepageServlet extends HttpServlet {
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/Homepage.jsp").forward(req, resp);
 	}
-
 	
 }

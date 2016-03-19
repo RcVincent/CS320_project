@@ -21,15 +21,15 @@
 			<div class="error">${errorMessage}</div>
 		</c:if>
 	
-		<form action="${pageContext.servletContext.contextPath}/Homepage" method="get">
+		<form action="${pageContext.servletContext.contextPath}/Login" method="post">
 			<table>
 				<tr>
 					<td class="label">Username: </td>
-					<td><input type="text" name="username" size="12" value="${username}" required/></td>
+					<td><input type="text" name="username" size="12" required/></td>
 				</tr>
 				<tr>
 					<td class="label">Password: </td>
-					<td><input type="password" name="password" size="12" value="${password}" required/></td>
+					<td><input type="password" name ="password" size="12"  required/></td>
 				</tr>
 				
 			</table>
@@ -37,7 +37,7 @@
 				<input type="Submit" name="submit" value="Login"/>
 			</div>
 			<div>
-				<a href="/lab03/CreateAccount"><type = "button">Click to create account</a>
+				<button><a href="/lab03/CreateAccount">Click here to create an account</a></button>
 			</div>
 		
 		</form>

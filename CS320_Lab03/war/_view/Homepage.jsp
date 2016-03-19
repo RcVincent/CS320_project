@@ -15,20 +15,22 @@
 	font-variant: small-caps;
 }
 
-#ContactContent {
+#LinkContent {
 	float: left;
 	border: 1px solid darkblue;
 	width: 400px;
 	margin-left: 13px;
 	margin-top: 13px;
+	margin-bottom: 13px;
 }
 
-#ContactName {
+#LinkName {
 	color: darkblue;
 	font-size: 150%;
 	border-bottom: 2px solid darkblue;
 	width: 300px;
 	margin-left: 13px;
+	margin_bottom: 20px;
 }
 
 #ContactBody {
@@ -55,6 +57,12 @@ div.fixed {
 	right: 10px;
 }
 
+button {
+	margin-top: 3px;
+	margin-left: 5px;
+	margin-bottom: 5px;
+}
+
 .error {
 	color: red;
 }
@@ -66,24 +74,55 @@ td.label {
 </head>
 
 <body>
+
 	<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
-		</c:if>
-		
-	<form action="${pageContext.servletContext.contextPath}/Homepage" method = "post">
+		<div class="error">${errorMessage}</div>
+	</c:if>
+
+	<form action="${pageContext.servletContext.contextPath}/Homepage">
+
 		<div id="SiteName">Track N Snack</div>
 
-		<div id="ContactContent">
-			<div id="ContactName">Search</div>
-			
-			<div id="ContactBody">
-				<input type="search" name="search" value="${search}">
+		<div id="Content">
 
+			<div id="LinkContent">
+				<div id="LinkName">Search</div>
+
+				<table>
+					<tr>
+						<td class="label"></td>
+						<td><input type="search" name="search" size="12" /></td>
+						<td><input type="Submit" name="submit" value="Search" /></td>
+					</tr>
+				</table>
 			</div>
 
+			<br>
+
+			<div id="LinkContent">
+				<div id="LinkName">Favorites</div>
+				<div id="ContentBody">
+					<button>
+						<a href="/lab03/Favorites">Click here to view favorites</a>
+					</button>
+				</div>
+			</div>
+
+			<br>
+
+			<div id="LinkContent">
+				<div id="LinkName">Your Account</div>
+				<div id="ContentBody">
+					<button>
+						<a href="/lab03/Account">Click here to view your account details</a>
+					</button>
+				</div>
+			</div>
 		</div>
 		<div class="fixed">
-			<a href="/lab03/Login"><type = "button"> Logout</a>
+			<button>
+				<a href="/lab03/Login">Logout</a>
+			</button>
 		</div>
 	</form>
 </body>
