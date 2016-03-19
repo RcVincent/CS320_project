@@ -13,7 +13,7 @@ public class User {
 
 	public User(String fN, String lN, String userName, String pswd, String email){
 		this.setUserName(userName);
-		this.passWord = pswd;
+		this.setPassWord(pswd);
 		this.firstName = fN;
 		this.lastName = lN;
 		this.email = email;
@@ -31,6 +31,17 @@ public class User {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public String getPassWord() {
+		return passWord;
+	}
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
+	}
+	//available usernames/pswd's for authentication method
+	public boolean authenticate(){
+		return status;
+		//TODO: hard code usernames and pswd's to send to the website
 	}
 
 
