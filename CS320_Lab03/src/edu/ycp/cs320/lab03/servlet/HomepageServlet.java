@@ -25,10 +25,10 @@ public class HomepageServlet extends HttpServlet {
 		
 		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
-	
+		String search = null;
 		try {
 			
-			String search = req.getParameter("search");
+			search = req.getParameter("search");
 
 			if (search == null) {
 
