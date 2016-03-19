@@ -62,8 +62,5 @@ public class CreateAccountServlet extends HttpServlet {
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/lab03/Homepage").forward(req, resp);
 	}
-
-	
-
 }
 

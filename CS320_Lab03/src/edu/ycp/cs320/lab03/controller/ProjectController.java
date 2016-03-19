@@ -21,7 +21,7 @@ public class ProjectController {
 	public boolean authenticate(String u, String p)
 	{
 		boolean real = false;
-		if(u == "meeps" && p == "peeps"){
+		if(u.equals("meeps")&& p.equals("peeps")){
 			real = true;
 		}
 		
