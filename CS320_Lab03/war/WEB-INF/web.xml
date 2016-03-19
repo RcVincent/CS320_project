@@ -26,21 +26,15 @@
    <servlet>
     <servlet-name>HomepageServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab03.servlet.HomepageServlet</servlet-class>
-    </servlet>
-
-
-
+   </servlet>
   <servlet>
     <servlet-name>CreateAccountServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab03.servlet.CreateAccountServlet</servlet-class>
-
-
 </servlet>
    <servlet>
-    <servlet-name>HomepageServlet</servlet-name>
-    <servlet-class>edu.ycp.cs320.lab03.servlet.HomepageServlet</servlet-class>
-
-  </servlet>
+    <servlet-name>AccountServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab03.servlet.AccountServlet</servlet-class>
+   </servlet>
   
   <!-- AJAX servlets. -->
   <servlet>
@@ -81,12 +75,12 @@
     <servlet-name>CreateAccountServlet</servlet-name>
     <url-pattern>/CreateAccount</url-pattern>
   </servlet-mapping>
-  
-
-   <servlet-mapping>
-    <servlet-name>HomepageServlet</servlet-name>
-    <url-pattern>/Homepage</url-pattern>
+  <servlet-mapping>
+    <servlet-name>AccountServlet</servlet-name>
+    <url-pattern>/Account</url-pattern>
   </servlet-mapping>
+
+   
 
 
   <!--  AJAX servlet mappings. -->

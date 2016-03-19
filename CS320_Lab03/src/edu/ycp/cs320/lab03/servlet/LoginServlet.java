@@ -1,7 +1,6 @@
 package edu.ycp.cs320.lab03.servlet;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +49,10 @@ public class LoginServlet extends HttpServlet {
 				errorMessage = "Incorrect Username or Password";
 				req.setAttribute("errorMessage", errorMessage);
 				req.getRequestDispatcher("/_view/Login.jsp");
+
 			}
+	
+
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid double";
 		}

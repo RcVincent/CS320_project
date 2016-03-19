@@ -10,6 +10,7 @@
 	color: red;
 }
 
+
 td.label {
 	text-align: right;
 }

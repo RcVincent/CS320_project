@@ -32,7 +32,7 @@ public class HomepageServlet extends HttpServlet {
 
 			if (search == null) {
 
-				errorMessage = "Please a restaurant name or genre to actually find one >|-^(";
+				errorMessage = "Please enter a restaurant name or genre to actually find one >|-^(";
 			} else {
 				ProjectController controller = new ProjectController();
 				controller.searchRestaurants(search);
