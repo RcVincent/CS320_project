@@ -6,7 +6,7 @@
 <head>
 <title>Track N Snack Home</title>
 <style type="text/css">
-#SiteName {
+#PageName {
 	color: darkblue;
 	font-size: 200%;
 	text-align: center;
@@ -81,7 +81,7 @@ td.label {
 
 	<form action="${pageContext.servletContext.contextPath}/Homepage">
 
-		<div id="SiteName">Track N Snack</div>
+		<div id="PageName">Track N Snack</div>
 
 		<div id="Content">
 
