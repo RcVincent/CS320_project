@@ -2,16 +2,18 @@ package edu.ycp.cs320.lab03.controller;
 
 import java.util.ArrayList;
 
-public class Patron {
-	private User pat;
-	private Address address;
-	ArrayList<Restaurant> favorites = new ArrayList();
-	ArrayList<Order> savedOrders = new ArrayList();
+public class Patron extends User {
 	
-	public Patron(User user){
-		this.setPat(user);
+	private Address address;
+	public ArrayList<Restaurant> favorites = new ArrayList<Restaurant>();
+	public ArrayList<Order> savedOrders = new ArrayList<Order>();
+	
+	public Patron(String u, String p, String f, String l, String e){
+		super(u, p, f, l, e);
+		
 	}
 
+	
 	public Address getAddress() {
 		return address;
 	}
@@ -20,13 +22,6 @@ public class Patron {
 		this.address = address;
 	}
 
-	public User getPat() {
-		return pat;
-	}
-
-	public void setPat(User pat) {
-		this.pat = pat;
-	}
 	public void addTofavorites(Restaurant rest){
 		favorites.add(rest);
 	}
@@ -42,4 +37,5 @@ public class Patron {
 	public void addToSavedOrders(Order o){
 		savedOrders.add(o);
 	}
+
 }
