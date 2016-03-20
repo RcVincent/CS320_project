@@ -22,8 +22,7 @@ td.label {
 		<div class="error">${errorMessage}</div>
 	</c:if>
 
-	<form action="${pageContext.servletContext.contextPath}/Login"
-		method="post">
+	<form action="${pageContext.servletContext.contextPath}/Login" method="post">
 		<table>
 			<tr>
 				<td class="label">Username:</td>
@@ -39,8 +38,7 @@ td.label {
 			<input type="Submit" name="submit" value="Login" />
 		</div>
 		<div>
-			<a href="/lab03/CreateAccount"><type= "button">Click to
-				create account</a>
+			<button><a href="/lab03/CreateAccount"><type= "button">Click to create account</a></button>
 		</div>
 
 	</form>
