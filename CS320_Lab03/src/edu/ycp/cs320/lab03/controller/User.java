@@ -7,16 +7,20 @@ public abstract class User {
 	private String email;
 	private String firstName;
 	private String lastName;
+	private boolean isOwner;
 	private boolean status = false;
 
 
-	public User(String userName, String password, String firstName, String lastName, String email) {
+	public User(String userName, String password) {
 		// TODO Auto-generated method stub
 		this.setUserName(userName);
 		this.setPassWord(password);
-		this.setFirstName(firstName);
-		this.setLastName(lastName);
-		this.setEmail(email);
+		
+	}
+	public void setAccountInfo(String fn, String ln, String email){
+		this.firstName = fn;
+		this.lastName = ln;
+		this.email = email;
 	}
 	
 	public boolean logIn(String username, String password) {
@@ -34,8 +38,8 @@ public abstract class User {
 
 	
 //	//use database for this too
-	public boolean isOwner(String username){
-		throw new UnsupportedOperationException();
+	public void isOwner(boolean o){
+		this.isOwner = o;
 	}
 
 	public String getUserName() {

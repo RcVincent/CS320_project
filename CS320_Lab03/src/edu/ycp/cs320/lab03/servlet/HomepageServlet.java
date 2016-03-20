@@ -30,13 +30,9 @@ public class HomepageServlet extends HttpServlet {
 			
 			search = req.getParameter("search");
 
-			if (search == null) {
-
-				errorMessage = "Please enter a restaurant name or genre to actually find one >|-^(";
-			} else {
+			if (search != null) {
 				ProjectController controller = new ProjectController();
 				controller.searchRestaurants(search);
-				
 			}
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid value";

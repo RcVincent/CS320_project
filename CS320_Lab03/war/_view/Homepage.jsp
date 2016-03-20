@@ -43,14 +43,6 @@
 	float: left;
 }
 
-#ContentName {
-	font-size: 150%;
-	border-bottom: 1px solid darkblue;
-	color: darkblue;
-	margin-top: 13px;
-	width: 800px;
-}
-
 div.fixed {
 	position: fixed;
 	bottom: 10px;
@@ -66,7 +58,17 @@ button {
 .error {
 	color: red;
 }
-
+.results{
+	margin-top: 20px;
+	margin-left: 150px;
+	color: darkblue;
+	font-size: 200%;
+	text-align: center;
+	border-top: 3px solid darkblue;
+	border-bottom: 3px solid darkblue;
+	font-variant: small-caps;
+	float: left;
+}
 td.label {
 	text-align: right;
 }
@@ -79,7 +81,7 @@ td.label {
 		<div class="error">${errorMessage}</div>
 	</c:if>
 
-	<form action="${pageContext.servletContext.contextPath}/Homepage">
+	<form action="${pageContext.servletContext.contextPath}/Homepage" method = "post">
 
 		<div id="PageName">Track N Snack</div>
 
@@ -119,6 +121,9 @@ td.label {
 				</div>
 			</div>
 		</div>
+		<c:if test="${! empty search}">
+			<div class="results">Search Results</div>
+		</c:if>
 		<div class="fixed">
 			<button>
 				<a href="/lab03/Login">Logout</a>

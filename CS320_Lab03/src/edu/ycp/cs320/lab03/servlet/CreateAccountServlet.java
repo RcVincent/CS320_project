@@ -43,7 +43,9 @@ public class CreateAccountServlet extends HttpServlet {
 				
 			} else {
 				ProjectController controller = new ProjectController();
-				User newUser = new Patron(firstName, lastName, userName, password, email);
+				Patron newPatron = new Patron(userName, password);
+				newPatron.setAccountInfo(firstName, lastName, email);
+				newPatron.isOwner(false);
 			}
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid parameters";

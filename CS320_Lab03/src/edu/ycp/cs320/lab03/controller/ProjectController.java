@@ -3,7 +3,7 @@ package edu.ycp.cs320.lab03.controller;
 
 
 public class ProjectController {
-
+	
 
 	public void searchRestaurants(String search) {
 		// TODO Auto-generated method stub

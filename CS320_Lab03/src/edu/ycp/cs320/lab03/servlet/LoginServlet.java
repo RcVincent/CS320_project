@@ -29,13 +29,9 @@ public class LoginServlet extends HttpServlet {
 		String errorMessage = null;
 
 		try {
+			String u = req.getParameter("username");
 
-			String u = null;
-			String p = null;
-
-			u = req.getParameter("username");
-
-			p = req.getParameter("password");
+			String p = req.getParameter("password");
 
 			ProjectController controller = new ProjectController();
 			if(controller.authenticate(u, p)){
@@ -48,7 +44,9 @@ public class LoginServlet extends HttpServlet {
 			else{
 				errorMessage = "Incorrect Username or Password";
 				req.setAttribute("errorMessage", errorMessage);
+
 				req.getRequestDispatcher("/_view/Login.jsp").forward(req, resp);
+
 
 			}
 	
