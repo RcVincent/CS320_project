@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Owner extends User {
 	public ArrayList<Restaurant> myRestaurants = new ArrayList<Restaurant>();
 	
-	public Owner(String userName, String password, String firstName, String lastName, String email) {
-		super(userName, password, firstName, lastName, email);
+	public Owner(String userName, String password) {
+		super(userName, password);
 		// TODO Auto-generated constructor stub
 	}
 

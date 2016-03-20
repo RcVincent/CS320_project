@@ -8,8 +8,8 @@ public class Patron extends User {
 	public ArrayList<Restaurant> favorites = new ArrayList<Restaurant>();
 	public ArrayList<Order> savedOrders = new ArrayList<Order>();
 	
-	public Patron(String u, String p, String f, String l, String e){
-		super(u, p, f, l, e);
+	public Patron(String u, String p){
+		super(u, p);
 		
 	}
 

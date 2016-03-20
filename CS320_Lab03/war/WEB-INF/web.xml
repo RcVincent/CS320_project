@@ -35,6 +35,10 @@
     <servlet-name>AccountServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab03.servlet.AccountServlet</servlet-class>
    </servlet>
+   <servlet>
+    <servlet-name>FavoritesServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab03.servlet.FavoritesServlet</servlet-class>
+   </servlet>
   
   <!-- AJAX servlets. -->
   <servlet>
@@ -63,14 +67,10 @@
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/Login</url-pattern>
   </servlet-mapping>
-
-
    <servlet-mapping>
     <servlet-name>HomepageServlet</servlet-name>
     <url-pattern>/Homepage</url-pattern>
   </servlet-mapping>
-
-
   <servlet-mapping>
     <servlet-name>CreateAccountServlet</servlet-name>
     <url-pattern>/CreateAccount</url-pattern>
@@ -79,7 +79,10 @@
     <servlet-name>AccountServlet</servlet-name>
     <url-pattern>/Account</url-pattern>
   </servlet-mapping>
-
+    <servlet-mapping>
+    <servlet-name>FavoritesServlet</servlet-name>
+    <url-pattern>/Favorites</url-pattern>
+  </servlet-mapping>
    
 
 

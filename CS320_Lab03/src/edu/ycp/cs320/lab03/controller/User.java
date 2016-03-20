@@ -7,15 +7,19 @@ public abstract class User {
 	private String email;
 	private String firstName;
 	private String lastName;
+	private boolean isOwner;
 	private boolean status = false;
 
 
-	public User(String userName, String password, String firstName, String lastName, String email) {
+	public User(String userName, String password) {
 		// TODO Auto-generated method stub
-		this.userName = userName;
-		this.passWord = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.setUserName(userName);
+		this.setPassWord(password);
+		
+	}
+	public void setAccountInfo(String fn, String ln, String email){
+		this.firstName = fn;
+		this.lastName = ln;
 		this.email = email;
 	}
 	
@@ -35,11 +39,50 @@ public abstract class User {
 		return userName;
 	}
 	
-	//use database for this too
-//	public boolean isOwner(String username){
-//		
-//	}
+//	//use database for this too
+	public void isOwner(boolean o){
+		this.isOwner = o;
+	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassWord() {
+		return passWord;
+	}
+
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
 }
 
