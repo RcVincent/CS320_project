@@ -14,6 +14,9 @@
 td.label {
 	text-align: right;
 }
+button{
+	margin-top: 2px;
+}
 </style>
 </head>
 

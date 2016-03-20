@@ -21,7 +21,7 @@
 			<div class="error">${errorMessage}</div>
 		</c:if>
 	
-		<form action="${pageContext.servletContext.contextPath}/CreateAccunt" method="post">
+		<form action="${pageContext.servletContext.contextPath}/CreateAccount" method="post">
 			<table>
 				<tr>
 					<td class="label">First name:</td>
@@ -43,7 +43,11 @@
 					<td class="label">email address:</td>
 					<td><input type="email" name="email" size="12" value="${email}" required/></td>
 				</tr>
-		
+				<tr>
+						<td class = "label">Account Type:</td>
+					  <td><input type="radio" name="AccountType" value="patron" checked> Patron</td>
+					  <td><input type="radio" name="AccountType" value="owner"> Owner</td>
+				</tr>
 			</table>
 
    			<input type="Submit" name="submit" value="Create Account"/>

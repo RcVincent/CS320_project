@@ -4,7 +4,7 @@ package edu.ycp.cs320.lab03.controller;
 
 public class ProjectController {
 	private boolean LogStatus;
-
+	
 
 	public void searchRestaurants(String search) {
 		// TODO Auto-generated method stub
@@ -23,6 +23,6 @@ public class ProjectController {
 		
 		return real;
 	}
-	
+
 	
 }

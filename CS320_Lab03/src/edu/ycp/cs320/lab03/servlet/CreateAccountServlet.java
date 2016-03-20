@@ -35,6 +35,7 @@ public class CreateAccountServlet extends HttpServlet {
 			String userName = req.getParameter("userName");
 			String password = req.getParameter("passowrd");
 			String email = req.getParameter("email address");
+			String AccountType = req.getParameter("AccountType");
 			
 
 			if (userName == null || password == null || email == null

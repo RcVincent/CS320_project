@@ -27,7 +27,6 @@ public class HomepageServlet extends HttpServlet {
 		String errorMessage = null;
 		String search = null;
 		try {
-			
 			search = req.getParameter("search");
 
 			if (search != null) {
