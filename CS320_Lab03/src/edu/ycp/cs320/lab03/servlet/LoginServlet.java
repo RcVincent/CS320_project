@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
 			else{
 				errorMessage = "Incorrect Username or Password";
 				req.setAttribute("errorMessage", errorMessage);
-				req.getRequestDispatcher("/_view/Login.jsp");
+				req.getRequestDispatcher("/_view/Login.jsp").forward(req, resp);
 
 			}
 	
