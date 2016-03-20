@@ -58,9 +58,10 @@ button {
 .error {
 	color: red;
 }
-.results{
+#results{
 	margin-top: 20px;
 	margin-left: 150px;
+	width: 50%;
 	color: darkblue;
 	font-size: 200%;
 	text-align: center;
@@ -93,7 +94,7 @@ td.label {
 				<table>
 					<tr>
 						<td class="label"></td>
-						<td><input type="search" name="search" size="12" /></td>
+						<td><input type="search" name="search" size="12" required/></td>
 						<td><input type="Submit" name="submit" value="Search" /></td>
 					</tr>
 				</table>
@@ -122,7 +123,10 @@ td.label {
 			</div>
 		</div>
 		<c:if test="${! empty search}">
-			<div class="results">Search Results</div>
+			<div id="results">Search Results</div>
+		</c:if>
+		<c:if test="${ empty search}">
+			<div id="results">Because Food</div>
 		</c:if>
 		<div class="fixed">
 			<button>

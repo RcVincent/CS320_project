@@ -9,14 +9,18 @@
 		#PageName {
 			color: darkblue;
 			font-size: 200%;
-			
+			text-align: center;
 			border-top: 3px solid darkblue;
 			border-bottom: 3px solid darkblue;
 			font-variant: small-caps;
-}
+		}
 		#AccountInfo{
-			text-align: center;
 			font-size: 125%;
+			text-align: right;
+			align: center;
+		}
+		table{
+			border-spacing: 10px;
 		}
 		</style>
 	</head>
@@ -28,13 +32,13 @@
 			<table>
 				<tr>
 					<td class="label">First name:</td>
-					
 				</tr>
 				<tr>
 					<td class="label">Last name:</td>
 				</tr>
 				<tr>
 					<td class="label">Username:</td>
+					<td>${username}</td>
 				</tr>
 				<tr>
 					<td class="label">Address:</td>

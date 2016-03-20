@@ -35,7 +35,9 @@ public abstract class User {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	public String getUsername(){
+		return userName;
+	}
 	
 //	//use database for this too
 	public void isOwner(boolean o){
