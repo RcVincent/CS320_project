@@ -38,7 +38,7 @@
 				</tr>
 				<tr>
 					<td class="label">Username:</td>
-					<td>${username}</td>
+					<td>${userName}</td>
 				</tr>
 				<tr>
 					<td class="label">Address:</td>

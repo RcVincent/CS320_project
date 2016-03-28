@@ -3,10 +3,6 @@ package edu.ycp.cs320.lab03.controller;
 
 
 public class ProjectController {
-<<<<<<< HEAD
-	private boolean LogStatus;
-=======
->>>>>>> refs/remotes/cdierdorff/master
 	
 
 	public void searchRestaurants(String search) {

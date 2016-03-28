@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab03.controller.AddNumbersController;
+import edu.ycp.cs320.lab03.controller.Patron;
 import edu.ycp.cs320.lab03.controller.ProjectController;
 import edu.ycp.cs320.lab03.controller.User;
 
@@ -24,14 +25,11 @@ public class AccountServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-
 		// Decode form parameters and dispatch to controller
-		User use = null;
 		String errorMessage = null;
+		String userName = null;
 		try {
-			
-			String username = use.getUsername();
-			
+			userName = (String) req.getSession().getAttribute("username");
 
 			
 		} catch (NumberFormatException e) {
@@ -50,4 +48,5 @@ public class AccountServlet extends HttpServlet {
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/Account.jsp").forward(req, resp);
 	}
+	
 }
