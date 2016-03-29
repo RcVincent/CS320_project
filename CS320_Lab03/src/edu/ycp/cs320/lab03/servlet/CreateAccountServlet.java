@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab03.controller.AddNumbersController;
+import edu.ycp.cs320.lab03.controller.Owner;
 import edu.ycp.cs320.lab03.controller.Patron;
 import edu.ycp.cs320.lab03.controller.ProjectController;
 import edu.ycp.cs320.lab03.controller.User;
@@ -42,12 +43,18 @@ public class CreateAccountServlet extends HttpServlet {
 					|| firstName == null || lastName == null) {
 				errorMessage = "Please fill in all fields";
 				
-			} else {
+			} else if(AccountType.equals("patron")){
 				ProjectController controller = new ProjectController();
 				Patron newPatron = new Patron(userName, password);
 				newPatron.setAccountInfo(firstName, lastName, email);
 				newPatron.isOwner(false);
+			} else if(AccountType.equals("owner")){
+				ProjectController controller = new ProjectController();
+				Owner newOwner = new Owner(userName, password);
+				newOwner.setAccountInfo(firstName, lastName, email);
+				newOwner.isOwner(true);
 			}
+			
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid parameters";
 		}

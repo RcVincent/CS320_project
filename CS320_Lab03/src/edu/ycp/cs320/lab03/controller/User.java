@@ -1,7 +1,7 @@
 package edu.ycp.cs320.lab03.controller;
 
 
-public abstract class User {
+public class User {
 	private String userName;
 	private String passWord;
 	private String email;
@@ -82,6 +82,12 @@ public abstract class User {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	public boolean isOwner() {
+		return isOwner;
+	}
+	public void setOwner(boolean isOwner) {
+		this.isOwner = isOwner;
 	}
 
 }

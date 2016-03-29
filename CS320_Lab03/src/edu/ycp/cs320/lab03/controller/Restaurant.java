@@ -1,13 +1,19 @@
 package edu.ycp.cs320.lab03.controller;
 
+import java.util.ArrayList;
+
 public class Restaurant {
 	private String Name;
 	private Address address;
 	private String description;
+	private Menu menu;
+	private Order o;
+	private Review rev;
+	public ArrayList<Review> reviews = new ArrayList<Review>();
 	
-	public Restaurant(String n, Address a){
+	
+	public Restaurant(String n){
 		this.setName(n);
-		this.setAddress(a);
 	}
 
 	public String getName() {
@@ -21,10 +27,6 @@ public class Restaurant {
 	public Address getAddress() {
 		return address;
 	}
-	public void addToMenu(){
-		
-	}
-
 	public void setAddress(Address address) {
 		this.address = address;
 	}
@@ -35,6 +37,14 @@ public class Restaurant {
 		return this.description;
 	}
 	public void recieveOrder(Order o){
-		throw new UnsupportedOperationException();
+		this.o = o;
+	}
+	//will get string and parsed int from controller
+	public void writeReview(String s, int i){
+		this.rev = new Review(s, i);
+		reviews.add(rev);
+	}
+	public Menu getMenu(){
+		return this.menu;
 	}
 }

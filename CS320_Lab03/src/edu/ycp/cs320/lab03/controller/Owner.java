@@ -14,12 +14,17 @@ public class Owner extends User {
 	public void addToRestaurants(Restaurant rest){
 		myRestaurants.add(rest);
 	}
-	public Restaurant seeFavoriteRestaurantProfile(Restaurant r){
+	public Restaurant seeRestaurantProfile(Restaurant r){
 		for(int i = 0; i < myRestaurants.size(); i++){
 			if(myRestaurants.get(i).getName().equals(r.getName())){
 				return myRestaurants.get(i);
 			}
 		}
 		return null;
+	}
+	
+	//owner adds item to restaurant menu
+	public void buildMenu(String item, Float price, int i){
+		myRestaurants.get(i).getMenu().itemToAdd(item, price);
 	}
 }
