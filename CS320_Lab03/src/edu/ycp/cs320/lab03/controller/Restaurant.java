@@ -7,9 +7,8 @@ public class Restaurant {
 	private Address address;
 	private String description;
 	private Menu menu;
-	private Order o;
-	private Review rev;
 	public ArrayList<Review> reviews = new ArrayList<Review>();
+	public ArrayList<Order> ordersList = new ArrayList<Order>();
 	
 	
 	public Restaurant(String n, Address a){
@@ -40,17 +39,18 @@ public class Restaurant {
 	}
 	
 	public void recieveOrder(Order o){
-		this.o = o;
+		this.ordersList.add(o);
+	}
+	public Order getOrder(int i){
+		return this.ordersList.get(i);
 	}
 	
-	//will get string and parsed int from controller
-	public void writeReview(String s, int i){
-		this.rev = new Review(s, i);
-		reviews.add(rev);
+	public void addReview(Review rev){
+		this.reviews.add(rev);
 	}
-	
-	
-	
+	public Review readReview(int i){
+		return this.reviews.get(i);
+	}
 	public Menu getMenu(){
 		return this.menu;
 	}

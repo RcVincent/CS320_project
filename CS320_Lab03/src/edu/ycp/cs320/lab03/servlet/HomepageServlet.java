@@ -26,12 +26,13 @@ public class HomepageServlet extends HttpServlet {
 		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
 		String search = null;
+		String param = null;
 		try {
 			search = req.getParameter("search");
 
 			if (search != null) {
 				ProjectController controller = new ProjectController();
-				controller.searchRestaurants(search);
+				controller.searchRestaurants(search, param);
 			}
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid value";
