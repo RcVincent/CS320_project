@@ -54,7 +54,7 @@ public class MenuAddITemsTest {
 	
 	@Test
 	public void addPrice() throws Exception{ 
-		
+	
 	}
 	
 	@Test
