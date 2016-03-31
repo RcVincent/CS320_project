@@ -1,12 +1,13 @@
 package edu.ycp.cs320.lab03.controller;
 
+import java.awt.List;
 import java.util.ArrayList;
 
 public class ProjectController {
 	User u;
 	
 	
-	public void searchRestaurants(String searchVal, String params){
+	public ArrayList<Restaurant> searchRestaurants(String searchVal, String params){
 		Search search = null;
 		ArrayList<Restaurant> searchResults = new ArrayList<Restaurant>();
 		if(params == "name"){
@@ -14,6 +15,7 @@ public class ProjectController {
 		}else if(params == "city"){
 			searchResults.addAll(search.searchRestaurantsByCity(searchVal));
 		}
+		return searchResults;
 	}
 	
 	
@@ -27,7 +29,15 @@ public class ProjectController {
 
 		return real;
 	}
-
+	
+	public List viewMenuItems(Restaurant rest){
+		return rest.getMenu().viewItems();
+		
+	}
+	public float getItemPrice(Menu menu, String item){
+		return menu.getItemPrice(item);
+	}
+	
 	public Order makeOrder(Restaurant rest, String itemToOrder, boolean saveOrder){
 		Order o;
 		if(!u.isOwner()){
@@ -41,6 +51,10 @@ public class ProjectController {
 		return o;		
 	}
 	
+	
+	
+	
+	//will get string data from the servlet/jsp
 	public void writeReview(Restaurant rest, String title, String review, int rating){
 		Review rev = new Review(title, review, rating);
 		rest.addReview(rev);
