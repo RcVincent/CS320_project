@@ -8,9 +8,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.ycp.cs320.lab03.controller.Menu;
+import edu.ycp.cs320.lab03.controller.Restaurant;
 
 public class MenuAddITemsTest {
 	private Menu menu; 
+	private Restaurant r;
 	private String item1;
 	private String item2;
 	private String item3;
@@ -21,6 +23,14 @@ public class MenuAddITemsTest {
 	@Before
 	public void  setUp() throws Exception {
 		menu = new Menu(); 
+		r = new Restaurant(r.getName(), r.getAddress()); 
+		
+		//set up test item names
+		item1 = new String();
+		item2 = new String();
+		item3 = new String();
+		
+		//set up test item prices
 		price1 = (float) 10.99;
 		price2 = (float) 4.50;
 		price3 = (float) 7.50;		
@@ -33,11 +43,17 @@ public class MenuAddITemsTest {
 		menu.itemToAdd(item2, price2);
 		menu.itemToAdd(item3, price3);
 		
-		assertEquals(menu.getMenuSize(), 3);
+		assertEquals(3, menu.getMenuSize());
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Test
+	public void testViewPrices() throws Exception {
+		assertEquals(10.99 , r.getMenu().getItemPrice(item1));
 	}
 	
 	@Test
-	public void testViewPrices() throws Exception {
+	public void addPrice() throws Exception{ 
 		
 	}
 	
