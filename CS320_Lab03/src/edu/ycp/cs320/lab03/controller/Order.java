@@ -13,7 +13,7 @@ public class Order{
 	public Order(String item, Restaurant r, boolean type){
 		fullOrder.put(item, r.getMenu().getItemPrice(item));
 		calculatePrice(r.getMenu().getItemPrice(item));
-		this.setTakeOut(type);
+		setTakeOut(type);
 		Random rnd = new Random();
 		this.setConfirmationNumber(rnd);
 	}
@@ -26,6 +26,7 @@ public class Order{
 	
 	public Random getConfirmationNumber() {
 		return confirmationNumber;
+		
 	}
 
 
@@ -34,11 +35,10 @@ public class Order{
 	}
 
 
-	public boolean isTakeOut() {
+	public boolean getTakeOut() {
 		return takeOut;
 	}
-
-
+	
 	public void setTakeOut(boolean takeOut) {
 		this.takeOut = takeOut;
 	}

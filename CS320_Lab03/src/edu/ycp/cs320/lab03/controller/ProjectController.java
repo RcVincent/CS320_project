@@ -29,14 +29,17 @@ public class ProjectController {
 
 		return real;
 	}
-	
+	//these next two will be accessed from the same servlet so the restaurant stays consistent
 	public List viewMenuItems(Restaurant rest){
 		return rest.getMenu().viewItems();
 		
 	}
+	
 	public float getItemPrice(Menu menu, String item){
 		return menu.getItemPrice(item);
 	}
+	
+	
 	
 	public Order makeOrder(Restaurant rest, String itemToOrder, boolean saveOrder){
 		Order o;
@@ -50,9 +53,10 @@ public class ProjectController {
 		}
 		return o;		
 	}
-	
-	
-	
+	public Order viewOrder(Restaurant rest, int order){
+		//will pass the restaurant name from the session
+		return rest.getOrder(order);
+	}
 	
 	//will get string data from the servlet/jsp
 	public void writeReview(Restaurant rest, String title, String review, int rating){
@@ -63,11 +67,5 @@ public class ProjectController {
 	public Review readReview(Restaurant rest, int i){
 		return rest.readReview(i);
 	}
-	
-	
-	
 
-	
-	
-	
 }

@@ -40,7 +40,7 @@ public class Restaurant {
 	
 	public void recieveOrder(Order o){
 		this.ordersList.add(o);
-	}
+	}	
 	public Order getOrder(int i){
 		return this.ordersList.get(i);
 	}
