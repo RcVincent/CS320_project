@@ -35,8 +35,8 @@ public class LoginServlet extends HttpServlet {
 			ProjectController controller = new ProjectController();
 			//if user is authenticated, call homepage
 			if(controller.authenticate(u, p)){
-
-				req.getRequestDispatcher("/Homepage").forward(req, resp);
+				req.getSession(true).setAttribute("username", u);
+				resp.sendRedirect(req.getContextPath() + "/Homepage");
 				//				User user = null;
 				//				user.logIn(u, p);
 

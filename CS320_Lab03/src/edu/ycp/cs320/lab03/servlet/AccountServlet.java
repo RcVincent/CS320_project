@@ -26,12 +26,11 @@ public class AccountServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		// Decode form parameters and dispatch to controller
-		User use = null;
 		String errorMessage = null;
 		try {
 			
-			String username = use.getUsername();
-			
+			String username = (String)req.getSession().getAttribute("username");
+			req.setAttribute("username", username);
 
 			
 		} catch (NumberFormatException e) {
@@ -41,7 +40,7 @@ public class AccountServlet extends HttpServlet {
 		// Add parameters as request attributes
 //		req.setAttribute("firstName", req.getParameter("firstName"));
 //		req.setAttribute("lastName", req.getParameter("lastName"));
-		req.setAttribute("userName", req.getParameter("userName"));
+		
 //		req.setAttribute("password", req.getParameter("password"));
 //		req.setAttribute("email", req.getAttribute("email"));
 

@@ -7,13 +7,13 @@ public class Restaurant {
 	private Address address;
 	private String description;
 	private Menu menu;
-	private Order o;
-	private Review rev;
 	public ArrayList<Review> reviews = new ArrayList<Review>();
+	public ArrayList<Order> ordersList = new ArrayList<Order>();
 	
 	
-	public Restaurant(String n){
+	public Restaurant(String n, Address add){
 		this.setName(n);
+		this.setAddress(add);
 	}
 
 	public String getName() {
@@ -21,7 +21,7 @@ public class Restaurant {
 	}
 
 	public void setName(String name) {
-		Name = name;
+		this.Name = name;
 	}
 
 	public Address getAddress() {
@@ -37,12 +37,19 @@ public class Restaurant {
 		return this.description;
 	}
 	public void recieveOrder(Order o){
-		this.o = o;
+		this.ordersList.add(o);
 	}
-	//will get string and parsed int from controller
-	public void writeReview(String s, int i){
-		this.rev = new Review(s, i);
-		reviews.add(rev);
+	public Order getOrder(int i){
+		return this.ordersList.get(i);
+	}
+	
+	public void addReview(Review rev){
+		this.reviews.add(rev);
+
+	}
+
+	public Review readReview(int i){
+		return this.reviews.get(i);
 	}
 	public Menu getMenu(){
 		return this.menu;

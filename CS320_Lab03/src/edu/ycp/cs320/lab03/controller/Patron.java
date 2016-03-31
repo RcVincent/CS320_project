@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class Patron extends User {
 	private Order o;
 	private Restaurant r;
-	private String itemToOrder;
 	private Address address;
 	public ArrayList<Restaurant> favorites = new ArrayList<Restaurant>();
 	public ArrayList<Order> savedOrders = new ArrayList<Order>();
 	public ArrayList<Restaurant> searchResults = new ArrayList<Restaurant>();
+	public boolean saveOrder;
 
 	public Patron(String u, String p){
 		super(u, p);
@@ -45,16 +45,18 @@ public class Patron extends User {
 	}
 
 	public void addToSavedOrders(Order o){
-		savedOrders.add(o);
+		this.savedOrders.add(o);
 	}
 
-	public void makeTakeOutOrder(Restaurant r){
-		this.o.createOrder(this.itemToOrder, r, true);
+	public Order createOrder(Restaurant r, String itemToOrder, boolean savedOrder){
+		this.o = new Order(itemToOrder, r, savedOrder);
+		if(savedOrder){
+			addToSavedOrders(o);
+		}
+		return o;
 	}
 	
-	public void makeDeliveryOrder(Restaurant r){
-		this.o.createOrder(this.itemToOrder, r, false);
-	}
+	
 	
 	
 	//this int will come from the jsp/controller based on the order it appears in the actual search results

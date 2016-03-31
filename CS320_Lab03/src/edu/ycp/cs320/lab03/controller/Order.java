@@ -9,14 +9,26 @@ public class Order{
 	private Random confirmationNumber;
 	
 	
-	public void createOrder(String item, Restaurant r, boolean type){
+	public Order(String item, Restaurant r, boolean type){
 		//get item and price from the menu passed from the restaurant
 		this.price += r.getMenu().getItemPrice(item);
 		this.item = item;
 		this.takeOut = type;
 		Random rnd = new Random();
-		this.confirmationNumber = rnd;
+		this.setConfirmationNumber(rnd);
 	}
+
+
+	public Random getConfirmationNumber() {
+		return confirmationNumber;
+	}
+
+
+	public void setConfirmationNumber(Random confirmationNumber) {
+		this.confirmationNumber = confirmationNumber;
+	}
+	
+	
 	
 	
 	
