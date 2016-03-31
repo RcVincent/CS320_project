@@ -12,7 +12,12 @@ public class Menu {
 
 	public void addToMenu(String item, float price){
 		this.mapper.put(item, price);
-		itemList.add(item);
+		
+	}
+	
+	//How the consumer sees what items there are
+	public void additemsToList(String s) {
+		itemList.add(s);
 	}
 	
 	//for patron to view items for purchase

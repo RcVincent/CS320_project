@@ -12,53 +12,46 @@ import edu.ycp.cs320.lab03.controller.Restaurant;
 
 public class MenuAddITemsTest {
 	private Menu menu; 
-	private Restaurant r;
-	private String item1;
-	private String item2;
-	private String item3;
-	private float price1;
-	private float price2;
-	private float price3;
+	
+	private Float price1;
+	private Float price2;
+	private Float price3;
 	
 	@Before
 	public void  setUp() throws Exception {
-		menu = new Menu(); 
-		r = new Restaurant(r.getName(), r.getAddress()); 
-		
 		//set up test item names
-		item1 = new String();
-		item2 = new String();
-		item3 = new String();
+		menu = new Menu();
+		
 		
 		//set up test item prices
-		price1 = (float) 10.99;
+		price1 =  (float) 10.99;
 		price2 = (float) 4.50;
-		price3 = (float) 7.50;		
+		price3 = (float) 7.50;	
+		
+		menu.addToMenu("hamburger", price1);
+		menu.addToMenu("hotdog", price2);
+		menu.addToMenu("pizza", price3);
+		
 	}
 	
 	
 	@Test
-	public void addItemTest() throws Exception {
-		menu.itemToAdd(item1, price1);
-		menu.itemToAdd(item2, price2);
-		menu.itemToAdd(item3, price3);
-		
+	public void TestMenuSize() throws Exception {
 		assertEquals(3, menu.getMenuSize());
 	}
 	
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testViewPrices() throws Exception {
-		assertEquals(10.99 , r.getMenu().getItemPrice(item1));
+		assertEquals(10.99 , menu.getItemPrice("hamburger"), 0.000001);
+		assertEquals(4.50, menu.getItemPrice("hotdog"), 0.000001);
+		assertEquals(7.50, menu.getItemPrice("pizza"), 0.000001);
 	}
 	
-	@Test
-	public void addPrice() throws Exception{ 
-	
-	}
 	
 	@Test
 	public void testViewMenu() throws Exception {
 		menu.viewItems();
 	}
+	
 }
