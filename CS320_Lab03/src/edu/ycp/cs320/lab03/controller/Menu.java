@@ -10,24 +10,16 @@ public class Menu {
 	private List itemList;
 	private TreeMap<String, Float> mapper = new TreeMap<String, Float>();
 
-	private void addToMenu(String item, float price){
+	public void addToMenu(String item, float price){
 		this.mapper.put(item, price);
+		itemList.add(item);
 	}
 	
 	//for patron to view items for purchase
 	public List viewItems(){
 		return this.itemList;
 	}
-	
-	
-	
-	//for restaurant to build a menu
-	public void itemToAdd(String s, Float price){
-		this.itemList.add(s);
-		addToMenu(s, price);
-	}
-	
-	
+		
 	//for patron
 	public float getItemPrice(String s){
 		return this.mapper.get(s);

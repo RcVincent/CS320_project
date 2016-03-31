@@ -25,6 +25,6 @@ public class Owner extends User {
 	
 	//owner adds item to restaurant menu
 	public void buildMenu(String item, Float price, int i){
-		myRestaurants.get(i).getMenu().itemToAdd(item, price);
+		myRestaurants.get(i).getMenu().addToMenu(item, price);
 	}
 }
