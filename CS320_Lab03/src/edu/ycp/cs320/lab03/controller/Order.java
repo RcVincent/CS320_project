@@ -11,6 +11,7 @@ public class Order{
 	
 	
 	public Order(String item, Restaurant r, boolean type){
+		
 		fullOrder.put(item, r.getMenu().getItemPrice(item));
 		calculatePrice(r.getMenu().getItemPrice(item));
 		this.setTakeOut(type);

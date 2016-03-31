@@ -46,14 +46,18 @@ public class Restaurant {
 		return this.ordersList.get(i);
 	}
 	
-	public void addReview(Review rev){
-		this.reviews.add(rev);
+	public void addReview(Review i){
+		this.reviews.add(i);
 	}
-	public Review readReview(int i){
-		return this.reviews.get(i);
+
+	public Menu getMenu() {
+		return menu;
 	}
-	public Menu getMenu(){
-		return this.menu;
+
+	public void setMenu(Menu menu) {
+		this.menu = menu;
 	}
+
+
 	
 }
