@@ -3,7 +3,6 @@ package edu.ycp.cs320.lab03.controller;
 
 import java.awt.List;
 import java.util.TreeMap;
-import java.util.Iterator;
 
 
 public class Menu {
@@ -12,7 +11,12 @@ public class Menu {
 
 	public void addToMenu(String item, float price){
 		this.mapper.put(item, price);
-		itemList.add(item);
+		
+	}
+	
+	//How the consumer sees what items there are
+	public void additemsToList(String s) {
+		itemList.add(s);
 	}
 	
 	//for patron to view items for purchase
