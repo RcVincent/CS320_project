@@ -27,22 +27,26 @@ public class AccountServlet extends HttpServlet {
 
 		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
+		String firstname = null;
+		String lastname = null;
+		String email = null;
+		String username = null;
+		User user = null;
 		try {
-			
-			String username = (String)req.getSession().getAttribute("username");
-			req.setAttribute("username", username);
-
-			
+			user = (User) req.getSession().getAttribute("user");
+			firstname = user.getFirstName();
+			lastname = user.getLastName();
+			email = user.getEmail();
+			username = user.getUsername();
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid parameters";
 		}
 
 		// Add parameters as request attributes
-//		req.setAttribute("firstName", req.getParameter("firstName"));
-//		req.setAttribute("lastName", req.getParameter("lastName"));
-		
-//		req.setAttribute("password", req.getParameter("password"));
-//		req.setAttribute("email", req.getAttribute("email"));
+		req.setAttribute("firstName", firstname);
+		req.setAttribute("lastName", lastname);
+		req.setAttribute("email", email);
+		req.setAttribute("username", username);
 
 		// Add result objects as request attributes
 

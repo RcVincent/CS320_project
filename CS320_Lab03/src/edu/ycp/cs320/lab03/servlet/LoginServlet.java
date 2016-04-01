@@ -29,13 +29,12 @@ public class LoginServlet extends HttpServlet {
 		String errorMessage = null;
 
 		try {
-			String u = req.getParameter("username");
-			String p = req.getParameter("password");
+			User user = new User(req.getParameter("username"), req.getParameter("password"));
 
 			ProjectController controller = new ProjectController();
 			//if user is authenticated, call homepage
-			if(controller.authenticate(u, p)){
-				req.getSession(true).setAttribute("username", u);
+			if(controller.authenticate(user.getUsername(), user.getPassWord())){
+				req.getSession(true).setAttribute("user", user);
 				resp.sendRedirect(req.getContextPath() + "/Homepage");
 				//				User user = null;
 				//				user.logIn(u, p);
@@ -45,18 +44,12 @@ public class LoginServlet extends HttpServlet {
 			else{
 				errorMessage = "Incorrect Username or Password";
 				req.setAttribute("errorMessage", errorMessage);
-
-
 				req.getRequestDispatcher("/_view/Login.jsp").forward(req, resp);
-
-
-
 			}
 
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid double";
 		}
-
 	}
 
 }

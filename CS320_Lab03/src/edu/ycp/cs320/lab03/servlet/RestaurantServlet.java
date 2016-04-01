@@ -24,21 +24,17 @@ public class RestaurantServlet extends HttpServlet {
 		
 		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
-		String search = null;
-		String param = null;
+		String rest = null;
 		try {
-			search = req.getParameter("search");
+			rest = req.getParameter("restaurant.name");
 
-			if (search != null) {
-				ProjectController controller = new ProjectController();
-				controller.searchRestaurants(search, param);
-			}
+
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid value";
 		}
 		
 		// Add parameters as request attributes
-		req.setAttribute("search", req.getParameter("search"));
+		req.setAttribute("restName", rest);
 		
 		
 		// Add result objects as request attributes

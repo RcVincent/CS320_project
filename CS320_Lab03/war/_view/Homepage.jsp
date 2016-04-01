@@ -14,7 +14,6 @@
 	border-bottom: 3px solid darkblue;
 	font-variant: small-caps;
 }
-
 #LinkContent {
 	float: left;
 	border: 1px solid darkblue;
@@ -23,7 +22,6 @@
 	margin-top: 13px;
 	margin-bottom: 13px;
 }
-
 #LinkName {
 	color: darkblue;
 	font-size: 150%;
@@ -155,9 +153,8 @@ td.label {
 							<td class="label"></td>
 							<form
 								action="${pageContext.servletContext.contextPath}/Restaurant"
-								method="post">
-								<td><input type="submit" name="${restaurant.name }"
-									value="Click to view page"></td>
+								method="get">
+								<td><input type="submit" value="Click to view page"></td>
 							</form>
 						</tr>
 					</table>
@@ -167,7 +164,7 @@ td.label {
 	</c:if>
 
 	<c:if test="${ empty search}">
-		<div id="results">Because Food</div>
+		<div id="results">Make America Fat Again</div>
 	</c:if>
 	<div class="fixed">
 		<button>

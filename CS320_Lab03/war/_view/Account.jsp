@@ -32,9 +32,11 @@
 			<table>
 				<tr>
 					<td class="label">First name:</td>
+					<td>${firstname}</td>
 				</tr>
 				<tr>
 					<td class="label">Last name:</td>
+					<td>${lastname}</td>
 				</tr>
 				<tr>
 					<td class="label">Username:</td>

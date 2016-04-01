@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import edu.ycp.cs320.lab03.controller.User;
 import edu.ycp.cs320.lab03.controller.Restaurant;
 import edu.ycp.cs320.lab03.controller.ProjectController;
 

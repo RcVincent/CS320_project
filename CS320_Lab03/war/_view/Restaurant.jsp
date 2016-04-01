@@ -89,7 +89,7 @@ td.label {
 		<div id="Content">
 
 			<div id="LinkContent">
-				<div id="LinkName">Search</div>
+				<div id="LinkName">${rest}</div>
 
 				<table>
 					<tr>
