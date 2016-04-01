@@ -27,14 +27,16 @@ public class LoginServlet extends HttpServlet {
 
 		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
-
+		String username = null;
+		String password = null;
 		try {
-			User user = new User(req.getParameter("username"), req.getParameter("password"));
+			username = req.getParameter("username");
+			password = req.getParameter("password");
 
 			ProjectController controller = new ProjectController();
 			//if user is authenticated, call homepage
-			if(controller.authenticate(user.getUsername(), user.getPassWord())){
-				req.getSession(true).setAttribute("user", user);
+			if(controller.authenticate(username, password)){
+				req.getSession().setAttribute("username", username);
 				resp.sendRedirect(req.getContextPath() + "/Homepage");
 				//				User user = null;
 				//				user.logIn(u, p);

@@ -43,7 +43,8 @@
 					<td>${username}</td>
 				</tr>
 				<tr>
-					<td class="label">Address:</td>
+					<td class="label">Account Type:</td>
+					<td>${AccountType}</td>
 				</tr>
 			</table>
 			</div>

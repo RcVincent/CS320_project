@@ -18,6 +18,13 @@ public class AccountServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		String user = (String) req.getSession().getAttribute("username");
+		if (user == null) {
+			// user is not logged in, or the session expired
+			resp.sendRedirect(req.getContextPath() + "/Login");
+			return;
+		}
+		
 		req.getRequestDispatcher("/_view/Account.jsp").forward(req, resp);
 	}
 
@@ -31,24 +38,26 @@ public class AccountServlet extends HttpServlet {
 		String lastname = null;
 		String email = null;
 		String username = null;
-		User user = null;
+		String AccountType = null;
 		try {
-			user = (User) req.getSession().getAttribute("user");
-			firstname = user.getFirstName();
-			lastname = user.getLastName();
-			email = user.getEmail();
-			username = user.getUsername();
+			
+			firstname = (String) req.getSession().getAttribute("firstname");
+			lastname = (String) req.getSession().getAttribute("lastname");
+			email = (String) req.getSession().getAttribute("email");
+			username = (String) req.getSession().getAttribute("username");
+			AccountType  = (String) req.getSession().getAttribute("AccountType");
+			
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid parameters";
 		}
 
 		// Add parameters as request attributes
-		req.setAttribute("firstName", firstname);
-		req.setAttribute("lastName", lastname);
+		req.setAttribute("firstname", firstname);
+		req.setAttribute("lastname", lastname);
 		req.setAttribute("email", email);
 		req.setAttribute("username", username);
-
-		// Add result objects as request attributes
+		req.setAttribute("AccountType", AccountType);
+		
 
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/Account.jsp").forward(req, resp);

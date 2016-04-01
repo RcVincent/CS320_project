@@ -29,48 +29,45 @@ public class CreateAccountServlet extends HttpServlet {
 
 		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
-
+		String firstName = null;
+		String lastName = null;
+		String userName = null;
+		String email = null;
+		String password = null;
+		String AccountType = null;
 		try {
-			String firstName = req.getParameter("firstName");
-			String lastName = req.getParameter("lastName");
-			String userName = req.getParameter("userName");
-			String password = req.getParameter("password");
-			String email = req.getParameter("email");
-			String AccountType = req.getParameter("AccountType");
-			User user = new User(userName, password);
+			firstName = req.getParameter("firstName");
+			lastName = req.getParameter("lastName");
+			userName = req.getParameter("userName");
+			password = req.getParameter("password");
+			email = req.getParameter("email");
+			AccountType = req.getParameter("AccountType");
 
 			if (userName == null || password == null || email == null
 					|| firstName == null || lastName == null) {
 				errorMessage = "Please fill in all fields";
 				
 			} else if(AccountType.equals("patron")){
-				req.getSession(true);
 				req.getSession().setAttribute("username", userName);
 				req.getSession().setAttribute("firstname", firstName);
 				req.getSession().setAttribute("lastname", lastName);
 				req.getSession().setAttribute("email", email);
+				req.getSession().setAttribute("AccountType", AccountType);
 				resp.sendRedirect(req.getContextPath() + "/Homepage");
 			} else if(AccountType.equals("owner")){
-				req.getSession(true);
 				req.getSession().setAttribute("username", userName);
 				req.getSession().setAttribute("firstname", firstName);
 				req.getSession().setAttribute("lastname", lastName);
 				req.getSession().setAttribute("email", email);
+				req.getSession().setAttribute("AccountType", AccountType);
 				resp.sendRedirect(req.getContextPath() + "/Homepage");
 			}
-			
+			else{
+				req.getRequestDispatcher("/_view/CreateAccount.jsp").forward(req, resp);
+			}
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid parameters";
 		}
-
-		// Add parameters as request attributes
-
-		// Add result objects as request attributes
-		req.setAttribute("errorMessage", errorMessage);
-
-
-		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/CreateAccount").forward(req, resp);
 	}
 }
 
