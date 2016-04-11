@@ -8,6 +8,7 @@ public class Restaurant {
 	private Address address;
 	private String description;
 	private Menu menu;
+	private Genres gen;
 	public ArrayList<Review> reviews = new ArrayList<Review>();
 	public ArrayList<Order> ordersList = new ArrayList<Order>();
 	

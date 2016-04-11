@@ -1,5 +1,6 @@
 package edu.ycp.cs320.lab03.controller;
 
+import java.util.Random;
 
 public class User {
 	private String userName;
@@ -9,13 +10,16 @@ public class User {
 	private String lastName;
 	private boolean isOwner;
 	private boolean status = false;
+	private Random random;
+	private int accountNumber;
 
 
 	public User(String userName, String password) {
 		// TODO Auto-generated method stub
 		this.setUserName(userName);
 		this.setPassWord(password);
-		
+		this.random = new Random();
+		setAccountNumber(this.random.nextInt(100000));
 	}
 	public void setAccountInfo(String fn, String ln, String email){
 		this.firstName = fn;
@@ -88,6 +92,12 @@ public class User {
 	}
 	public void setOwner(boolean isOwner) {
 		this.isOwner = isOwner;
+	}
+	public int getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(int accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 
 }

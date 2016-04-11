@@ -13,7 +13,6 @@ public class Patron extends User {
 
 	public Patron(String u, String p){
 		super(u, p);
-
 	}
 	
 	private Restaurant getRestaurantFromSearchResults(int i){
@@ -70,7 +69,4 @@ public class Patron extends User {
 		this.r = getRestaurantFromFavorites(i);
 		return r.getMenu().getItemPrice(item);
 	}
-	
-	
-
 }

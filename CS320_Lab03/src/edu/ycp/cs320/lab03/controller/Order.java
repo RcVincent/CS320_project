@@ -6,7 +6,8 @@ import java.util.TreeMap;
 public class Order{
 	private float price = 0; //starts at zero as an accumulator
 	private boolean takeOut;
-	private Random confirmationNumber;
+	private Random random;
+	private int orderNumber;
 	public TreeMap<String, Float> fullOrder = new TreeMap<String, Float>();
 	
 	
@@ -14,8 +15,8 @@ public class Order{
 		fullOrder.put(item, r.getMenu().getItemPrice(item));
 		calculatePrice(r.getMenu().getItemPrice(item));
 		setTakeOut(type);
-		Random rnd = new Random();
-		this.setConfirmationNumber(rnd);
+		this.random = new Random();
+		setorderNumber(this.random.nextInt(100000));
 	}
 
 
@@ -23,18 +24,6 @@ public class Order{
 		this.price += itemPrice;
 		
 	}
-	
-	public Random getConfirmationNumber() {
-		return confirmationNumber;
-		
-	}
-
-
-	public void setConfirmationNumber(Random confirmationNumber) {
-		this.confirmationNumber = confirmationNumber;
-	}
-
-
 	public boolean getTakeOut() {
 		return takeOut;
 	}
@@ -48,13 +37,15 @@ public class Order{
 		return price;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public int getorderNumber() {
+		return orderNumber;
+	}
+
+
+	public void setorderNumber(int orderNumber) {
+		this.orderNumber = orderNumber;
+	}
+
 }
 
