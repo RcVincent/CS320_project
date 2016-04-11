@@ -5,17 +5,20 @@ import java.util.ArrayList;
 
 public class Restaurant {
 	private String Name;
-	private Address address;
+	private String address;
 	private String description;
+	private Address readAddress;
 	private Menu menu;
+	private int restID;
+	private int OwnerId;
 //	private Genres gen;
 	public ArrayList<Review> reviews = new ArrayList<Review>();
 	public ArrayList<Order> ordersList = new ArrayList<Order>();
 	
 	
-	public Restaurant(String n, Address add){
-		this.setName(n);
-		this.setAddress(add);
+	public Restaurant(){
+//		this.setName(n);
+//		this.setAddress(add);
 	}
 
 	public String getName() {
@@ -26,11 +29,12 @@ public class Restaurant {
 		this.Name = name;
 	}
 
-	public Address getAddress() {
+	public String getAddress() {
 		return address;
 	}
-	public void setAddress(Address address) {
+	public void setAddress(String address) {
 		this.address = address;
+		
 	}
 	public void setDescription(String s){
 		this.description.equals(s);
@@ -48,7 +52,6 @@ public class Restaurant {
 
 	public void addReview(Review i){
 		this.reviews.add(i);
-
 	}
 
 
@@ -61,6 +64,22 @@ public class Restaurant {
 
 	public void setMenu(Menu menu) {
 		this.menu = menu;
+	}
+	//for database
+	public int getRestID() {
+		return restID;
+	}
+
+	public void setRestID(int restID) {
+		this.restID = restID;
+	}
+// for database, foreign key
+	public int getOwnerId() {
+		return OwnerId;
+	}
+
+	public void setOwnerId(int ownerId) {
+		OwnerId = ownerId;
 	}
 
 }

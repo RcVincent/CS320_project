@@ -8,16 +8,17 @@ public class User {
 	private String email;
 	private String firstName;
 	private String lastName;
+	private int UserId;
 	private boolean isOwner;
 	private boolean status = false;
 	private Random random;
 	private int accountNumber;
 
 
-	public User(String userName, String password) {
-		// TODO Auto-generated method stub
-		this.setUserName(userName);
-		this.setPassWord(password);
+	public User(/*String userName, String password*/) {
+//		// TODO Auto-generated method stub
+//		this.setUserName(userName);
+//		this.setPassWord(password);
 		this.random = new Random();
 		setAccountNumber(this.random.nextInt(100000));
 	}
@@ -83,7 +84,6 @@ public class User {
 	public String getLastName() {
 		return lastName;
 	}
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
@@ -98,6 +98,12 @@ public class User {
 	}
 	public void setAccountNumber(int accountNumber) {
 		this.accountNumber = accountNumber;
+	}
+	public int getUserId() {
+		return UserId;
+	}
+	public void setUserId(int userId) {
+		UserId = userId;
 	}
 
 }

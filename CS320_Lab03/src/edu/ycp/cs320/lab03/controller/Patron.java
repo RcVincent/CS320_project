@@ -5,14 +5,15 @@ import java.util.ArrayList;
 public class Patron extends User {
 	private Order o;
 	private Restaurant r;
-	private Address address;
+	private String address;
+	private int patronId;
 	public ArrayList<Restaurant> favorites = new ArrayList<Restaurant>();
 	public ArrayList<Order> savedOrders = new ArrayList<Order>();
 	public ArrayList<Restaurant> searchResults = new ArrayList<Restaurant>();
 	public boolean saveOrder;
 
-	public Patron(String u, String p){
-		super(u, p);
+	public Patron(/*String u, String p*/){
+//		super(u, p);
 	}
 	
 	public Restaurant getRestaurantFromSearchResults(int i){
@@ -23,11 +24,11 @@ public class Patron extends User {
 		return favorites.get(i);
 	}
 
-	public Address getAddress() {
+	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 
@@ -68,5 +69,13 @@ public class Patron extends User {
 	public float lookupPriceFromFromFavorites(String item, int i){
 		this.r = getRestaurantFromFavorites(i);
 		return r.getMenu().getItemPrice(item);
+	}
+	//for database
+	public int getPatronId() {
+		return patronId;
+	}
+
+	public void setPatronId(int patronId) {
+		this.patronId = patronId;
 	}
 }
