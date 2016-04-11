@@ -51,8 +51,10 @@ public class OrderTest {
 	
 	@Test
 	public void getConfirmationNumberTest() throws Exception {
-		testOrder.getConfirmationNumber();
-		testOrder2.getConfirmationNumber();
+		
+		System.out.println(testOrder.getorderNumber());
+		System.out.println(testOrder2.getorderNumber());
+		assertNotEquals(testOrder2.getorderNumber(), testOrder.getorderNumber());
 	}
 	
 	@Test
