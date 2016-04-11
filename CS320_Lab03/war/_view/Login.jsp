@@ -16,21 +16,20 @@ button{
 	margin-top: 2px;
 }
 #PageName {
-	color: darkblue;
-	font-size: 200%;
+	color: white;
+	font-size: 250%;
 	text-align: center;
-	border-top: 3px solid darkblue;
-	border-bottom: 3px solid darkblue;
+	background-color: darkblue;
 	font-variant: small-caps;
 }
 #logon {
-    width: 50%;
-    margin-left: 13px;
-    margin-top: 13px; 
-    float: left;
+    margin: 50px auto;
 	border: 1px solid darkblue;
 	width: 400px;
 	padding: 10px;
+}
+#Content {
+	float: left;
 }
 </style>
 </head>
@@ -38,7 +37,9 @@ button{
 <body>
 	<div id="PageName">Welcome to Track N Snack</div>	
 	<form action="${pageContext.servletContext.contextPath}/Login" method="post">
+		
 		<div id = "logon">
+
 		<table>
 			<tr>
 				<c:if test="${! empty errorMessage}">

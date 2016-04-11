@@ -4,17 +4,18 @@
 
 <html>
 <head>
-<title>Track N Snack Home</title>
+<title>Wag's ribs</title>
 <style type="text/css">
 #PageName {
-	color: darkblue;
-	font-size: 200%;
+	color: white;
+	font-size: 250%;
 	text-align: center;
-	border-top: 3px solid darkblue;
-	border-bottom: 3px solid darkblue;
+	background-color: darkblue;
 	font-variant: small-caps;
 }
-
+body{
+	color: darkblue;
+}
 #LinkContent {
 	float: left;
 	border: 1px solid darkblue;
@@ -84,26 +85,23 @@ td.label {
 
 	<form action="${pageContext.servletContext.contextPath}/Restaurant" method = "post">
 
-		<div id="PageName">Track N Snack</div>
+		<div id="PageName">Wag's Ribs</div>
 
 		<div id="Content">
 
 			<div id="LinkContent">
-				<div id="LinkName">${rest}</div>
-
-				<table>
-					<tr>
-						<td class="label"></td>
-						<td><input type="search" name="search" size="12" required/></td>
-						<td><input type="Submit" name="submit" value="Search" /></td>
-					</tr>
-				</table>
+				<div id="LinkName">Home</div>
+				<div id="ContentBody">
+					<button>
+						<a href="/lab03/Homepage">Click here to return to the home page</a>
+					</button>
+				</div>
 			</div>
 
 			<br>
 
 			<div id="LinkContent">
-				<div id="LinkName">Favorites</div>
+				<div id="LinkName">Menu</div>
 				<div id="ContentBody">
 					<button>
 						<a href="/lab03/Restaurant">Click here to view menu</a>
@@ -112,12 +110,7 @@ td.label {
 			</div>
 
 			<br>
-		<c:if test="${! empty search}">
-			<div id="results">Search Results</div>
-		</c:if>
-		<c:if test="${ empty search}">
-			<div id="results">Because Food</div>
-		</c:if>
+
 		<div class="fixed">
 			<button>
 				<a href="/lab03/Login">Logout</a>

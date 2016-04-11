@@ -42,7 +42,7 @@ public class OrderTest {
 		testOrder = new Order("Sandwich", r, false); 
 		testOrder2 = new Order("pizza", r, true);
 		
-		
+	
 		
 		testOrder2.fullOrder.put("pizza", r.getMenu().getItemPrice("pizza"));
 		testOrder.fullOrder.put("Sandwich", r.getMenu().getItemPrice("Sandwich"));

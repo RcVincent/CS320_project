@@ -7,11 +7,10 @@
 <title>Track N Snack Home</title>
 <style type="text/css">
 #PageName {
-	color: darkblue;
-	font-size: 200%;
+	color: white;
+	font-size: 250%;
 	text-align: center;
-	border-top: 3px solid darkblue;
-	border-bottom: 3px solid darkblue;
+	background-color: darkblue;
 	font-variant: small-caps;
 }
 #LinkContent {
@@ -71,14 +70,15 @@ button {
 	margin-top: 20px;
 	margin-left: 150px;
 	width: 50%;
-	color: darkblue;
+	color: white;
 	font-size: 200%;
 	text-align: center;
+	background-color: darkblue;
 	border-top: 3px solid darkblue;
 	border-bottom: 3px solid darkblue;
 	font-variant: small-caps;
 	float: left;
-	width: 50%;
+	
 }
 
 #resultList {
@@ -149,7 +149,7 @@ td.label {
 						<tr>
 							<td class="label"></td>
 							<form
-								action="${pageContext.servletContext.contextPath}/Restaurant"
+								action="${pageContext.servletContext.contextPath}/${restaurant.name }"
 								method="get">
 								<td><input type="submit" value="Click to view page"></td>
 							</form>

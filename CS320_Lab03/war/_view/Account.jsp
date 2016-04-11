@@ -7,13 +7,12 @@
 		<title>Your Account</title>
 		<style type="text/css">
 		#PageName {
-			color: darkblue;
-			font-size: 200%;
-			text-align: center;
-			border-top: 3px solid darkblue;
-			border-bottom: 3px solid darkblue;
-			font-variant: small-caps;
-		}
+	color: white;
+	font-size: 250%;
+	text-align: center;
+	background-color: darkblue;
+	font-variant: small-caps;
+}
 		#AccountInfo{
 			font-size: 125%;
 			text-align: right;

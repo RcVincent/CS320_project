@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab03.controller.ProjectController;
 
-public class RestaurantServlet extends HttpServlet {
+public class WagsRibsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/Restaurant.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/Wag's ribs.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -42,6 +42,6 @@ public class RestaurantServlet extends HttpServlet {
 		
 		
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/Restaurant.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/Wag's ribs.jsp").forward(req, resp);
 	}
 }
