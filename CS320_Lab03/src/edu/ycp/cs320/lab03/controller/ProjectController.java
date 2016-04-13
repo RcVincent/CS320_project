@@ -50,7 +50,7 @@ public class ProjectController {
 	public Order makeOrder(Restaurant rest, String itemToOrder, boolean saveOrder){
 		Order o;
 		if(!u.isOwner()){
-			Patron p = new Patron();`
+			Patron p = new Patron();
 			o = p.createOrder(rest, itemToOrder, saveOrder);
 			rest.recieveOrder(o);
 		}

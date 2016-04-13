@@ -341,6 +341,8 @@ public class DerbyDatabase implements IDatabase {
 		rest.setOwnerId(resultSet.getInt(index++));
 		rest.setName(resultSet.getString(index++));
 		rest.setAddress(resultSet.getString(index++));
+		rest.setCity(resultSet.getString(index++));
+		rest.setZipCode(resultSet.getString(index++));
 	}
 	
 	private void loadPatron(Patron pat, ResultSet resultSet, int index) throws SQLException {
@@ -468,8 +470,11 @@ public class DerbyDatabase implements IDatabase {
 																				+ "	values (?, ?, ?. ?, ?, ?)");
 					for (Restaurant rest: restList) {
 						insertRestaurants.setInt(1, rest.getOwnerId());
-						insertRestaurants.setString(1,rest.getName());
-						insertRestaurants.setString(2, rest.getAddress());
+						insertRestaurants.setInt(2, rest.getRestID());
+						insertRestaurants.setString(3,rest.getName());
+						insertRestaurants.setString(4, rest.getAddress());
+						insertRestaurants.setString(5, rest.getCity());
+						insertRestaurants.setString(6, rest.getZipCode());
 						insertRestaurants.addBatch();
 					}
 					insertRestaurants.executeBatch();
