@@ -12,7 +12,7 @@ public class Restaurant {
 	private Address readAddress;
 	private Menu menu;
 	private int restID;
-	private int OwnerId;
+	private int UserId;
 //	private Genres gen;
 	public ArrayList<Review> reviews = new ArrayList<Review>();
 	public ArrayList<Order> ordersList = new ArrayList<Order>();
@@ -76,12 +76,12 @@ public class Restaurant {
 		this.restID = restID;
 	}
 // for database, foreign key
-	public int getOwnerId() {
-		return OwnerId;
+	public int getUserId() {
+		return UserId;
 	}
 
-	public void setOwnerId(int ownerId) {
-		OwnerId = ownerId;
+	public void setUserId(int ownerId) {
+		UserId = ownerId;
 	}
 
 	public String getCity() {

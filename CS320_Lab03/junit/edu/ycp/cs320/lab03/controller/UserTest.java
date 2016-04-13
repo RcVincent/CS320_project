@@ -13,10 +13,11 @@ public class UserTest {
 	
 	@Before
 	public void setUp() {
-		patron = new Patron("meeps", "peeps");
+		patron = new Patron();
+		patron.setUserName("meeps");
+		patron.setPassWord("peeps");
 		patron.setAccountInfo("Bob", "Smith", "bSmith@yahoo.com");
-		Address add = new Address(1, "Trump Ave.", "York", "PA", 17865);
-		patron.setAddress(add);
+
 	}
 	
 	@Test

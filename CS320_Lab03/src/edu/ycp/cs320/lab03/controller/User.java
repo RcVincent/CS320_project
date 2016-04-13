@@ -8,12 +8,14 @@ public class User {
 	private String email;
 	private String firstName;
 	private String lastName;
+	private String accountType;
 	private int UserId;
 	private boolean isOwner;
 	private boolean status = false;
 	private Random random;
 	private int accountNumber;
-
+	private final String ownType = "owner";
+	private final String patType = "patron";
 
 	public User(/*String userName, String password*/) {
 //		// TODO Auto-generated method stub
@@ -47,6 +49,10 @@ public class User {
 //	//use database for this too
 	public void isOwner(boolean o){
 		this.isOwner = o;
+		if(o){
+			this.accountType = ownType;
+		}else
+			this.accountType = patType;
 	}
 
 	public String getUserName() {
@@ -104,6 +110,12 @@ public class User {
 	}
 	public void setUserId(int userId) {
 		UserId = userId;
+	}
+	public String getAccountType() {
+		return accountType;
+	}
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
 	}
 
 }
