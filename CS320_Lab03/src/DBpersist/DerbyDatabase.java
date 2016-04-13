@@ -385,14 +385,16 @@ public class DerbyDatabase implements IDatabase {
 							"create table restuarants (" +
 									"	rest_id integer primary key " +
 									"		generated always as identity (start with 1, increment by 1), " +
-									"	owner_id integer constraint owner_id references users, " +
-									"	rest_name varchar(40)," +
+									"	owner_id integer constraint owner_id references owners, " +
+									"	rest_name varchar(40),"   +
 									"	rest_address varchar(90)" +
+									"   rest_city varchar(30)"	  +
+									"   rest_zipcode varchar(10)" +
 									")"
 							);
 					stmt3.executeUpdate();
 					
-					stmt2 = conn.prepareStatement(
+					stmt4 = conn.prepareStatement(
 							"create table patrons (" +
 									"	patron_id integer primary key " +
 									"		generated always as identity (start with 1, increment by 1), " +
@@ -401,7 +403,7 @@ public class DerbyDatabase implements IDatabase {
 									"	patron_firstName varchar(40)" +
 									")"
 							);
-					stmt2.executeUpdate();
+					stmt4.executeUpdate();
 
 					return true;
 				} finally {
@@ -462,7 +464,8 @@ public class DerbyDatabase implements IDatabase {
 					insertOwners.executeBatch();
 					System.out.println("Owners table populated");
 					
-					insertRestaurants = conn.prepareStatement("insert into restaurants (owner_id, rest_id, rest_name, rest_address) values (?, ?, ?. ?)");
+					insertRestaurants = conn.prepareStatement("insert into restaurants (owner_id, rest_id, rest_name, rest_address, rest_city, rest_zipcode) "
+																				+ "	values (?, ?, ?. ?, ?, ?)");
 					for (Restaurant rest: restList) {
 						insertRestaurants.setInt(1, rest.getOwnerId());
 						insertRestaurants.setString(1,rest.getName());

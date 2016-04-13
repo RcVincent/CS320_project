@@ -6,6 +6,8 @@ import java.util.ArrayList;
 public class Restaurant {
 	private String Name;
 	private String address;
+	private String city;
+	private String zipCode;
 	private String description;
 	private Address readAddress;
 	private Menu menu;
@@ -81,5 +83,23 @@ public class Restaurant {
 	public void setOwnerId(int ownerId) {
 		OwnerId = ownerId;
 	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String string) {
+		this.zipCode = string;
+	}
+
+	
 
 }

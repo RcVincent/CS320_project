@@ -36,6 +36,8 @@ public class InitialData {
 				rest.setRestID(restId++);				
 				rest.setName(i.next());
 				rest.setAddress(i.next());
+				rest.setCity(i.next());
+				rest.setZipCode(i.next());
 				restaurantList.add(rest);
 			}
 			System.out.println("restaurantList loaded from CSV file");
