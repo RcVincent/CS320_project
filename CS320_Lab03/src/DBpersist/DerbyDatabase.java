@@ -12,6 +12,10 @@ import java.util.List;
 import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.Pair;
+import edu.ycp.cs320.lab03.controller.Owner;
+import edu.ycp.cs320.lab03.controller.Patron;
+import edu.ycp.cs320.lab03.controller.Restaurant;
+import edu.ycp.cs320.lab03.controller.User;
 
 public class DerbyDatabase implements IDatabase {
 	static {
@@ -319,17 +323,33 @@ public class DerbyDatabase implements IDatabase {
 		return conn;
 	}
 
-	private void loadAuthor(Author author, ResultSet resultSet, int index) throws SQLException {
-		author.setAuthorId(resultSet.getInt(index++));
-		author.setLastname(resultSet.getString(index++));
-		author.setFirstname(resultSet.getString(index++));
+	private void loadUser(User user, ResultSet resultSet, int index) throws SQLException {
+		user.setUserId(resultSet.getInt(index++));
+		user.setUserName(resultSet.getString(index++));
+		user.setPassWord(resultSet.getString(index++));
 	}
 
-	private void loadBook(Book book, ResultSet resultSet, int index) throws SQLException {
-		book.setBookId(resultSet.getInt(index++));
-		book.setAuthorId(resultSet.getInt(index++));
-		book.setTitle(resultSet.getString(index++));
-		book.setIsbn(resultSet.getString(index++));
+	private void loadOwner(Owner owner, ResultSet resultSet, int index) throws SQLException {
+		owner.setOwnerId(resultSet.getInt(index++));
+		owner.setUserId(resultSet.getInt(index++));
+		owner.setFirstName(resultSet.getString(index++));
+		owner.setPassWord(resultSet.getString(index++));
+	}
+	
+	private void loadRestaurant(Restaurant rest, ResultSet resultSet, int index) throws SQLException {
+		rest.setRestID(resultSet.getInt(index++));
+		rest.setOwnerId(resultSet.getInt(index++));
+		rest.setName(resultSet.getString(index++));
+		rest.setAddress(resultSet.getString(index++));
+		rest.setCity(resultSet.getString(index++));
+		rest.setZipCode(resultSet.getString(index++));
+	}
+	
+	private void loadPatron(Patron pat, ResultSet resultSet, int index) throws SQLException {
+		pat.setPatronId(resultSet.getInt(index++));
+		pat.setUserId(resultSet.getInt(index++));
+		pat.setFirstName(resultSet.getString(index++));
+		pat.setLastName(resultSet.getString(index++));
 	}
 
 	public void createTables() {
@@ -338,33 +358,61 @@ public class DerbyDatabase implements IDatabase {
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
 
 				try {
 					stmt1 = conn.prepareStatement(
-							"create table authors (" +
-									"	author_id integer primary key " +
+							"create table users (" +
+									"	user_id integer primary key " +
 									"		generated always as identity (start with 1, increment by 1), " +									
-									"	author_lastname varchar(40)," +
-									"	author_firstname varchar(40)" +
+									"	user_userName varchar(40)," +
+									"	user_passWord varchar(40)" +
 									")"
 							);	
 					stmt1.executeUpdate();
 
 					stmt2 = conn.prepareStatement(
-							"create table books (" +
-									"	book_id integer primary key " +
+							"create table owners (" +
+									"	owner_id integer primary key " +
 									"		generated always as identity (start with 1, increment by 1), " +
-									"	author_id integer constraint author_id references authors, " +
-									"	title varchar(50)," +
-									"	isbn varchar(20)" +
+									"	user_id integer constraint user_id references users, " +
+									"	owner_lastName varchar(40)," +
+									"	owner_firstName varchar(40)" +
 									")"
 							);
 					stmt2.executeUpdate();
+					
+					stmt3 = conn.prepareStatement(
+							"create table restuarants (" +
+									"	rest_id integer primary key " +
+									"		generated always as identity (start with 1, increment by 1), " +
+									"	owner_id integer constraint owner_id references owners, " +
+									"	rest_name varchar(40),"   +
+									"	rest_address varchar(90)" +
+									"   rest_city varchar(30)"	  +
+									"   rest_zipcode varchar(10)" +
+									")"
+							);
+					stmt3.executeUpdate();
+					
+					stmt4 = conn.prepareStatement(
+							"create table patrons (" +
+									"	patron_id integer primary key " +
+									"		generated always as identity (start with 1, increment by 1), " +
+									"	user_id integer constraint user_id references users, " +
+									"	patron_lastName varchar(40)," +
+									"	patron_firstName varchar(40)" +
+									")"
+							);
+					stmt4.executeUpdate();
 
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
 					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
 				}
 			}
 		});
@@ -374,43 +422,81 @@ public class DerbyDatabase implements IDatabase {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
-				List<Author> authorList;
-				List<Book> bookList;
+				List<Restaurant> restList;
+				List<Owner> ownerList;
+				List<Patron> patronList;
+				List<User> userList;
 
 				try {
-					authorList = InitialData.getAuthors();
-					bookList = InitialData.getBooks();
+					restList = InitialData.getRestaurants();
+					ownerList = InitialData.getOwners();
+					patronList = InitialData.getPatrons();
+					userList = InitialData.getUsers();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 
-				PreparedStatement insertAuthor = null;
-				PreparedStatement insertBook = null;
+				PreparedStatement insertRestaurants = null;
+				PreparedStatement insertOwners = null;
+				PreparedStatement insertPatrons = null;
+				PreparedStatement insertUsers = null;
 
 				try {
-					insertAuthor = conn.prepareStatement("insert into authors (author_lastname, author_firstname) values (?, ?)");
-					for (Author author : authorList) {
-						//						insertAuthor.setInt(1, author.getAuthorId());	// auto-generated primary key, don't insert this
-						insertAuthor.setString(1, author.getLastname());
-						insertAuthor.setString(2, author.getFirstname());
-						insertAuthor.addBatch();
-					}
-					insertAuthor.executeBatch();
+					
 
-					insertBook = conn.prepareStatement("insert into books (author_id, title, isbn) values (?, ?, ?)");
-					for (Book book : bookList) {
-						//						insertBook.setInt(1, book.getBookId());		// auto-generated primary key, don't insert this
-						insertBook.setInt(1, book.getAuthorId());
-						insertBook.setString(2, book.getTitle());
-						insertBook.setString(3, book.getIsbn());
-						insertBook.addBatch();
+					insertUsers = conn.prepareStatement("insert into users (user_id, user_userName, user_passWord) values (?, ?, ?)");
+					for (User u : userList) {
+						insertUsers.setInt(1, u.getUserId());
+						insertUsers.setString(2, u.getUserName());
+						insertUsers.setString(3, u.getPassWord());
+						insertUsers.addBatch();
 					}
-					insertBook.executeBatch();
-
+					insertUsers.executeBatch();
+					System.out.println("Users table populated");
+					
+					
+					insertOwners = conn.prepareStatement("insert into owners (user_id, owner_id, owner_lastName, owner_Firstname) values (?, ?, ?, ?)");
+					for (Owner owner : ownerList) {
+						insertOwners.setInt(1, owner.getUserId());
+						insertOwners.setInt(2, owner.getOwnerId());
+						insertOwners.setString(3, owner.getLastName());
+						insertOwners.setString(4, owner.getFirstName());
+						insertOwners.addBatch();
+					}
+					insertOwners.executeBatch();
+					System.out.println("Owners table populated");
+					
+					insertRestaurants = conn.prepareStatement("insert into restaurants (owner_id, rest_id, rest_name, rest_address, rest_city, rest_zipcode) "
+																				+ "	values (?, ?, ?. ?, ?, ?)");
+					for (Restaurant rest: restList) {
+						insertRestaurants.setInt(1, rest.getOwnerId());
+						insertRestaurants.setInt(2, rest.getRestID());
+						insertRestaurants.setString(3,rest.getName());
+						insertRestaurants.setString(4, rest.getAddress());
+						insertRestaurants.setString(5, rest.getCity());
+						insertRestaurants.setString(6, rest.getZipCode());
+						insertRestaurants.addBatch();
+					}
+					insertRestaurants.executeBatch();
+					System.out.println("restaurants table populated");
+					
+					
+					insertPatrons = conn.prepareStatement("insert into patrons (user_id, patron_id, patron_lastName, pataron_firstName) values(?, ?, ?,)");
+					for (Patron pat : patronList) {
+						insertPatrons.setInt(1, pat.getUserId());
+						insertPatrons.setInt(2, pat.getPatronId());
+						insertPatrons.setString(3, pat.getLastName());
+						insertPatrons.setString(4, pat.getFirstName());
+						insertPatrons.addBatch();
+					}
+					insertPatrons.executeBatch();
+					System.out.println("patron table populated");
+					
+					
 					return true;
 				} finally {
-					DBUtil.closeQuietly(insertBook);
-					DBUtil.closeQuietly(insertAuthor);
+					DBUtil.closeQuietly(insertOwners);
+					DBUtil.closeQuietly(insertRestaurants);
 				}
 			}
 		});

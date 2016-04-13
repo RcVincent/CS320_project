@@ -5,84 +5,164 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.ycp.cs320.booksdb.model.Author;
-import edu.ycp.cs320.booksdb.model.Book;
+import edu.ycp.cs320.lab03.controller.Owner;
+import edu.ycp.cs320.lab03.controller.Restaurant;
+import edu.ycp.cs320.lab03.controller.Patron;
+import edu.ycp.cs320.lab03.controller.Menu;
+import edu.ycp.cs320.lab03.controller.Review;
 import edu.ycp.cs320.lab03.controller.User;
 
 public class InitialData {
-	public static List<User> getUser() throws IOException {
-		List<User> authorList = new ArrayList<User>();
-		ReadCSV readAuthors = new ReadCSV("authors.csv");
+
+	// reads initial Author data from CSV file and returns a List of Authors
+	public static List<Restaurant> getRestaurants() throws IOException {
+		List<Restaurant> restaurantList = new ArrayList<Restaurant>();
+		ReadCSV readRestaurants = new ReadCSV("restaurants.csv");
 		try {
 			// auto-generated primary key for authors table
-			Integer authorId = 1;
+			Integer restId = 1;
 			while (true) {
-				List<String> tuple = readAuthors.next();
+				List<String> tuple = readRestaurants.next();
 				if (tuple == null) {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
-				Author author = new Author();
-//				author.setAuthorId(Integer.parseInt(i.next()));
-				author.setAuthorId(authorId++);				
-				author.setLastname(i.next());
-				author.setFirstname(i.next());
-				authorList.add(author);
+				Restaurant rest = new Restaurant();
+
+				// read restaurant ID from CSV file, but don't use it
+				// it's there for reference purposes, just make sure that it is correct
+				// when setting up the BookAuthors CSV file				
+				Integer.parseInt(i.next());
+				rest.setRestID(restId++);				
+				rest.setName(i.next());
+				rest.setAddress(i.next());
+				rest.setCity(i.next());
+				rest.setZipCode(i.next());
+				restaurantList.add(rest);
 			}
-			return authorList;
+			System.out.println("restaurantList loaded from CSV file");
+			return restaurantList;
 		} finally {
-			readAuthors.close();
+			readRestaurants.close();
 		}
 	}
 	
-	public static List<Order> getBooks() throws IOException {
-		List<Book> bookList = new ArrayList<Book>();
-		ReadCSV readBooks = new ReadCSV("books.csv");
+	// this db will hold the primary key for the restaurants
+	public static List<Owner> getOwners() throws IOException {
+		List<Owner> OwnerList = new ArrayList<Owner>();
+		ReadCSV readOwners = new ReadCSV("owners.csv");
 		try {
-			// auto-generated primary key for table books
-			Integer bookId = 1;
+			// auto-generated primary key for table Owners
+			Integer OwnerId = 1;
 			while (true) {
-				List<String> tuple = readBooks.next();
+				List<String> tuple = readOwners.next();
 				if (tuple == null) {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
-				Book book = new Book();
-//				book.setBookId(Integer.parseInt(i.next()));
-				book.setBookId(bookId++);				
-				book.setAuthorId(Integer.parseInt(i.next()));
-				book.setTitle(i.next());
-				book.setIsbn(i.next());
-				bookList.add(book);
+				Owner owner = new Owner();
+				
+				// read Owner ID from CSV file, but don't use it
+				// it's there for reference purposes, just make sure that it is correct
+				// when setting up the Authors CSV file
+				Integer.parseInt(i.next());
+				// auto-generate Owner ID, instead
+				owner.setOwnerId(OwnerId++);				
+				owner.setFirstName(i.next());
+				owner.setLastName(i.next());
+				OwnerList.add(owner);
 			}
-			return bookList;
+			System.out.println("OwnerList loaded from CSV file");			
+			return OwnerList;
 		} finally {
-			readBooks.close();
+			readOwners.close();
 		}
 	}
-	public static List<Restaurant> getBooks() throws IOException {
-		List<Book> bookList = new ArrayList<Book>();
-		ReadCSV readBooks = new ReadCSV("books.csv");
+
+	public static List<Patron> getPatrons() throws IOException {
+		List<Patron> PatronList = new ArrayList<Patron>();
+		ReadCSV readPatrons = new ReadCSV("patrons.csv");
 		try {
-			// auto-generated primary key for table books
-			Integer bookId = 1;
+			// auto-generated primary key for table Patrons
+			Integer PatronId = 1;
 			while (true) {
-				List<String> tuple = readBooks.next();
+				List<String> tuple = readPatrons.next();
 				if (tuple == null) {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
-				Book book = new Book();
-//				book.setBookId(Integer.parseInt(i.next()));
-				book.setBookId(bookId++);				
-				book.setAuthorId(Integer.parseInt(i.next()));
-				book.setTitle(i.next());
-				book.setIsbn(i.next());
-				bookList.add(book);
+				Patron patron = new Patron();
+				
+				// read Patron ID from CSV file, but don't use it
+				// it's there for reference purposes, just make sure that it is correct
+				// when setting up the Authors CSV file
+				Integer.parseInt(i.next());
+				// auto-generate Patron ID, instead
+				patron.setPatronId(PatronId++);				
+				patron.setFirstName(i.next());
+				patron.setLastName(i.next());
+				PatronList.add(patron);
 			}
-			return bookList;
+			System.out.println("PatronList loaded from CSV file");			
+			return PatronList;
 		} finally {
-			readBooks.close();
+			readPatrons.close();
 		}
 	}
+	//user db will be for authentication and hold a primary key for patrons and Owners
+	public static List<User> getUsers() throws IOException {
+		List<User> UserList = new ArrayList<User>();
+		ReadCSV readUser = new ReadCSV("User.csv");
+		try {
+			// auto-generated primary key for table User
+			Integer UserId = 1;
+			while (true) {
+				List<String> tuple = readUser.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				User User = new User();
+				
+				// read User ID from CSV file, but don't use it
+				// it's there for reference purposes, just make sure that it is correct
+				// when setting up the Authors CSV file
+				Integer.parseInt(i.next());
+				// auto-generate User ID, instead
+				User.setUserId(UserId++);				
+//				User.setAuthorId(Integer.parseInt(i.next()));  // no longer in User table
+				User.setUserName(i.next());
+				User.setPassWord(i.next());
+				User.setEmail(i.next());
+				UserList.add(User);
+			}
+			System.out.println("UserList loaded from CSV file");			
+			return UserList;
+		} finally {
+			readUser.close();
+		}
+	}
+//	
+//	// reads initial BookAuthor data from CSV file and returns a List of BookAuthors
+//	public static List<BookAuthor> getBookAuthors() throws IOException {
+//		List<BookAuthor> bookAuthorList = new ArrayList<BookAuthor>();
+//		ReadCSV readBookAuthors = new ReadCSV("book_authors.csv");
+//		try {
+//			while (true) {
+//				List<String> tuple = readBookAuthors.next();
+//				if (tuple == null) {
+//					break;
+//				}
+//				Iterator<String> i = tuple.iterator();
+//				BookAuthor bookAuthor = new BookAuthor();
+//				bookAuthor.setBookId(Integer.parseInt(i.next()));				
+//				bookAuthor.setAuthorId(Integer.parseInt(i.next()));
+//				bookAuthorList.add(bookAuthor);
+//			}
+//			System.out.println("bookAuthorList loaded from CSV file");			
+//			return bookAuthorList;
+//		} finally {
+//			readBookAuthors.close();
+//		}
+//	}
 }
