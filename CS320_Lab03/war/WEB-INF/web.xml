@@ -40,8 +40,8 @@
     <servlet-class>edu.ycp.cs320.lab03.servlet.FavoritesServlet</servlet-class>
    </servlet>
    <servlet>
-    <servlet-name>WagsRibsServlet</servlet-name>
-    <servlet-class>edu.ycp.cs320.lab03.servlet.WagsRibsServlet</servlet-class>
+    <servlet-name>BakersDonutsServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab03.servlet.BakersDonutsServlet</servlet-class>
    </servlet>
  
   
@@ -89,8 +89,8 @@
     <url-pattern>/Favorites</url-pattern>
   </servlet-mapping>
     <servlet-mapping>
-    <servlet-name>WagsRibsServlet</servlet-name>
-    <url-pattern>/Wag's ribs</url-pattern>
+    <servlet-name>BakersDonutsServlet</servlet-name>
+    <url-pattern>/Baker's Donuts</url-pattern>
   </servlet-mapping>   
 
 

@@ -83,9 +83,9 @@ td.label {
 		<div class="error">${errorMessage}</div>
 	</c:if>
 
-	<form action="${pageContext.servletContext.contextPath}/Restaurant" method = "post">
+	<form action="${pageContext.servletContext.contextPath}/Baker's Donuts" method = "post">
 
-		<div id="PageName">Wag's Ribs</div>
+		<div id="PageName">Baker's Donuts</div>
 
 		<div id="Content">
 
@@ -104,7 +104,7 @@ td.label {
 				<div id="LinkName">Menu</div>
 				<div id="ContentBody">
 					<button>
-						<a href="/lab03/Restaurant">Click here to view menu</a>
+						<a href="/lab03/Baker's Donuts Menu">Click here to view menu</a>
 					</button>
 				</div>
 			</div>

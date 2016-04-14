@@ -108,7 +108,7 @@ td.label {
 					<form action="${pageContext.servletContext.contextPath}/Homepage"
 						method="post">
 						<td class="label"></td>
-						<td><input type="search" name="search" size="12" value="${search}"placeholder="Search"/></td>
+						<td><input type="search" name="search" size="12" placeholder="Search"/></td>
 						<td><input type="Submit" name="submit" value="Search"/></td>
 						<td><input type="radio" name="searchType" value="city" checked>City</td>
 						<td><input type="radio" name="searchType" value="name">Name</td>
