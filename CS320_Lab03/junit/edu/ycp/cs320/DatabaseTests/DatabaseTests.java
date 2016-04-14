@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.ycp.cs320.lab03.DBpersist.DatabaseProvider;
+import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;
 import edu.ycp.cs320.lab03.DBpersist.IDatabase;
 import edu.ycp.cs320.lab03.controller.Owner;
 import edu.ycp.cs320.lab03.controller.Patron;
@@ -36,7 +37,7 @@ public class DatabaseTests {
 	@Before
 	public void setUp() throws Exception {
 		// creating DB instance here
-		DatabaseProvider.setInstance(db);	
+		DatabaseProvider.setInstance(new DerbyDatabase());	
 		db = DatabaseProvider.getInstance();
 
 	}
@@ -70,30 +71,30 @@ public class DatabaseTests {
 	@Test
 	public void searchByCityName() {
 		System.out.println("\n*** Searching for Restaurants by City ***");
-		String city = "York"; 
+		String city = "Houston AZ"; 
 
 		List<Restaurant> restaurantCount = db.getListOfRestaurantsByCity(city);
 		assertEquals(1, restaurantCount.size());
 
-		String city2 = "Boston";
+		String city2 = "Boston TX";
 		restaurantCount = db.getListOfRestaurantsByCity(city2);
-		assertEquals(2, db.getListOfRestaurantsByCity(city2));
+		assertEquals(1, restaurantCount.size());
 
 		String city3 = "Paris";
 		restaurantCount = db.getListOfRestaurantsByCity(city3);
-		assertEquals(0, db.getListOfRestaurantsByCity(city3));
+		assertEquals(0, restaurantCount.size());
 		
-		if(restaurantCount.isEmpty()) {
-			System.out.println("No Restaurants found in database");
-			fail("No restaurants returned from restaurant db");
-		}
-		else {
-			restlist = new ArrayList<Restaurant>(); 
-			for(Restaurant r : restaurantCount) {
-				restlist.add(r);
-				System.out.println(r.getName() + ", " + r.getAddress() + ", " + r.getCity() + ", " + r.getZipCode()); 
-			}
-		}
+//		if(restaurantCount.isEmpty()) {
+//			System.out.println("No Restaurants found in database");
+//			fail("No restaurants returned from restaurant db");
+//		}
+//		else {
+//			restlist = new ArrayList<Restaurant>(); 
+//			for(Restaurant r : restaurantCount) {
+//				restlist.add(r);
+//				System.out.println(r.getName() + ", " + r.getAddress() + ", " + r.getCity() + ", " + r.getZipCode()); 
+//			}
+//		}
 	}
 	
 	@Test 
