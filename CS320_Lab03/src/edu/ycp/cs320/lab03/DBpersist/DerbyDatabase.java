@@ -231,10 +231,10 @@ public class DerbyDatabase implements IDatabase {
 
 
 					stmt2 = conn.prepareStatement(
-							"create table restuarants (" +
+							"create table restaurants (" +
 									"	rest_id integer primary key " +
 									"		generated always as identity (start with 1, increment by 1), " +
-									"	owner_id integer constraint user_id references users, " +
+									"	user_id integer constraint user_id references users, " +
 									"	rest_name varchar(40),"    +
 									"	rest_address varchar(90)," +
 									"   rest_city varchar(30),"	   +
@@ -274,31 +274,31 @@ public class DerbyDatabase implements IDatabase {
 				try {
 
 
-					insertUsers = conn.prepareStatement("insert into users (user_id, user_userName, user_passWord, user_email, user_accountType, user_firstName, user_Lastname) "
-							+ "		values (?, ?, ?, ?, ?, ?, ?)");
+					insertUsers = conn.prepareStatement("insert into users (user_userName, user_passWord, user_email, user_accountType, user_firstName, user_Lastname) "
+							+ "		values (?, ?, ?, ?, ?, ?)");
 					for (User u : userList) {
-						insertUsers.setInt(1, u.getUserId());
-						insertUsers.setString(2, u.getUserName());
-						insertUsers.setString(3, u.getPassWord());
-						insertUsers.setString(4, u.getEmail());
-						insertUsers.setString(5, u.getAccountType());
-						insertUsers.setString(6, u.getFirstName());
-						insertUsers.setString(7, u.getLastName());
+//						insertUsers.setInt(1, u.getUserId());
+						insertUsers.setString(1, u.getUserName());
+						insertUsers.setString(2, u.getPassWord());
+						insertUsers.setString(3, u.getEmail());
+						insertUsers.setString(4, u.getAccountType());
+						insertUsers.setString(5, u.getFirstName());
+						insertUsers.setString(6, u.getLastName());
 						insertUsers.addBatch();
 					}
 					insertUsers.executeBatch();
 					System.out.println("Users table populated");
 
 
-					insertRestaurants = conn.prepareStatement("insert into restaurants (owner_id, rest_id, rest_name, rest_address, rest_city, rest_zipcode) "
-							+ "	values (?, ?, ?. ?, ?, ?)");
+					insertRestaurants = conn.prepareStatement("insert into restaurants (rest_name, rest_address, rest_city, rest_zipcode) "
+							+ "	values (?, ?, ?, ?)");
 					for (Restaurant rest: restList) {
-						insertRestaurants.setInt(1, rest.getUserId());
-						insertRestaurants.setInt(2, rest.getRestID());
-						insertRestaurants.setString(3,rest.getName());
-						insertRestaurants.setString(4, rest.getAddress());
-						insertRestaurants.setString(5, rest.getCity());
-						insertRestaurants.setString(6, rest.getZipCode());
+//						insertRestaurants.setInt(1, rest.getUserId());
+//						insertRestaurants.setInt(2, rest.getRestID());
+						insertRestaurants.setString(1,rest.getName());
+						insertRestaurants.setString(2, rest.getAddress());
+						insertRestaurants.setString(3, rest.getCity());
+						insertRestaurants.setString(4, rest.getZipCode());
 						insertRestaurants.addBatch();
 					}
 					insertRestaurants.executeBatch();
@@ -323,7 +323,7 @@ public class DerbyDatabase implements IDatabase {
 
 		System.out.println("Loading initial data...");
 		db.loadInitialData();
-
+		System.out.println("loaded intial data");
 		System.out.println("Success!");
 	}
 

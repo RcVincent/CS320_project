@@ -50,7 +50,7 @@ public class InitialData {
 	//user db will be for authentication and hold a primary key for patrons and Owners
 	public static List<User> getUsers() throws IOException {
 		List<User> UserList = new ArrayList<User>();
-		ReadCSV readUser = new ReadCSV("User.csv");
+		ReadCSV readUser = new ReadCSV("users.csv");
 		try {
 			// auto-generated primary key for table User
 			Integer UserId = 1;
