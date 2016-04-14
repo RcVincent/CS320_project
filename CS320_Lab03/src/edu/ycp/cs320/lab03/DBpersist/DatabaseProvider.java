@@ -1,4 +1,4 @@
-package DBpersist;
+package edu.ycp.cs320.lab03.DBpersist;
 
 public class DatabaseProvider {
 	private static IDatabase theInstance;

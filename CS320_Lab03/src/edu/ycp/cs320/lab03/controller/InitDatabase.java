@@ -2,11 +2,8 @@ package edu.ycp.cs320.lab03.controller;
 
 import java.util.Scanner;
 
-//import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
-//import edu.ycp.cs320.booksdb.persist.FakeDatabase;
-//import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
-import DBpersist.DerbyDatabase;
-import DBpersist.DatabaseProvider;
+import edu.ycp.cs320.lab03.DBpersist.DatabaseProvider;
+import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;
 
 public class InitDatabase {
 	public static void init(Scanner keyboard) {

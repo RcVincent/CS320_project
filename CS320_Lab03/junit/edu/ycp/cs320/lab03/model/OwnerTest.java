@@ -15,10 +15,14 @@ public class OwnerTest {
 	private Owner littleO;
 	@Before
 	public void setUp() throws Exception{
-		BigO = new Owner("name", "password");
+		BigO = new Owner();
+		BigO.setUserName("name");
+		BigO.setPassWord("password");
 		BigO.addToRestaurants(r1);
 		BigO.addToRestaurants(r2);
-		littleO = new Owner("name1", "pass");
+		littleO = new Owner();
+		littleO.setUserName("name1");
+		littleO.setPassWord("pass");
 	}
 	
 	@Test

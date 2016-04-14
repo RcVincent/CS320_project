@@ -1,4 +1,4 @@
-package DBpersist;
+package edu.ycp.cs320.lab03.DBpersist;
 
 import java.io.BufferedReader;
 import java.io.Closeable;

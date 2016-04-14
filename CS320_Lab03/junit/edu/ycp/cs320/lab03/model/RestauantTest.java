@@ -19,7 +19,7 @@ public class RestauantTest {
 	private Order TestOrder; 
 	private Order TestOrder2;
 	private Order TestOrder3;
-	private Address add; 
+
 	private Menu menu; 
 	
 	private Float price1 = (float) 14.99;
@@ -29,8 +29,12 @@ public class RestauantTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		add = new Address(175, "Jackson St", "York", "PA", 17403); 
-		r = new Restaurant("Yorktown", add); 
+
+		r = new Restaurant();
+		r.setName("Yorktown");
+		r.setAddress("123 4th street");
+		r.setCity("york");
+		r.setZipCode("12356");
 		menu = new Menu(); 
 		r.setMenu(menu);
 		
