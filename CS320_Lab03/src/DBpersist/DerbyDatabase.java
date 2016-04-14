@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ycp.cs320.booksdb.model.Author;
-import edu.ycp.cs320.booksdb.model.Book;
-import edu.ycp.cs320.booksdb.model.Pair;
+//import edu.ycp.cs320.booksdb.model.Author;
+//import edu.ycp.cs320.booksdb.model.Book;
+//import edu.ycp.cs320.booksdb.model.Pair;
 import edu.ycp.cs320.lab03.controller.Owner;
 import edu.ycp.cs320.lab03.controller.Patron;
 import edu.ycp.cs320.lab03.controller.Restaurant;
@@ -33,23 +33,24 @@ public class DerbyDatabase implements IDatabase {
 	private static final int MAX_ATTEMPTS = 10;
 
 	@Override
-	public List<Pair<Author, Book>> findBookByAuthorName(final String authorLast) {
-		return executeTransaction(new Transaction<List<Pair<Author,Book>>>() {
+	public List<Restaurant> getListOfRestaurants(final String city) {
+		return executeTransaction(new Transaction<List<Restaurant>>() {
 			@Override
-			public List<Pair<Author, Book>> execute(Connection conn) throws SQLException {
+			public List<Restaurant> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
+		
 
 				try {
 					stmt = conn.prepareStatement(
-							"select authors.*, books.* " +
-									"  from authors, books " +
+							"select restaurant.*" +
+									"  from restaurant" +
 									"    where authors.author_id = books.author_id " +
 									"        and authors.author_Lastname = ?"
 							);
-					stmt.setString(1, authorLast);
+					stmt.setString(1, city);
 
-					List<Pair<Author, Book>> result = new ArrayList<Pair<Author,Book>>();
+					List<Restaurant> result = new ArrayList<Restaurant>();
 
 					resultSet = stmt.executeQuery();
 
@@ -59,18 +60,16 @@ public class DerbyDatabase implements IDatabase {
 					while (resultSet.next()) {
 						found = true;
 
-						Author author = new Author();
-						loadAuthor(author, resultSet, 1);
-						Book book = new Book();
-						loadBook(book, resultSet, 4);
+						Restaurant author = new Restaurant();
+						loadRestaurant(author, resultSet, 1);
 
-						result.add(new Pair<Author, Book>(author, book));
+						result.add(author);
 					}
 
 					// check if the title was found
-					if (!found) {
-						System.out.println("<" + authorLast + "> was not found in the books table");
-					}
+//					if (!found) {
+//						System.out.println("<" + authorLast + "> was not found in the books table");
+//					}
 
 					return result;
 
@@ -82,193 +81,193 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-
-	@Override
-	public List<Pair<Author, Book>> insertNewBook(final String title, final String authorLast, 
-			final String authorFirst, final String isbn) {
-		return executeTransaction(new Transaction<List<Pair<Author,Book>>>() {
-			@Override
-			public List<Pair<Author, Book>> execute(Connection conn) throws SQLException {
-				PreparedStatement stmt1 = null;
-				PreparedStatement stmt2 = null;
-				PreparedStatement stmt3 = null;
-				PreparedStatement stmt4 = null;
-				PreparedStatement stmt5 = null;
-				ResultSet resultSet1 = null;
-				ResultSet resultSet2 = null;
-				ResultSet resultSet3 = null;
-
-
-				// connect to the database
-				conn = DriverManager.getConnection("jdbc:derby:test.db;create=true");
-				Integer author_id = -1;
-//				Integer book_id = -1;
-				try {
-					conn.setAutoCommit(true);
-
-					// prompt user for title to search for
-					System.out.print("Lab 6 task 2 -> Author to find: ");
-
-					// a canned query to find book information (including author name) from title
-					stmt1 = conn.prepareStatement(
-							"select author_id "
-									+ "  from authors "
-									+ "  where author_lastname = ? "
-									+ "        and author_firstname= ? "
-							);
-
-					// substitute the title entered by the user for the placeholder in the query
-					stmt1.setString(1, authorLast);
-					stmt1.setString(2, authorFirst); 
-
-					// execute the query
-					resultSet1 = stmt1.executeQuery();
-
-					if(resultSet1.next()){
-						//the author was found
-						author_id = resultSet1.getInt(1);
-						System.out.println("author id-> " + author_id);
-
-
-					}
-					else{
-						System.out.print("Adding Author ");
-						// will add the names from previous input				
-						stmt2 = conn.prepareStatement(
-								" insert into authors(author_lastname, author_firstname) "
-										+ " values(?,?) "
-								);
-						stmt2.setString(1, authorLast);
-						stmt2.setString(2, authorFirst);
-						stmt2.executeUpdate();	
-						//ensure authors were added by seeing new author ID
-						stmt3 = conn.prepareStatement(
-								"select author_id "
-										+ "  from authors "
-										+ "  where author_lastname = ? "
-										+ "        and author_firstname = ? "
-								);
-						stmt3.setString(1, authorLast);
-						stmt3.setString(2, authorFirst);
-						resultSet2 = stmt3.executeQuery();
-						if(resultSet2.next()){
-							author_id = resultSet2.getInt(1);
-						}
-						
-						System.out.println("author id -> " + author_id);
-					}
-
-					//the author was found
-					System.out.println("Author is in table");
-
-					stmt4 = conn.prepareStatement(
-							" insert into books(title, author_id, isbn) "
-									+ " values(?, ?, ?) "
-
-							);
-
-					stmt4.setString(1, title);
-					stmt4.setInt(2, author_id);
-					stmt4.setString(3, isbn);
-					stmt4.executeUpdate();
-
-
-					List<Pair<Author, Book>> result = new ArrayList<Pair<Author,Book>>();
-
-					stmt5 = conn.prepareStatement(
-							" select authors.*, books.* " +
-									" from authors, books " +
-									" where books.title = ? " +
-									" and authors.author_lastname = ? "
-							);
-					stmt5.setString(1, title);
-					stmt5.setString(2, authorLast);
-
-					resultSet3 = stmt5.executeQuery();
-
-					// for testing that a result was returned
-					Boolean found = false;
-
-					while (resultSet3.next()) {
-						found = true;
-						Author author = new Author();
-						loadAuthor(author, resultSet3, 1);
-						Book book = new Book();
-						loadBook(book, resultSet3, 4);
-						result.add(new Pair<Author, Book>(author, book));
-					}
-
-					if (!found) {
-						System.out.println("<" + title + "> was not found in the books table");
-					}
-
-					return result;
-
-				} finally {
-					// close result set, statement, connection
-					DBUtil.closeQuietly(resultSet1);
-					DBUtil.closeQuietly(resultSet2);
-					DBUtil.closeQuietly(resultSet3);
-
-					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(stmt2);
-					DBUtil.closeQuietly(stmt3);
-
-					DBUtil.closeQuietly(conn);
-				}
-			}
-		});
-
-	}
-
-	@Override
-	public List<Pair<Author, Book>> findAuthorAndBookByTitle(final String title) {
-		return executeTransaction(new Transaction<List<Pair<Author,Book>>>() {
-			@Override
-			public List<Pair<Author, Book>> execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
-
-				try {
-					stmt = conn.prepareStatement(
-							"select authors.*, books.* " +
-									"  from authors, books " +
-									" where authors.author_id = books.author_id " +
-									"   and books.title = ?"
-							);
-					stmt.setString(1, title);
-
-					List<Pair<Author, Book>> result = new ArrayList<Pair<Author,Book>>();
-
-					resultSet = stmt.executeQuery();
-
-					// for testing that a result was returned
-					Boolean found = false;
-
-					while (resultSet.next()) {
-						found = true;
-
-						Author author = new Author();
-						loadAuthor(author, resultSet, 1);
-						Book book = new Book();
-						loadBook(book, resultSet, 4);
-
-						result.add(new Pair<Author, Book>(author, book));
-					}
-
-					// check if the title was found
-					if (!found) {
-						System.out.println("<" + title + "> was not found in the books table");
-					}
-
-					return result;
-				} finally {
-					DBUtil.closeQuietly(resultSet);
-					DBUtil.closeQuietly(stmt);
-				}
-			}
-		});
-	}
+//
+//	@Override
+//	public List<Pair<Author, Book>> insertNewBook(final String title, final String authorLast, 
+//			final String authorFirst, final String isbn) {
+//		return executeTransaction(new Transaction<List<Pair<Author,Book>>>() {
+//			@Override
+//			public List<Pair<Author, Book>> execute(Connection conn) throws SQLException {
+//				PreparedStatement stmt1 = null;
+//				PreparedStatement stmt2 = null;
+//				PreparedStatement stmt3 = null;
+//				PreparedStatement stmt4 = null;
+//				PreparedStatement stmt5 = null;
+//				ResultSet resultSet1 = null;
+//				ResultSet resultSet2 = null;
+//				ResultSet resultSet3 = null;
+//
+//
+//				// connect to the database
+//				conn = DriverManager.getConnection("jdbc:derby:test.db;create=true");
+//				Integer author_id = -1;
+////				Integer book_id = -1;
+//				try {
+//					conn.setAutoCommit(true);
+//
+//					// prompt user for title to search for
+//					System.out.print("Lab 6 task 2 -> Author to find: ");
+//
+//					// a canned query to find book information (including author name) from title
+//					stmt1 = conn.prepareStatement(
+//							"select author_id "
+//									+ "  from authors "
+//									+ "  where author_lastname = ? "
+//									+ "        and author_firstname= ? "
+//							);
+//
+//					// substitute the title entered by the user for the placeholder in the query
+//					stmt1.setString(1, authorLast);
+//					stmt1.setString(2, authorFirst); 
+//
+//					// execute the query
+//					resultSet1 = stmt1.executeQuery();
+//
+//					if(resultSet1.next()){
+//						//the author was found
+//						author_id = resultSet1.getInt(1);
+//						System.out.println("author id-> " + author_id);
+//
+//
+//					}
+//					else{
+//						System.out.print("Adding Author ");
+//						// will add the names from previous input				
+//						stmt2 = conn.prepareStatement(
+//								" insert into authors(author_lastname, author_firstname) "
+//										+ " values(?,?) "
+//								);
+//						stmt2.setString(1, authorLast);
+//						stmt2.setString(2, authorFirst);
+//						stmt2.executeUpdate();	
+//						//ensure authors were added by seeing new author ID
+//						stmt3 = conn.prepareStatement(
+//								"select author_id "
+//										+ "  from authors "
+//										+ "  where author_lastname = ? "
+//										+ "        and author_firstname = ? "
+//								);
+//						stmt3.setString(1, authorLast);
+//						stmt3.setString(2, authorFirst);
+//						resultSet2 = stmt3.executeQuery();
+//						if(resultSet2.next()){
+//							author_id = resultSet2.getInt(1);
+//						}
+//						
+//						System.out.println("author id -> " + author_id);
+//					}
+//
+//					//the author was found
+//					System.out.println("Author is in table");
+//
+//					stmt4 = conn.prepareStatement(
+//							" insert into books(title, author_id, isbn) "
+//									+ " values(?, ?, ?) "
+//
+//							);
+//
+//					stmt4.setString(1, title);
+//					stmt4.setInt(2, author_id);
+//					stmt4.setString(3, isbn);
+//					stmt4.executeUpdate();
+//
+//
+//					List<Pair<Author, Book>> result = new ArrayList<Pair<Author,Book>>();
+//
+//					stmt5 = conn.prepareStatement(
+//							" select authors.*, books.* " +
+//									" from authors, books " +
+//									" where books.title = ? " +
+//									" and authors.author_lastname = ? "
+//							);
+//					stmt5.setString(1, title);
+//					stmt5.setString(2, authorLast);
+//
+//					resultSet3 = stmt5.executeQuery();
+//
+//					// for testing that a result was returned
+//					Boolean found = false;
+//
+//					while (resultSet3.next()) {
+//						found = true;
+//						Author author = new Author();
+//						loadAuthor(author, resultSet3, 1);
+//						Book book = new Book();
+//						loadBook(book, resultSet3, 4);
+//						result.add(new Pair<Author, Book>(author, book));
+//					}
+//
+//					if (!found) {
+//						System.out.println("<" + title + "> was not found in the books table");
+//					}
+//
+//					return result;
+//
+//				} finally {
+//					// close result set, statement, connection
+//					DBUtil.closeQuietly(resultSet1);
+//					DBUtil.closeQuietly(resultSet2);
+//					DBUtil.closeQuietly(resultSet3);
+//
+//					DBUtil.closeQuietly(stmt1);
+//					DBUtil.closeQuietly(stmt2);
+//					DBUtil.closeQuietly(stmt3);
+//
+//					DBUtil.closeQuietly(conn);
+//				}
+//			}
+//		});
+//
+//	}
+//
+//	@Override
+//	public List<Pair<Author, Book>> findAuthorAndBookByTitle(final String title) {
+//		return executeTransaction(new Transaction<List<Pair<Author,Book>>>() {
+//			@Override
+//			public List<Pair<Author, Book>> execute(Connection conn) throws SQLException {
+//				PreparedStatement stmt = null;
+//				ResultSet resultSet = null;
+//
+//				try {
+//					stmt = conn.prepareStatement(
+//							"select authors.*, books.* " +
+//									"  from authors, books " +
+//									" where authors.author_id = books.author_id " +
+//									"   and books.title = ?"
+//							);
+//					stmt.setString(1, title);
+//
+//					List<Pair<Author, Book>> result = new ArrayList<Pair<Author,Book>>();
+//
+//					resultSet = stmt.executeQuery();
+//
+//					// for testing that a result was returned
+//					Boolean found = false;
+//
+//					while (resultSet.next()) {
+//						found = true;
+//
+//						Author author = new Author();
+//						loadAuthor(author, resultSet, 1);
+//						Book book = new Book();
+//						loadBook(book, resultSet, 4);
+//
+//						result.add(new Pair<Author, Book>(author, book));
+//					}
+//
+//					// check if the title was found
+//					if (!found) {
+//						System.out.println("<" + title + "> was not found in the books table");
+//					}
+//
+//					return result;
+//				} finally {
+//					DBUtil.closeQuietly(resultSet);
+//					DBUtil.closeQuietly(stmt);
+//				}
+//			}
+//		});
+//	}
 
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
@@ -314,7 +313,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:test.db;create=true");
+		Connection conn = DriverManager.getConnection("jdbc:derby:C:/CS320_Project/project.db;create=true");
 
 		// Set autocommit to false to allow multiple the execution of
 		// multiple queries/statements as part of the same transaction.
