@@ -185,7 +185,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	private void loadUser(User user, ResultSet resultSet, int index) throws SQLException {
-//		user.setUserId(resultSet.getInt(index++));
+		user.setUserId(resultSet.getInt(index++));
 		user.setUserName(resultSet.getString(index++));
 		user.setPassWord(resultSet.getString(index++));
 		user.setEmail(resultSet.getString(index++));
@@ -195,8 +195,8 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	private void loadRestaurant(Restaurant rest, ResultSet resultSet, int index) throws SQLException {
-//		
 		rest.setUserId(resultSet.getInt(index++));
+		rest.setRestID(resultSet.getInt(index++));
 		rest.setName(resultSet.getString(index++));
 		rest.setAddress(resultSet.getString(index++));
 		rest.setCity(resultSet.getString(index++));

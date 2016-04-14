@@ -144,7 +144,7 @@ td.label {
 		<div id="Restaurants">
 			<c:forEach items="${rest}" var="restaurant">
 				<div id="LinkContent">
-					<div id="LinkName">${restaurant.name }</div>
+					<div id="LinkName">${restaurant.name}</div>
 					<table>
 						<tr>
 							<td class="label"></td>

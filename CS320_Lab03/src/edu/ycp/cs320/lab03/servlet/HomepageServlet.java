@@ -43,9 +43,9 @@ public class HomepageServlet extends HttpServlet {
 		city = req.getParameter("search");
 		
 //			param = req.getParameter("searchType");
-			if (city != null) {
-				rest = search.RestByCity(city);;
-			}
+		
+			rest = search.RestByCity(city);;
+			
 		
 		
 		// Add parameters as request attributes

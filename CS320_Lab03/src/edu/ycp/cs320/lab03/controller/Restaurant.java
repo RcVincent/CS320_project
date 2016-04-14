@@ -4,7 +4,7 @@ package edu.ycp.cs320.lab03.controller;
 import java.util.ArrayList;
 
 public class Restaurant {
-	private String Name;
+	private String name;
 	private String address;
 	private String city;
 	private String zipCode;
@@ -19,16 +19,16 @@ public class Restaurant {
 	
 	
 	public Restaurant(){
-//		this.setName(n);
+	
 //		this.setAddress(add);
 	}
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 	public void setName(String name) {
-		this.Name = name;
+		this.name = name;
 	}
 
 	public String getAddress() {

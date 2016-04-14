@@ -78,7 +78,7 @@ public class DatabaseTests {
 
 		String city2 = "Boston TX";
 		restaurantCount = db.getListOfRestaurantsByCity(city2);
-		assertEquals(1, restaurantCount.size());
+		assertEquals(2, restaurantCount.size());
 
 		String city3 = "Paris";
 		restaurantCount = db.getListOfRestaurantsByCity(city3);
