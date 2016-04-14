@@ -32,7 +32,7 @@ public class InitialData {
 				// read restaurant ID from CSV file, but don't use it
 				// it's there for reference purposes, just make sure that it is correct
 				// when setting up the BookAuthors CSV file				
-				Integer.parseInt(i.next());
+				//Integer.parseInt(i.next());
 				rest.setRestID(restId++);				
 				rest.setName(i.next());
 				rest.setAddress(i.next());
