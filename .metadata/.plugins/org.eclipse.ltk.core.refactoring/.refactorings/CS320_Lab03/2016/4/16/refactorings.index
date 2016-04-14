@@ -1,0 +1,25 @@
+1460246696020	Encapsulate field 'accountNumber'
+1460247715820	Delete element
+1460388604980	Delete element
+1460390266871	Rename resource 'authors.csv'
+1460390353874	Rename resource 'books.csv'
+1460404846121	Rename package 'edu.ycp.cs320.booksdb.persist.res'
+1460405161408	Delete element
+1460406673126	Encapsulate field 'restID'
+1460408197070	Encapsulate field 'OwnerId'
+1460408908342	Encapsulate field 'patronId'
+1460409569848	Delete element
+1460409612488	Rename resource 'authors.csv'
+1460409766695	Rename resource 'authors.csv'
+1460409772854	Delete element
+1460409840589	Rename resource 'authors.csv'
+1460410033756	Encapsulate field 'UserId'
+1460411543732	Encapsulate field 'OwnerId'
+1460559093735	Rename type 'TitleQuery'
+1460574674187	Encapsulate field 'city'
+1460574733972	Encapsulate field 'zipCode'
+1460578663570	Rename package 'DBpersist'
+1460581420141	Delete element
+1460582702316	Encapsulate field 'accountType'
+1460583749461	Delete element
+1460583753311	Delete element

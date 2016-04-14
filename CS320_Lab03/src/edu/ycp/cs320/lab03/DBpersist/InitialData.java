@@ -50,7 +50,7 @@ public class InitialData {
 	//user db will be for authentication and hold a primary key for patrons and Owners
 	public static List<User> getUsers() throws IOException {
 		List<User> UserList = new ArrayList<User>();
-		ReadCSV readUser = new ReadCSV("User.csv");
+		ReadCSV readUser = new ReadCSV("users.csv");
 		try {
 			// auto-generated primary key for table User
 			Integer UserId = 1;
@@ -65,10 +65,9 @@ public class InitialData {
 				// read User ID from CSV file, but don't use it
 				// it's there for reference purposes, just make sure that it is correct
 				// when setting up the Authors CSV file
-				Integer.parseInt(i.next());
+				//Integer.parseInt(i.next());
 				// auto-generate User ID, instead
 				User.setUserId(UserId++);				
-//				User.setAuthorId(Integer.parseInt(i.next()));  // no longer in User table
 				User.setUserName(i.next());
 				User.setPassWord(i.next());
 				User.setEmail(i.next());

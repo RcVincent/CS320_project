@@ -175,7 +175,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:H:/workspace.mydb;create=true");
+		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/austin/Desktop/CS201/eclipse/CS320_Project/project.db;create=true");
 
 		// Set autocommit to false to allow multiple the execution of
 		// multiple queries/statements as part of the same transaction.
@@ -231,7 +231,7 @@ public class DerbyDatabase implements IDatabase {
 
 
 					stmt2 = conn.prepareStatement(
-							"create table restuarants (" +
+							"create table restaurants (" +
 									"	rest_id integer primary key " +
 									"		generated always as identity (start with 1, increment by 1), " +
 									"	owner_id integer constraint user_id references users, " +
@@ -274,8 +274,8 @@ public class DerbyDatabase implements IDatabase {
 				try {
 
 
-					insertUsers = conn.prepareStatement("insert into users (user_id, user_userName, user_passWord, user_email, user_accountType, user_firstName, user_Lastname) "
-							+ "		values (?, ?, ?, ?, ?, ?, ?)");
+					insertUsers = conn.prepareStatement("insert into users (user_userName, user_passWord, user_email, user_accountType, user_firstName, user_Lastname) "
+							+ "		values (?, ?, ?, ?, ?, ?)");
 					for (User u : userList) {
 						insertUsers.setInt(1, u.getUserId());
 						insertUsers.setString(2, u.getUserName());

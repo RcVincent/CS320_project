@@ -17,7 +17,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import DBpersist.DBUtil;
+import edu.ycp.cs320.lab03.DBpersist.*;;
 
 /**
  * An interactive query tool for SQLite.
@@ -42,7 +42,7 @@ public class SQLDemo {
 		Connection conn = null;
 		try {
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-			conn = DriverManager.getConnection("jdbc:derby:C:/CS320_Project/project.db;create=true");
+			conn = DriverManager.getConnection("jdbc:derby:C:/Users/austin/Desktop/CS201/eclipse/CS320_Project/project.db;create=true");
 
 			conn.setAutoCommit(true);
 	
