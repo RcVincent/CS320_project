@@ -1,0 +1,64 @@
+package edu.ycp.cs320.lab03.restaurant;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import edu.ycp.cs320.lab03.controller.Address;
+import edu.ycp.cs320.lab03.controller.Menu;
+import edu.ycp.cs320.lab03.controller.Order;
+import edu.ycp.cs320.lab03.controller.Restaurant;
+
+public class RestaurantTest {
+	private Restaurant r;
+	//private ArrayList<Order> o;
+	
+	private Order TestOrder; 
+	private Order TestOrder2;
+	private Order TestOrder3;
+	private Address add; 
+	private Menu menu; 
+	
+	private Float price1 = (float) 14.99;
+	private Float price2 = (float) 9.99; 
+	private Float price3 = (float) 6.99;
+	
+	
+	@Before
+	public void setUp() throws Exception {
+		add = new Address(175, "Jackson St", "York", "PA", 17403); 
+		r = new Restaurant("Yorktown", add); 
+		menu = new Menu(); 
+		r.setMenu(menu);
+		
+		r.getMenu().addToMenu("Large Pizza", price1);
+		r.getMenu().addToMenu("Medium Pizza", price2);
+		r.getMenu().addToMenu("Small Pizza", price3);
+		
+		
+		
+		TestOrder = new Order("Large Pizza", r, false); 
+		TestOrder2 = new Order("Medium Pizza", r, false);
+		TestOrder3 = new Order("Small Pizza", r, false);
+		
+		r.ordersList.add(TestOrder);
+		r.ordersList.add(TestOrder2);
+		r.ordersList.add(TestOrder3);
+	}
+	
+	
+	
+	@Test
+	public void getOrder() {
+		assertEquals(3, r.ordersList.size());
+	}
+	
+	@Test
+	public void findOrder() {
+		r.getOrder(0);
+		
+	}
+}

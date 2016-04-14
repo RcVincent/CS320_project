@@ -65,10 +65,9 @@ public class InitialData {
 				// read User ID from CSV file, but don't use it
 				// it's there for reference purposes, just make sure that it is correct
 				// when setting up the Authors CSV file
-				Integer.parseInt(i.next());
+				//Integer.parseInt(i.next());
 				// auto-generate User ID, instead
 				User.setUserId(UserId++);				
-//				User.setAuthorId(Integer.parseInt(i.next()));  // no longer in User table
 				User.setUserName(i.next());
 				User.setPassWord(i.next());
 				User.setEmail(i.next());

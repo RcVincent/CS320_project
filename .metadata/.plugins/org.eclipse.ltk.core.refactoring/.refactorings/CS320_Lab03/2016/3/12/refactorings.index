@@ -1,0 +1,14 @@
+1458144662296	Rename type 'LoginSevlet'
+1458160283576	Move compilation units
+1458261035229	Move compilation unit
+1458262711946	Encapsulate field 'userName'
+1458262726163	Encapsulate field 'type'
+1458263825588	Delete element
+1458263910299	Delete element
+1458264612259	Encapsulate field 'address'
+1458264624334	Encapsulate field 'pat'
+1458314425698	Encapsulate field 'Name'
+1458314429584	Encapsulate field 'address'
+1458315711834	Encapsulate field 'passWord'
+1458419948929	Infer generic type arguments
+1458419961141	Infer generic type arguments
