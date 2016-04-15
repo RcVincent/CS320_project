@@ -16,6 +16,8 @@ public interface IDatabase {
 	List<Restaurant> getListOfRestaurantsByCity(String name);
 
 	List<User> matchUsernameWithPassword(String name);
+
+	List<User> addUserToDatabase(String name, String pswd, String email, String type, String first, String last);
 	
 	
 	
