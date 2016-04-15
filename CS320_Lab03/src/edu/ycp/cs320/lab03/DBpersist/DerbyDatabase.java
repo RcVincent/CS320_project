@@ -40,17 +40,12 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet = null;
 
 				try {
-					if(city.equals("")){
-						stmt = conn.prepareStatement(
-								"select * from restaurants " 
-								);
 
-					}else{
-						stmt = conn.prepareStatement(
-								"select * from restaurants " +
-										" where rest_city = ? "
-								);
-					}
+
+					stmt = conn.prepareStatement(
+							"select * from restaurants " +
+									" where rest_city = ? "
+							);
 					stmt.setString(1, city);
 					List<Restaurant> result = new ArrayList<Restaurant>();
 					resultSet = stmt.executeQuery();
@@ -85,25 +80,35 @@ public class DerbyDatabase implements IDatabase {
 	//matching a userName with a password
 	//********************
 	@Override
-	public List<User> matchUsernameWithPassword(final String name) {
+	public List<User> addUserToDatabase(final String name, final String pswd, final String email, final String type, final String first,
+			final String last) {
 		return executeTransaction(new Transaction<List<User>>() {
 			@Override
 			public List<User> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
 				ResultSet resultSet = null;
 
 				try {
-
 					stmt = conn.prepareStatement(
-							"select * from users " +
-									" where user_id = user_password " +
-									" and user_name = ?"
+							"insert into users(user_userName, user_passWord, user_email, user_accountType, user_firstName, user_lastName) " +
+									" values(?, ?, ?, ?, ?, ?) "
 							);
-
-
 					stmt.setString(1, name);
+					stmt.setString(2, pswd);
+					stmt.setString(3, email);
+					stmt.setString(4, type);
+					stmt.setString(5, first);
+					stmt.setString(6, last);
+					stmt.executeUpdate();
+					
+					stmt2 = conn.prepareStatement(
+							"select user_userName " +
+									" from users " +
+									" where user_userName = ?"
+							);
 					List<User> result = new ArrayList<User>();
-					resultSet = stmt.executeQuery();
+					resultSet = stmt2.executeQuery();
 
 					// for testing that a result was returned
 					Boolean found = false;
@@ -277,7 +282,7 @@ public class DerbyDatabase implements IDatabase {
 					insertUsers = conn.prepareStatement("insert into users (user_userName, user_passWord, user_email, user_accountType, user_firstName, user_Lastname) "
 							+ "		values (?, ?, ?, ?, ?, ?)");
 					for (User u : userList) {
-//						insertUsers.setInt(1, u.getUserId());
+						//						insertUsers.setInt(1, u.getUserId());
 						insertUsers.setString(1, u.getUserName());
 						insertUsers.setString(2, u.getPassWord());
 						insertUsers.setString(3, u.getEmail());
@@ -293,8 +298,8 @@ public class DerbyDatabase implements IDatabase {
 					insertRestaurants = conn.prepareStatement("insert into restaurants (rest_name, rest_address, rest_city, rest_zipcode) "
 							+ "	values (?, ?, ?, ?)");
 					for (Restaurant rest: restList) {
-//						insertRestaurants.setInt(1, rest.getUserId());
-//						insertRestaurants.setInt(2, rest.getRestID());
+						//						insertRestaurants.setInt(1, rest.getUserId());
+						//						insertRestaurants.setInt(2, rest.getRestID());
 						insertRestaurants.setString(1,rest.getName());
 						insertRestaurants.setString(2, rest.getAddress());
 						insertRestaurants.setString(3, rest.getCity());
@@ -327,10 +332,11 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("Success!");
 	}
 	@Override
-	public List<User> addUserToDatabase(String name, String pswd, String email, String type, String first,
-			String last) {
+	public List<User> matchUsernameWithPassword(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }
