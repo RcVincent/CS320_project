@@ -103,19 +103,19 @@ public class DerbyDatabase implements IDatabase {
 					stmt.executeUpdate();
 					
 					stmt2 = conn.prepareStatement(
-							"select user_userName " +
+							"select * " +
 									" from users " +
 									" where user_userName = ?"
 							);
-					List<User> result = new ArrayList<User>();
+					stmt2.setString(1, name);
+					
 					resultSet = stmt2.executeQuery();
 
 					// for testing that a result was returned
 					Boolean found = false;
-
+					List<User> result = new ArrayList<User>();
 					while (resultSet.next()) {
 						found = true;
-
 						User u = new User();
 						loadUser(u, resultSet, 1);
 						result.add(u);
@@ -180,7 +180,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/austin/Desktop/CS201/eclipse/CS320_Project/project.db;create=true");
+		Connection conn = DriverManager.getConnection("jdbc:derby:H:/workspace.newDBarea;create=true");
 
 		// Set autocommit to false to allow multiple the execution of
 		// multiple queries/statements as part of the same transaction.
