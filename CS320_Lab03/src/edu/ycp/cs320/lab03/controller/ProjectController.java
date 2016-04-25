@@ -41,7 +41,7 @@ public class ProjectController {
 		
 	}
 	
-	public float getItemPrice(Menu menu, String item){
+	public Double getItemPrice(Menu menu, String item){
 		return menu.getItemPrice(item);
 	}
 	

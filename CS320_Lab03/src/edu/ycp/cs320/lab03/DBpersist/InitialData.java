@@ -46,7 +46,7 @@ public class InitialData {
 			readRestaurants.close();
 		}
 	}
-	
+
 	//user db will be for authentication and hold a primary key for patrons and Owners
 	public static List<User> getUsers() throws IOException {
 		List<User> UserList = new ArrayList<User>();
@@ -61,11 +61,11 @@ public class InitialData {
 				}
 				Iterator<String> i = tuple.iterator();
 				User User = new User();
-				
+
 				// read User ID from CSV file, but don't use it
 				// it's there for reference purposes, just make sure that it is correct
 				// when setting up the Authors CSV file
-				//Integer.parseInt(i.next());
+				
 				// auto-generate User ID, instead
 				User.setUserId(UserId++);				
 				User.setUserName(i.next());
@@ -82,5 +82,4 @@ public class InitialData {
 			readUser.close();
 		}
 	}
-
 }

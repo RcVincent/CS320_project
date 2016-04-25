@@ -13,9 +13,9 @@ import edu.ycp.cs320.lab03.controller.Restaurant;
 public class MenuTest {
 	private Menu menu; 
 	
-	private Float price1;
-	private Float price2;
-	private Float price3;
+	private Double price1;
+	private Double price2;
+	private Double price3;
 	
 	@Before
 	public void  setUp() throws Exception {
@@ -24,9 +24,9 @@ public class MenuTest {
 		
 		
 		//set up test item prices
-		price1 =  (float) 10.99;
-		price2 = (float) 4.50;
-		price3 = (float) 7.50;	
+		price1 =  (Double) 10.99;
+		price2 = (Double) 4.50;
+		price3 = (Double) 7.50;	
 		
 		menu.addToMenu("hamburger", price1);
 		menu.addToMenu("hotdog", price2);

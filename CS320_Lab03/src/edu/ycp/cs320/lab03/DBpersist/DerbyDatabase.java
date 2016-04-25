@@ -77,7 +77,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	//********************
-	//matching a userName with a password
+	//adding a user to the database
 	//********************
 	@Override
 	public List<User> addUserToDatabase(final String name, final String pswd, final String email, final String type, final String first,
@@ -123,7 +123,7 @@ public class DerbyDatabase implements IDatabase {
 
 					// check if the title was found
 					if (!found) {
-						System.out.println("<" + name + "> was not found in the restaurants table");
+						System.out.println("<" + name + "> was not found in the users table");
 					}
 
 					return result;
@@ -136,6 +136,56 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	//*************************************************
+	//match user name with password for authentication
+	//*************************************************
+	@Override
+	public List<User> matchUsernameWithPassword(final String name) {
+		
+		return executeTransaction(new Transaction<List<User>>() {
+			@Override
+			public List<User> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+
+				try {
+
+
+					stmt = conn.prepareStatement(
+							"select * from Users " +
+									" where user_userName = ? "
+							);
+					stmt.setString(1, name);
+					List<User> result = new ArrayList<User>();
+					resultSet = stmt.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						User u = new User();
+						loadUser(u, resultSet, 1);
+						result.add(u);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + name + "> was not found in the Users table");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
 			return doExecuteTransaction(txn);
@@ -216,6 +266,7 @@ public class DerbyDatabase implements IDatabase {
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
 				//				PreparedStatement stmt3 = null;
 				//				PreparedStatement stmt4 = null;
 
@@ -247,6 +298,9 @@ public class DerbyDatabase implements IDatabase {
 									")"
 							);
 					stmt2.executeUpdate();
+					
+					
+					
 
 
 
@@ -331,12 +385,7 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("loaded intial data");
 		System.out.println("Success!");
 	}
-	@Override
-	public List<User> matchUsernameWithPassword(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 
 
 }

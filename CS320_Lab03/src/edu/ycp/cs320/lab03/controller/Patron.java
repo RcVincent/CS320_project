@@ -60,13 +60,13 @@ public class Patron extends User {
 	
 	
 	//this int will come from the jsp/controller based on the order it appears in the actual search results
-	public float lookupPriceFromSearchResults(String item, int i){
+	public Double lookupPriceFromSearchResults(String item, int i){
 		this.r = getRestaurantFromSearchResults(i);
 		return r.getMenu().getItemPrice(item);
 	}
 	
 	//the favorites will be numbered when viewed so the patron can input the into the jsp
-	public float lookupPriceFromFromFavorites(String item, int i){
+	public Double lookupPriceFromFromFavorites(String item, int i){
 		this.r = getRestaurantFromFavorites(i);
 		return r.getMenu().getItemPrice(item);
 	}
