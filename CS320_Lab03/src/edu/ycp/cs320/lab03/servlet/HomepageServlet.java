@@ -30,31 +30,28 @@ public class HomepageServlet extends HttpServlet {
 		// proceed to handle request...
 		req.getRequestDispatcher("/_view/Homepage.jsp").forward(req, resp);
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+
 		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
 		String city = null;
 		search = new RestaurantSearch();
 		ArrayList<Restaurant> rest = null;
 		city = req.getParameter("search");
-		
-//			param = req.getParameter("searchType");
-		
-			rest = search.RestByCity(city);;
-			
-		
-		
+		rest = search.RestByCity(city);;
+
+
+
 		// Add parameters as request attributes
 		req.setAttribute("rest", rest);
 		req.setAttribute("search", city);
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		
-		
+
+
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/Homepage.jsp").forward(req, resp);
 	}

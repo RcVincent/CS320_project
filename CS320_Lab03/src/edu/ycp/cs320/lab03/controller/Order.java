@@ -4,11 +4,11 @@ import java.util.Random;
 import java.util.TreeMap;
 
 public class Order{
-	private float price = 0; //starts at zero as an accumulator
+	private Double price = 0.00; //starts at zero as an accumulator
 	private boolean takeOut;
 	private Random random;
 	private int orderNumber;
-	public TreeMap<String, Float> fullOrder = new TreeMap<String, Float>();
+	public TreeMap<String, Double> fullOrder = new TreeMap<String, Double>();
 	
 	
 	public Order(String item, Restaurant r, boolean type){
@@ -20,7 +20,7 @@ public class Order{
 	}
 
 
-	private void calculatePrice(float itemPrice) {
+	private void calculatePrice(Double itemPrice) {
 		this.price += itemPrice;
 		
 	}
@@ -33,7 +33,7 @@ public class Order{
 	}
 
 
-	public float getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 

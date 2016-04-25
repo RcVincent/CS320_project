@@ -25,10 +25,10 @@ public class ProjectController {
 
 
 	
-	public boolean authenticate(String u, String p)
+	public boolean authenticate(User u, String pswd)
 	{
 		boolean real = false;
-		if(u.equals("meeps") && p.equals("peeps")){
+		if(u.getPassWord().equals(pswd)){
 
 			real = true;
 		}
@@ -41,7 +41,7 @@ public class ProjectController {
 		
 	}
 	
-	public float getItemPrice(Menu menu, String item){
+	public Double getItemPrice(Menu menu, String item){
 		return menu.getItemPrice(item);
 	}
 	

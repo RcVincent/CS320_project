@@ -22,9 +22,9 @@ public class RestauantTest {
 
 	private Menu menu; 
 	
-	private Float price1 = (float) 14.99;
-	private Float price2 = (float) 9.99; 
-	private Float price3 = (float) 6.99;
+	private Double price1 = (Double) 14.99;
+	private Double price2 = (Double) 9.99; 
+	private Double price3 = (Double) 6.99;
 	
 	
 	@Before

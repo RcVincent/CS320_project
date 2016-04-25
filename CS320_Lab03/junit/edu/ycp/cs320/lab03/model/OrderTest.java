@@ -17,8 +17,8 @@ public class OrderTest {
 	 
 	private Restaurant r;
 	
-	private Float price1 = (float) 10.99;
-	private Float price2 = (float) 4.99;
+	private Double price1 = (Double) 10.99;
+	private Double price2 = (Double) 4.99;
 
 	private Menu testMenu1;
 	private String pizza = "pizza"; 
