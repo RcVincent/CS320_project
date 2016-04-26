@@ -25,7 +25,6 @@
 	</head>
 
 	<body>
-		<form action="${pageContext.servletContext.contextPath}/Account" method="post">
 			<div id = "PageName">Your Account</div>
 			<div id = "AccountInfo">
 			<table>
@@ -42,11 +41,19 @@
 					<td>${username}</td>
 				</tr>
 				<tr>
+					<td class="label">eMail:</td>
+					<td>${email}</td>
+				</tr>
+				<tr>
 					<td class="label">Account Type:</td>
 					<td>${AccountType}</td>
 				</tr>
+				<tr><form action="${pageContext.servletContext.contextPath}/Homepage" method="get">
+					<td><input type="Submit" name="submit" value="Click to go to Homepage"/></td>
+					</form>
+				</tr>
 			</table>
 			</div>
-		</form>
+		
 	</body>
 </html>

@@ -185,7 +185,52 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	@Override
+	public List<User> getAccountInfo(final String name) {
+		
+		return executeTransaction(new Transaction<List<User>>() {
+			@Override
+			public List<User> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
 
+				try {
+
+
+					stmt = conn.prepareStatement(
+							"select * from Users " +
+									" where user_userName = ? "
+							);
+					stmt.setString(1, name);
+					List<User> result = new ArrayList<User>();
+					resultSet = stmt.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						User u = new User();
+						loadUser(u, resultSet, 1);
+						result.add(u);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + name + "> was not found in the Users table");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
 			return doExecuteTransaction(txn);
@@ -349,10 +394,10 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("Users table populated");
 
 
-					insertRestaurants = conn.prepareStatement("insert into restaurants (rest_name, rest_address, rest_city, rest_zipcode) "
+					insertRestaurants = conn.prepareStatement("insert into restaurants (user_id, rest_name, rest_address, rest_city, rest_zipcode) "
 							+ "	values (?, ?, ?, ?)");
 					for (Restaurant rest: restList) {
-						//						insertRestaurants.setInt(1, rest.getUserId());
+						insertRestaurants.setInt(1, rest.getUserId());
 						//						insertRestaurants.setInt(2, rest.getRestID());
 						insertRestaurants.setString(1,rest.getName());
 						insertRestaurants.setString(2, rest.getAddress());

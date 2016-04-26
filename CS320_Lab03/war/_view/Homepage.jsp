@@ -132,10 +132,14 @@ td.label {
 		<div id="LinkContent">
 			<div id="LinkName">Your Account</div>
 			<div>
-				<button>
-					<a href="/lab03/Account"><type= "button">Click to view
-						account info</a>
-				</button>
+				<form action="${pageContext.servletContext.contextPath}/Account"
+						method="post">
+						<table>
+							<tr>
+								<td><input type="Submit" name="submit" value="Click to view Account Info"/></td>
+							</tr>
+						</table>
+				</form>
 			</div>
 		</div>
 	</div>

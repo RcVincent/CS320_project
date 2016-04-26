@@ -82,9 +82,6 @@ td.label {
 	<c:if test="${! empty errorMessage}">
 		<div class="error">${errorMessage}</div>
 	</c:if>
-
-	<form action="${pageContext.servletContext.contextPath}/Baker's Donuts" method = "post">
-
 		<div id="PageName">Baker's Donuts</div>
 
 		<div id="Content">
@@ -103,9 +100,9 @@ td.label {
 			<div id="LinkContent">
 				<div id="LinkName">Menu</div>
 				<div id="ContentBody">
-					<button>
-						<a href="/lab03/Baker's Donuts Menu">Click here to view menu</a>
-					</button>
+					<form action="${pageContext.servletContext.contextPath}/Menu" method="get">
+					<input type="Submit" name="submit" value="Click to see our menu!"/>
+					</form>
 				</div>
 			</div>
 
@@ -116,6 +113,5 @@ td.label {
 				<a href="/lab03/Login">Logout</a>
 			</button>
 		</div>
-	</form>
 </body>
 </html>
