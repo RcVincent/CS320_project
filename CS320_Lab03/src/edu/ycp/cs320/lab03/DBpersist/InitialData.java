@@ -14,7 +14,7 @@ import edu.ycp.cs320.lab03.controller.User;
 
 public class InitialData {
 
-	// reads initial Author data from CSV file and returns a List of Authors
+	// reads initial Restaurant data from CSV file and returns a List of Authors
 	public static List<Restaurant> getRestaurants() throws IOException {
 		List<Restaurant> restaurantList = new ArrayList<Restaurant>();
 		ReadCSV readRestaurants = new ReadCSV("restaurants.csv");
@@ -30,10 +30,8 @@ public class InitialData {
 				Restaurant rest = new Restaurant();
 
 				// read restaurant ID from CSV file, but don't use it
-				// it's there for reference purposes, just make sure that it is correct
-				// when setting up the BookAuthors CSV file				
-				//Integer.parseInt(i.next());
-				rest.setRestID(restId++);				
+				rest.setRestID(restId++);
+				rest.setUserId(Integer.parseInt(i.next()));
 				rest.setName(i.next());
 				rest.setAddress(i.next());
 				rest.setCity(i.next());
@@ -63,9 +61,6 @@ public class InitialData {
 				User User = new User();
 
 				// read User ID from CSV file, but don't use it
-				// it's there for reference purposes, just make sure that it is correct
-				// when setting up the Authors CSV file
-				
 				// auto-generate User ID, instead
 				User.setUserId(UserId++);				
 				User.setUserName(i.next());
@@ -82,4 +77,44 @@ public class InitialData {
 			readUser.close();
 		}
 	}
+	
+	public static List<Menu> getMenus() throws IOException {
+		List<Menu> MenuList = new ArrayList<Menu>();
+		ReadCSV readMenu = new ReadCSV("menu.csv");
+		try {
+			// auto-generated primary key for table Menu
+			Integer MenuId = 1;
+			while (true) {
+				List<String> tuple = readMenu.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				Menu m = new Menu();
+
+				// read Menu ID from CSV file, but don't use it
+				// it's there for reference purposes, just make sure that it is correct
+				// when setting up the Restaurant CSV file
+				// auto-generate Menu ID, instead
+				m.setMenuId(MenuId++);
+				m.setRestId(Integer.parseInt(i.next()));
+				m.setItem(i.next());
+				m.setSprice(i.next());
+				MenuList.add(m);
+			}
+			System.out.println("MenuList loaded from CSV file");			
+			return MenuList;
+		} finally {
+			readMenu.close();
+		}
+	}
 }
+
+
+
+
+
+
+
+
+

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ycp.cs320.lab03.controller.Menu;
 import edu.ycp.cs320.lab03.controller.Owner;
 import edu.ycp.cs320.lab03.controller.Patron;
 import edu.ycp.cs320.lab03.controller.Restaurant;
@@ -185,6 +186,128 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	//********************************
+	//Delete a user from the database
+	//********************************
+	@Override
+	public List<User> DeleteUserFromDatabase(final String name, final String pswd) {
+		return executeTransaction(new Transaction<List<User>>() {
+			@Override
+			public List<User> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				ResultSet resultSet = null;
+
+				try {
+
+
+					stmt = conn.prepareStatement(
+							"delete from users " +
+									" where user_userName = ? " +
+									" and user_userpassWord = ? "
+							);
+					stmt.setString(1, name);
+					stmt.setString(2, pswd);
+					stmt.executeUpdate();
+
+					// return all users and see that the one entered was deleted
+					
+					stmt2 = conn.prepareStatement(
+							"select * from users " 		
+							);
+					resultSet = stmt2.executeQuery();
+					List<User> result = new ArrayList<User>();
+					
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						User u = new User();
+						loadUser(u, resultSet, 1);
+						result.add(u);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + name + "> users list is empty");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	//************************
+	//Change username
+	//***********************
+	@Override
+	public List<User> changeUsername(final String name, final String newName, final String pswd) {
+		return executeTransaction(new Transaction<List<User>>() {
+			@Override
+			public List<User> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				ResultSet resultSet = null;
+
+				try {
+
+
+					stmt = conn.prepareStatement(
+							"update users " +
+									" set user_userName = ? " +
+									" where user_userName = ? " +
+									" and user_userpassWord = ? "
+							);
+					stmt.setString(1, newName);
+					stmt.setString(2, name);
+					stmt.setString(3, pswd);
+					stmt.executeUpdate();
+
+					// return all users and see that the one entered was deleted
+					
+					stmt2 = conn.prepareStatement(
+							"select user_userName from users " 	+
+									" where user_userName = ? "
+							);
+					//ensure new userName is in database
+					stmt2.setString(1, newName);
+					resultSet = stmt2.executeQuery();
+					List<User> result = new ArrayList<User>();
+					
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						User u = new User();
+						loadUser(u, resultSet, 1);
+						result.add(u);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + name + "> users list is empty");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+
+	
 
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
@@ -230,7 +353,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/austin/Desktop/CS201/eclipse/CS320_Project/project.db;create=true");
+		Connection conn = DriverManager.getConnection("jdbc:derby:H:/workspace.newDBarea;create=true");
 
 		// Set autocommit to false to allow multiple the execution of
 		// multiple queries/statements as part of the same transaction.
@@ -250,12 +373,19 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	private void loadRestaurant(Restaurant rest, ResultSet resultSet, int index) throws SQLException {
-		rest.setUserId(resultSet.getInt(index++));
 		rest.setRestID(resultSet.getInt(index++));
+		rest.setUserId(resultSet.getInt(index++));
 		rest.setName(resultSet.getString(index++));
 		rest.setAddress(resultSet.getString(index++));
 		rest.setCity(resultSet.getString(index++));
 		rest.setZipCode(resultSet.getString(index++));
+	}
+	
+	private void loadMenu(Menu m, ResultSet resultSet, int index) throws SQLException {
+		m.setMenuId(resultSet.getInt(index++));
+		m.setRestId(resultSet.getInt(index++));
+		m.setItem(resultSet.getString(index++));
+		m.setSprice(resultSet.getString(index++));
 	}
 
 
@@ -267,6 +397,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
+				
 				//				PreparedStatement stmt3 = null;
 				//				PreparedStatement stmt4 = null;
 
@@ -299,7 +430,16 @@ public class DerbyDatabase implements IDatabase {
 							);
 					stmt2.executeUpdate();
 					
-					
+					stmt3 = conn.prepareStatement(
+							" create table menu (" +
+									" menu_id integer primary key " +
+									" 		generated always as identity (start with 1, increment by 1), " +
+									" rest_id integer constraint rest_id references restaurants, "   +
+									" menu_item varchar(40), "      +
+									" menu_price varchar(20) "      +
+									")"
+							);
+					stmt3.executeUpdate();
 					
 
 
@@ -319,17 +459,19 @@ public class DerbyDatabase implements IDatabase {
 			public Boolean execute(Connection conn) throws SQLException {
 				List<Restaurant> restList;
 				List<User> userList;
+				List<Menu> menuList;
 
 				try {
 					restList = InitialData.getRestaurants();
 					userList = InitialData.getUsers();
+					menuList = InitialData.getMenus();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 
 				PreparedStatement insertRestaurants = null;
 				PreparedStatement insertUsers = null;
-
+				PreparedStatement insertMenus = null;
 				try {
 
 
@@ -349,21 +491,29 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("Users table populated");
 
 
-					insertRestaurants = conn.prepareStatement("insert into restaurants (rest_name, rest_address, rest_city, rest_zipcode) "
-							+ "	values (?, ?, ?, ?)");
+					insertRestaurants = conn.prepareStatement("insert into restaurants (user_id, rest_name, rest_address, rest_city, rest_zipcode) "
+							+ "	values (?, ?, ?, ?, ?)");
 					for (Restaurant rest: restList) {
-						//						insertRestaurants.setInt(1, rest.getUserId());
-						//						insertRestaurants.setInt(2, rest.getRestID());
-						insertRestaurants.setString(1,rest.getName());
-						insertRestaurants.setString(2, rest.getAddress());
-						insertRestaurants.setString(3, rest.getCity());
-						insertRestaurants.setString(4, rest.getZipCode());
+						insertRestaurants.setInt(1, rest.getUserId());
+						insertRestaurants.setString(2,rest.getName());
+						insertRestaurants.setString(3, rest.getAddress());
+						insertRestaurants.setString(4, rest.getCity());
+						insertRestaurants.setString(5, rest.getZipCode());
 						insertRestaurants.addBatch();
 					}
 					insertRestaurants.executeBatch();
 					System.out.println("restaurants table populated");
-
-
+					
+					
+					insertMenus = conn.prepareStatement("insert into menu (rest_id, menu_item, menu_price) " + "values (?, ?, ?)");
+					for (Menu m : menuList) {
+						insertMenus.setInt(1, m.getRestId());
+						insertMenus.setString(2, m.getItem());
+						insertMenus.setString(3, m.getSprice());
+						insertMenus.addBatch();
+					}
+					insertMenus.executeBatch();
+					System.out.println("menu created");
 
 					return true;
 				} finally {
@@ -379,12 +529,12 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("Creating tables...");
 		DerbyDatabase db = new DerbyDatabase();
 		db.createTables();
-
 		System.out.println("Loading initial data...");
 		db.loadInitialData();
 		System.out.println("loaded intial data");
-		System.out.println("Success!");
+		System.out.println("Major Success!");
 	}
+
 	
 
 
