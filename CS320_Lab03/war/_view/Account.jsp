@@ -52,6 +52,10 @@
 					<td><input type="Submit" name="submit" value="Click to go to Homepage"/></td>
 					</form>
 				</tr>
+				<tr><form action="${pageContext.servletContext.contextPath}/ChangeUsername" method="get">
+					<td><input type="Submit" name="submit" value="Click to change your username"/></td>
+					</form>
+				</tr>
 			</table>
 			</div>
 		

@@ -1,9 +1,5 @@
 package edu.ycp.cs320.lab03.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 import edu.ycp.cs320.lab03.DBpersist.DatabaseProvider;
 import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;
 import edu.ycp.cs320.lab03.DBpersist.IDatabase;

@@ -151,10 +151,10 @@ td.label {
 					<div id="LinkName">${restaurant.name}</div>
 					<table>
 						<tr>
-							<td class="label"></td>
-							<form
-								action="${pageContext.servletContext.contextPath}/${restaurant.name }"
-								method="get">
+							<td>${restaurant.address },</td>
+							<td>${restaurant.city },</td>
+							<td>${restaurant.zipcode }</td>
+							<form action="${pageContext.servletContext.contextPath}/${restaurant.name }" method="get">
 								<td><input type="submit" value="Click to view page"></td>
 							</form>
 						</tr>

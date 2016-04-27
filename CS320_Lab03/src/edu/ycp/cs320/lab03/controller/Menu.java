@@ -10,6 +10,7 @@ public class Menu {
 	private String item;
 	private String sprice; //for database
 	private int menuId;   //for database
+	private int restId;   //for database
 	private Double price;
 	private TreeMap<String, Double> mapper = new TreeMap<String, Double>();
 
@@ -49,6 +50,7 @@ public class Menu {
 	}
 	public void setSprice(String sprice) {
 		this.sprice = sprice;
+		//this method also sets the double as a price to accumulate the order total
 		setPrice(toDouble(this.sprice));
 	}
 
@@ -59,9 +61,6 @@ public class Menu {
 		    } else {
 		      return Double.parseDouble(s);
 		    }
-		
-		
-		
 	}
 
 	public Double getPrice() {
@@ -77,5 +76,12 @@ public class Menu {
 	public Integer getMenuId() {
 		return this.menuId;
 	}
+	public int getRestId() {
+		return restId;
+	}
+	public void setRestId(int restId) {
+		this.restId = restId;
+	}
+
 	
 }

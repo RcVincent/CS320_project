@@ -9,7 +9,7 @@ public class Restaurant {
 	private String city;
 	private String zipCode;
 	private String description;
-	private Address readAddress;
+	
 	private Menu menu;
 	private int restID;
 	private int UserId;
