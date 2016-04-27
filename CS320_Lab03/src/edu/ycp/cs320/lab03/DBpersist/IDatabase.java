@@ -2,6 +2,7 @@ package edu.ycp.cs320.lab03.DBpersist;
 
 import java.util.List;
 
+import edu.ycp.cs320.lab03.controller.Menu;
 import edu.ycp.cs320.lab03.controller.Owner;
 import edu.ycp.cs320.lab03.controller.Pair;
 import edu.ycp.cs320.lab03.controller.Restaurant;
@@ -22,5 +23,7 @@ public interface IDatabase {
 	List<User> DeleteUserFromDatabase(String name, String pswd);
 
 	List<User> changeUsername(String name, String newName, String pswd);
+
+	//List<Menu> addItemToMenu(String item, Double price, int rest_id);
 	
 }

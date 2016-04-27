@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ycp.cs320.lab03.controller.Menu;
+import edu.ycp.cs320.lab03.controller.Order;
 import edu.ycp.cs320.lab03.controller.Owner;
 import edu.ycp.cs320.lab03.controller.Patron;
 import edu.ycp.cs320.lab03.controller.Restaurant;
@@ -305,8 +306,15 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+	//***********************
+	//Add item to menu
+	//************************
+	//@Override
+	//public List<Menu> addItemToMenu(String item, Double price, int rest_id) {
+		
+	//}
 
+	
 	
 
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
@@ -385,7 +393,14 @@ public class DerbyDatabase implements IDatabase {
 		m.setMenuId(resultSet.getInt(index++));
 		m.setRestId(resultSet.getInt(index++));
 		m.setItem(resultSet.getString(index++));
-		m.setSprice(resultSet.getString(index++));
+		m.setPrice(resultSet.getDouble(index++));
+	}
+	private void loadOrder(Order o, ResultSet resultSet, int index) throws SQLException {
+		o.setOrderId(resultSet.getInt(index++));
+		o.setPatronId(resultSet.getInt(index++));
+		o.setorderNumber(resultSet.getInt(index++));
+		o.setItem(resultSet.getString(index++));
+		o.setPrice(resultSet.getDouble(index++));
 	}
 
 
@@ -397,9 +412,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
-				
-				//				PreparedStatement stmt3 = null;
-				//				PreparedStatement stmt4 = null;
+				PreparedStatement stmt4 = null;
 
 				try {
 					stmt1 = conn.prepareStatement(
@@ -434,20 +447,32 @@ public class DerbyDatabase implements IDatabase {
 							" create table menu (" +
 									" menu_id integer primary key " +
 									" 		generated always as identity (start with 1, increment by 1), " +
-									" rest_id integer constraint rest_id references restaurants, "   +
+									" rest_id varchar(10), "   +
 									" menu_item varchar(40), "      +
 									" menu_price varchar(20) "      +
 									")"
 							);
 					stmt3.executeUpdate();
 					
-
+					stmt4 = conn.prepareStatement(
+							" create table orders (" +
+									" order_id integer primary key " +
+									" 		generated always as identity (start with 1, increment by 1), " +
+									" patron_id varchar(10), "    +
+									" order_number varchar(20), " +
+									" item varchar(40), "		  +
+									" price varchar(20)"		  +
+									")"
+							);
+					stmt4.executeUpdate();
 
 
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
 					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
 				}
 			}
 		});
@@ -460,7 +485,7 @@ public class DerbyDatabase implements IDatabase {
 				List<Restaurant> restList;
 				List<User> userList;
 				List<Menu> menuList;
-
+				//initial data for order will be built when an order is made
 				try {
 					restList = InitialData.getRestaurants();
 					userList = InitialData.getUsers();
@@ -509,7 +534,7 @@ public class DerbyDatabase implements IDatabase {
 					for (Menu m : menuList) {
 						insertMenus.setInt(1, m.getRestId());
 						insertMenus.setString(2, m.getItem());
-						insertMenus.setString(3, m.getSprice());
+						insertMenus.setDouble(3, m.getPrice());
 						insertMenus.addBatch();
 					}
 					insertMenus.executeBatch();
@@ -519,6 +544,9 @@ public class DerbyDatabase implements IDatabase {
 				} finally {
 					DBUtil.closeQuietly(insertUsers);
 					DBUtil.closeQuietly(insertRestaurants);
+					DBUtil.closeQuietly(insertMenus);
+					
+					
 				}
 			}
 		});
@@ -535,7 +563,6 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("Major Success!");
 	}
 
-	
 
 
 }

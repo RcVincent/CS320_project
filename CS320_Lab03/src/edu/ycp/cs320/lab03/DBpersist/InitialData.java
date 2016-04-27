@@ -9,6 +9,7 @@ import edu.ycp.cs320.lab03.controller.Owner;
 import edu.ycp.cs320.lab03.controller.Restaurant;
 import edu.ycp.cs320.lab03.controller.Patron;
 import edu.ycp.cs320.lab03.controller.Menu;
+import edu.ycp.cs320.lab03.controller.Order;
 import edu.ycp.cs320.lab03.controller.Review;
 import edu.ycp.cs320.lab03.controller.User;
 
@@ -99,7 +100,7 @@ public class InitialData {
 				m.setMenuId(MenuId++);
 				m.setRestId(Integer.parseInt(i.next()));
 				m.setItem(i.next());
-				m.setSprice(i.next());
+				m.setPrice(Double.parseDouble(i.next()));
 				MenuList.add(m);
 			}
 			System.out.println("MenuList loaded from CSV file");			
@@ -108,6 +109,37 @@ public class InitialData {
 			readMenu.close();
 		}
 	}
+//	public static List<Order> getOrders() throws IOException {
+//		List<Order> orderList = new ArrayList<Order>();
+//		ReadCSV readMenu = new ReadCSV("orders.csv");
+//		try {
+//			// auto-generated primary key for table Menu
+//			Integer orderId = 1;
+//			while (true) {
+//				List<String> tuple = readMenu.next();
+//				if (tuple == null) {
+//					break;
+//				}
+//				Iterator<String> i = tuple.iterator();
+//				Order o = new Order();
+//				// read order ID from CSV file, but don't use it
+//				// it's there for reference purposes, just make sure that it is correct
+//				// when setting up the order CSV file
+//				// auto-generate Menu ID, instead
+//				o.setOrderId(orderId++);
+//				o.setPatronId(Integer.parseInt(i.next()));
+//				o.setorderNumber(Integer.parseInt(i.next()));
+//				o.setItem(i.next());
+//				o.setPrice(Double.parseDouble(i.next()));
+//				orderList.add(o);
+//			}
+//			System.out.println("OrderList loaded from CSV file");			
+//			return orderList;
+//		} finally {
+//			readMenu.close();
+//		}
+//	}
+	
 }
 
 
