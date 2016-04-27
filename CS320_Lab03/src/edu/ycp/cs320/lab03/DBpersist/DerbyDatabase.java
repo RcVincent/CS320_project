@@ -309,12 +309,111 @@ public class DerbyDatabase implements IDatabase {
 	//***********************
 	//Add item to menu
 	//************************
-	//@Override
-	//public List<Menu> addItemToMenu(String item, Double price, int rest_id) {
-		
-	//}
+	@Override
+	public List<Menu> addItemToMenu(final String item, final Double price, final int rest_id) {
+		return executeTransaction(new Transaction<List<Menu>>() {
+			@Override
+			public List<Menu> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				ResultSet resultSet = null;
 
-	
+				try {
+					stmt = conn.prepareStatement(
+							"insert into menu(rest_id, menu_item, menu_price) " +
+									" values(?, ?, ?) "
+							);
+					stmt.setInt(1, rest_id);
+					stmt.setString(2, item);
+					stmt.setDouble(3, price);
+					stmt.executeUpdate();
+					
+					stmt2 = conn.prepareStatement(
+							"select * " +
+									" from menu " +
+									" where menu_name = ?"
+							);
+					stmt2.setString(1, item);
+					
+					resultSet = stmt2.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+					List<Menu> result = new ArrayList<Menu>();
+					while (resultSet.next()) {
+						found = true;
+						Menu m = new Menu();
+						loadMenu(m, resultSet, 1);
+						result.add(m);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + item + "> was not found in the menu table");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	//*******************************
+	//owner sees items in their menu
+	//*******************************
+	@Override
+	public List<Menu> seeMenuByOwner(final String owner) {
+		return executeTransaction(new Transaction<List<Menu>>() {
+			@Override
+			public List<Menu> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+
+				try {
+
+
+					stmt = conn.prepareStatement(
+							"select menu_item, menu_price  " +
+									" from menu, users, restaurants "  +
+									" where users.user_userName = ? "  +
+									" and users.user_id = restaurants.user_id " +
+									" and menu.rest_id = restaurants.rest_id; "
+							);
+					stmt.setString(1, owner);
+					List<Menu> result = new ArrayList<Menu>();
+					resultSet = stmt.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						Menu m = new Menu();
+						loadMenu(m, resultSet, 1);
+						result.add(m);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + owner + "> was not found in the Menus table");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
 	
 
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
@@ -447,7 +546,7 @@ public class DerbyDatabase implements IDatabase {
 							" create table menu (" +
 									" menu_id integer primary key " +
 									" 		generated always as identity (start with 1, increment by 1), " +
-									" rest_id varchar(10), "   +
+									" rest_id integer, "   +
 									" menu_item varchar(40), "      +
 									" menu_price varchar(20) "      +
 									")"
@@ -458,10 +557,10 @@ public class DerbyDatabase implements IDatabase {
 							" create table orders (" +
 									" order_id integer primary key " +
 									" 		generated always as identity (start with 1, increment by 1), " +
-									" patron_id varchar(10), "    +
-									" order_number varchar(20), " +
+									" patron_id integer, "    +
+									" order_number integer, " +
 									" item varchar(40), "		  +
-									" price varchar(20)"		  +
+									" price double"		  +
 									")"
 							);
 					stmt4.executeUpdate();

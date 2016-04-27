@@ -24,6 +24,8 @@ public interface IDatabase {
 
 	List<User> changeUsername(String name, String newName, String pswd);
 
-	//List<Menu> addItemToMenu(String item, Double price, int rest_id);
+	List<Menu> addItemToMenu(String item, Double price, int rest_id);
+
+	List<Menu> seeMenuByOwner(String owner);
 	
 }

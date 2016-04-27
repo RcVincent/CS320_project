@@ -7,30 +7,29 @@ import edu.ycp.cs320.lab03.DBpersist.DatabaseProvider;
 import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;
 import edu.ycp.cs320.lab03.DBpersist.IDatabase;
 
-public class RestaurantSearch {
+public class showOwnerTheirMenu {
 	private IDatabase db = null;
-	public RestaurantSearch() {
+	public showOwnerTheirMenu() {
 		
 		// Create the default IDatabase instance
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		db = DatabaseProvider.getInstance();
 	}
-		public ArrayList<Restaurant> RestByCity(String city){
-			List<Restaurant> restList = db.getListOfRestaurantsByCity(city);
-			ArrayList<Restaurant> rests = null;
+		public ArrayList<Menu> menuByOwner(String owner){
+			List<Menu> menuList = db.seeMenuByOwner(owner);
+			ArrayList<Menu> menus = null;
 			
-			if (restList.isEmpty()) {
-				System.out.println("No restaurants found");
+			if (menuList.isEmpty()) {
+				System.out.println("No menus found");
 				return null;
 			}
 			else {
-				rests = new ArrayList<Restaurant>();
-				for (Restaurant rest : restList) {
-					rests.add(rest);
+				menus = new ArrayList<Menu>();
+				for (Menu m : menuList) {
+					menus.add(m);
 				}			
 			}
-			
-			// return authors for this title
-			return rests;
+			// return menus
+			return menus;
 	}
 }
