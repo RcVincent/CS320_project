@@ -44,9 +44,12 @@ public class LoginServlet extends HttpServlet {
 				//if user is authenticated, call homepage
 				if(controller.authenticate(u, password)){
 					req.getSession(true).setAttribute("username", username);
-					resp.sendRedirect(req.getContextPath() + "/Homepage");
-					//				User user = null;
-					//				user.logIn(u, p);
+					if(u.getAccountType().equals("owner")){
+						resp.sendRedirect(req.getContextPath() + "/Baker'sDonutsOwnerPage");
+					}
+					else{
+						resp.sendRedirect(req.getContextPath() + "/Homepage");
+					}
 
 				}
 				else{

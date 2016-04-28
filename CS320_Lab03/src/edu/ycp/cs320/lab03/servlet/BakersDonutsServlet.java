@@ -21,7 +21,7 @@ public class BakersDonutsServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 		}
-		req.getRequestDispatcher("/_view/Baker's Donuts.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/Baker'sDonutsOwnerPage.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -48,6 +48,6 @@ public class BakersDonutsServlet extends HttpServlet {
 		
 		
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/Baker's Donuts.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/Baker'sDonutsOwnerPage.jsp").forward(req, resp);
 	}
 }

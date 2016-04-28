@@ -49,7 +49,7 @@ public class Patron extends User {
 	}
 
 	public Order createOrder(Restaurant r, String itemToOrder, boolean savedOrder){
-		this.o = new Order(itemToOrder, r, savedOrder);
+		this.o = new Order();
 		if(savedOrder){
 			addToSavedOrders(o);
 		}

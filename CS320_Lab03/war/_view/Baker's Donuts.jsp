@@ -43,7 +43,11 @@ body{
 #Content {
 	float: left;
 }
-
+button {
+	margin-top: 3px;
+	margin-left: 5px;
+	margin-bottom: 5px;
+}
 div.fixed {
 	position: fixed;
 	bottom: 10px;
@@ -99,11 +103,13 @@ td.label {
 
 			<div id="LinkContent">
 				<div id="LinkName">Menu</div>
-				<div id="ContentBody">
 					<form action="${pageContext.servletContext.contextPath}/Menu" method="get">
-					<input type="Submit" name="submit" value="Click to see our menu!"/>
+					<table>
+							<tr>
+								<td><input type="Submit" name="submit" value="Click to view our menu"/></td>
+							</tr>
+						</table>
 					</form>
-				</div>
 			</div>
 
 			<br>

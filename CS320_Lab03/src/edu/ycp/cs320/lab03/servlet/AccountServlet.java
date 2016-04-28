@@ -36,7 +36,6 @@ public class AccountServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		// Decode form parameters and dispatch to controller
-		String errorMessage = null;
 		String firstname = null;
 		String lastname = null;
 		String email = null;
@@ -44,7 +43,7 @@ public class AccountServlet extends HttpServlet {
 		String AccountType = null;
 		user = new getAccountInfo();
 		ArrayList<User> u = user.getInfo(username);
-			User use = u.get(0);
+		User use = u.get(0);
 		firstname = use.getFirstName();
 		lastname = use.getLastName();
 		email = use.getEmail();

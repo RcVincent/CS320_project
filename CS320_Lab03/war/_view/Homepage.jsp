@@ -55,7 +55,10 @@ button {
 .error {
 	color: red;
 }
+.Address {
+	font-size: 15px;
 
+}
 #Restaurants {
 	float: left;
 	border: 3px solid darkblue;
@@ -151,9 +154,9 @@ td.label {
 					<div id="LinkName">${restaurant.name}</div>
 					<table>
 						<tr>
-							<td>${restaurant.address },</td>
-							<td>${restaurant.city },</td>
-							<td>${restaurant.zipcode }</td>
+							<td class = "Address">${restaurant.address },</td>
+							<td class = "Address">${restaurant.city },</td>
+							<td class = "Address">${restaurant.zipCode }</td>
 							<form action="${pageContext.servletContext.contextPath}/${restaurant.name }" method="get">
 								<td><input type="submit" value="Click to view page"></td>
 							</form>
