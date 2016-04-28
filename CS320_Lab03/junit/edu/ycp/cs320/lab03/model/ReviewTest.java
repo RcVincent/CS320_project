@@ -24,20 +24,20 @@ public class ReviewTest {
 	}
 
 	@Test
-	public void getContentsTest() {
+	public void getContentsTest() throws Exception {
 		assertEquals("Good", rev.getReview());
 	}
 
-	public void getRatingsTest() {
+	public void getRatingsTest()throws Exception {
 		assertEquals(3, rev.getRating());
 	}
 
-	public void addReviewToRestaurant() {
+	public void addReviewToRestaurant() throws Exception {
 		r.addReview(rev);
 		assertEquals(1, r.reviews.size()); 
 	}
 
-	public void viewReview(){
+	public void viewReview() throws Exception {
 		r.reviews.get(0);
 	}
 

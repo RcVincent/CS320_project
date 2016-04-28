@@ -12,6 +12,8 @@ import org.junit.Test;
 import edu.ycp.cs320.lab03.DBpersist.DatabaseProvider;
 import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;
 import edu.ycp.cs320.lab03.DBpersist.IDatabase;
+import edu.ycp.cs320.lab03.model.Menu;
+import edu.ycp.cs320.lab03.model.Order;
 import edu.ycp.cs320.lab03.model.Owner;
 import edu.ycp.cs320.lab03.model.Patron;
 import edu.ycp.cs320.lab03.model.Restaurant;
@@ -25,8 +27,9 @@ public class DatabaseTests {
 	List<Patron> patronList = null;
 	List<User> userlist = null;
 	ArrayList<User> users = null; 
-
-
+	ArrayList<Menu> MenuList = null;
+	ArrayList<Order> OrderList = null; 
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -70,7 +73,7 @@ public class DatabaseTests {
 	 */
 	
 	@Test
-	public void searchByCityName() {
+	public void searchByCityName() throws Exception {
 		System.out.println("\n*** Searching for Restaurants by City ***");
 		String city = "Houston AZ"; 
 
@@ -99,7 +102,7 @@ public class DatabaseTests {
 	}
 	
 	@Test 
-	public void MatchUsersWithPassword() {
+	public void MatchUsersWithPassword() throws Exception {
 		System.out.println("\n*** Searching for Users ***"); 
 		
 		String userPassword = "pass"; 
@@ -124,14 +127,14 @@ public class DatabaseTests {
 		}
 		else {
 			users = new ArrayList<User>(); 
-			for(User u : userList) {
+			for(User u : users) {
 				users.add(u); 
 				System.out.println(u.getUserName() + ", " + u.getPassWord() + ", " + u.getFirstName() + ", " + u.getLastName());
 			}
 		}
 	}
 	@Test
-	public void addUserToDatabaseTest() {
+	public void addUserToDatabaseTest() throws Exception {
 		System.out.println("\n*** Adding Users to Database ***");
 
 		//SetUp
@@ -156,7 +159,7 @@ public class DatabaseTests {
 		}
 		else {
 			users = new ArrayList<User>(); 
-			for(User u : userlist) {
+			for(User u : users) {
 				users.add(u); 
 				System.out.println(u.getUserName() + ", " + u.getPassWord() + ", " +u.getEmail() + ", " +u.getAccountType() + ", "  + u.getFirstName() + ", " + u.getLastName());
 			}
@@ -164,7 +167,7 @@ public class DatabaseTests {
 	}
 
 	@Test
-	public void deleteUserFromDatabase() {
+	public void deleteUserFromDatabase() throws Exception {
 		System.out.println("\n *** Removing Users from Database ***");
 
 
@@ -224,6 +227,130 @@ public class DatabaseTests {
 		if(TestUser.getUserName() == newName) {
 			System.out.println("\n*** Changing Username ***");
 		}
+	}
+	
+	@Test
+	public void addItemToMenuTest() throws Exception {
+		//Set up
+		Restaurant r = new Restaurant(); 
+		String item1 = "pizza";
+		String item2 = "hotdog";
+		String item3 = "Special Brownies"; 
+				
+		//Load the items to the menu for this test case. 
+		r.getMenu().addToMenu(item1, 10.99);
+		r.getMenu().addToMenu(item2, 4.99);
+		r.getMenu().addToMenu(item3, 29.99);
+		
+		List<Menu> menulist = db.addItemToMenu(item1, r.getMenu().getItemPrice(item1), r.getRestID());
+		menulist = db.addItemToMenu(item2, r.getMenu().getItemPrice(item2), r.getRestID());
+		menulist = db.addItemToMenu(item3, r.getMenu().getItemPrice(item3), r.getRestID());
+		
+		assertEquals(10.99, menulist.get(0).getItemPrice(item1), 0.001);
+		assertEquals(4.99, menulist.get(1).getItemPrice(item2), 0.001);
+		assertEquals(29.99, menulist.get(2).getItemPrice(item3), 0.001);
+		
+		assertEquals(3, menulist.size());
+		if(menulist.isEmpty()) {
+			System.out.println("Error. No items were added to the menu");
+			fail("Something has gone terribly wrong"); 
+		}
+		else {
+			MenuList= new ArrayList<Menu>(); 
+			for(Menu m: MenuList) {
+				MenuList.add(m);
+				System.out.println("Adding Items"); 
+			}
+		}
+		
+		
+	}
+	
+	@Test
+	public void getMenuByRestName() throws Exception {
+		//Set up
+		Restaurant Rest = new Restaurant(); 
+		String desiredName = "PizzaPain"; 
+		Rest.setName("PizzaPain");
+		Menu m = new Menu(); 
+		
+		List<Menu> menulist = new ArrayList<Menu>(); 
+		menulist = db.menuByRestName(desiredName);
+
+		if(menulist.isEmpty()) {
+			System.out.println("No menus to find");
+			fail("Manuel! Go get the Menus!");
+		}
+		else {
+			for(Menu M: MenuList) {
+				MenuList.add(M); //this needs to be revised I know it is wrong. 
+				System.out.println("Retrieving Menu");
+			}
+		}
+			
+	}
+	
+	public void getPriceOffMenuTest() throws Exception {
+		//Set up
+		Menu m = new Menu();
+		String item1 = "Pizza"; 
+		String item2 = "Hamburger";
+		String item3 = "Hit in Head";
+		
+		m.addToMenu(item1, 7.99);
+		m.addToMenu(item2, 6.99);
+		m.addToMenu(item3, 0.99);
+		
+		List<Menu> menulist = new ArrayList<Menu>();
+		
+		//Operations and conditions 
+		menulist = db.getPriceOfMenuItem(item1); 
+		assertEquals(7.99, menulist.get(0).getItemPrice(item1), 0.001);
+		
+		menulist = db.getPriceOfMenuItem(item2);
+		assertEquals(6.99, menulist.get(1).getItemPrice(item2), 0.001);
+		
+		menulist = db.getPriceOfMenuItem(item3);
+		assertEquals(6.99, menulist.get(2).getItemPrice(item3), 0.001);
+		
+		if(menulist.isEmpty()){
+			System.out.println("There is no menu present");
+			fail("This has gotten rather silly"); 
+		}
+		//need another condition here for returns.	
+	}
+	
+	public void createOrderInTableTest() {
+		
+		Order o = new Order();
+		Order o2 = new Order();
+		Order o3 = new Order();
+		Patron p = new Patron(); 
+		Patron p2= new Patron(); 
+		Restaurant r = new Restaurant();  
+		Restaurant r2 = new Restaurant();  
+		
+		List<Order> orderList = new ArrayList<Order>(); 
+		
+		orderList = db.ceateOrderInTable(p.getPatronId(), o.getorderNumber(), r.getMenu().getItem(), r.getMenu().getItemPrice(r.getMenu().getItem()));
+		assertEquals(1, orderList.size());
+		orderList = db.ceateOrderInTable(p.getPatronId(), o2.getorderNumber(), r.getMenu().getItem(), r.getMenu().getItemPrice(r.getMenu().getItem()));
+		assertEquals(2, orderList.size());
+		orderList = db.ceateOrderInTable(p2.getPatronId(), o3.getorderNumber(), r2.getMenu().getItem(), r2.getMenu().getItemPrice(r2.getMenu().getItem()));
+		assertEquals(1, orderList.size());
+		
+		if(orderList.isEmpty()) {
+			System.out.println("Why is no one ordering anything!?");
+			fail("Manuel!!");
+		}
+		else {
+			for (Order O: OrderList){
+				OrderList.add(O); 
+				System.out.println("Creating Orders"); 
+			}
+		}
+		
+		
 	}
 }
 
