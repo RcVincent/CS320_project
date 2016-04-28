@@ -2,12 +2,12 @@ package edu.ycp.cs320.lab03.DBpersist;
 
 import java.util.List;
 
-import edu.ycp.cs320.lab03.controller.Menu;
-import edu.ycp.cs320.lab03.controller.Order;
-import edu.ycp.cs320.lab03.controller.Owner;
-import edu.ycp.cs320.lab03.controller.Pair;
-import edu.ycp.cs320.lab03.controller.Restaurant;
-import edu.ycp.cs320.lab03.controller.User;
+import edu.ycp.cs320.lab03.model.Menu;
+import edu.ycp.cs320.lab03.model.Order;
+import edu.ycp.cs320.lab03.model.Owner;
+import edu.ycp.cs320.lab03.model.Pair;
+import edu.ycp.cs320.lab03.model.Restaurant;
+import edu.ycp.cs320.lab03.model.User;
 
 //import edu.ycp.cs320.booksdb.model.Author;
 //import edu.ycp.cs320.booksdb.model.Book;
@@ -32,7 +32,6 @@ public interface IDatabase {
 	List<Menu> getPriceOfMenuItem(String item);
 
 	List<Order> ceateOrderInTable(int patId, int orderNum, String item, Double price);
-	
-	
+
 
 }

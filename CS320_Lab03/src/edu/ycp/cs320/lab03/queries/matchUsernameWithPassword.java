@@ -6,7 +6,7 @@ import java.util.List;
 import edu.ycp.cs320.lab03.DBpersist.DatabaseProvider;
 import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;
 import edu.ycp.cs320.lab03.DBpersist.IDatabase;
-import edu.ycp.cs320.lab03.controller.User;
+import edu.ycp.cs320.lab03.model.User;
 
 public class matchUsernameWithPassword {
 	private IDatabase db = null;

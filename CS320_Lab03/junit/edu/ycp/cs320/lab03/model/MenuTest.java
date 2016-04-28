@@ -7,9 +7,6 @@ import java.awt.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.ycp.cs320.lab03.controller.Menu;
-import edu.ycp.cs320.lab03.controller.Restaurant;
-
 public class MenuTest {
 	private Menu menu; 
 	

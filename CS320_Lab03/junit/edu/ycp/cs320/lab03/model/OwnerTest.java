@@ -5,9 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.ycp.cs320.lab03.controller.Owner;
-import edu.ycp.cs320.lab03.controller.Restaurant;
-
 public class OwnerTest {
 	private Owner BigO;
 	private Restaurant r1; 

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab03.controller.AddNumbersController;
 import edu.ycp.cs320.lab03.controller.ProjectController;
-import edu.ycp.cs320.lab03.controller.User;
+import edu.ycp.cs320.lab03.model.User;
 
 
 public class AccountServlet extends HttpServlet {

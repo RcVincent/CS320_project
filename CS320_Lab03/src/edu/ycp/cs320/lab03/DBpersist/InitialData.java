@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.ycp.cs320.lab03.controller.Owner;
-import edu.ycp.cs320.lab03.controller.Restaurant;
-import edu.ycp.cs320.lab03.controller.Patron;
-import edu.ycp.cs320.lab03.controller.Menu;
-import edu.ycp.cs320.lab03.controller.Order;
-import edu.ycp.cs320.lab03.controller.Review;
-import edu.ycp.cs320.lab03.controller.User;
+import edu.ycp.cs320.lab03.model.Menu;
+import edu.ycp.cs320.lab03.model.Order;
+import edu.ycp.cs320.lab03.model.Owner;
+import edu.ycp.cs320.lab03.model.Patron;
+import edu.ycp.cs320.lab03.model.Restaurant;
+import edu.ycp.cs320.lab03.model.Review;
+import edu.ycp.cs320.lab03.model.User;
 
 public class InitialData {
 
@@ -109,6 +109,7 @@ public class InitialData {
 			readMenu.close();
 		}
 	}
+//	orders table will be empty until order is created by user
 //	public static List<Order> getOrders() throws IOException {
 //		List<Order> orderList = new ArrayList<Order>();
 //		ReadCSV readMenu = new ReadCSV("orders.csv");

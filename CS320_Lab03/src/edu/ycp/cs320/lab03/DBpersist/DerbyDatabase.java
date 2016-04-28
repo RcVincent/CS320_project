@@ -9,12 +9,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ycp.cs320.lab03.controller.Menu;
-import edu.ycp.cs320.lab03.controller.Order;
-import edu.ycp.cs320.lab03.controller.Owner;
-import edu.ycp.cs320.lab03.controller.Patron;
-import edu.ycp.cs320.lab03.controller.Restaurant;
-import edu.ycp.cs320.lab03.controller.User;
+import edu.ycp.cs320.lab03.model.Menu;
+import edu.ycp.cs320.lab03.model.Order;
+import edu.ycp.cs320.lab03.model.Owner;
+import edu.ycp.cs320.lab03.model.Patron;
+import edu.ycp.cs320.lab03.model.Restaurant;
+import edu.ycp.cs320.lab03.model.User;
 
 public class DerbyDatabase implements IDatabase {
 	static {
@@ -378,7 +378,7 @@ public class DerbyDatabase implements IDatabase {
 
 
 					stmt = conn.prepareStatement(
-							"select menu_item, menu_price  " +
+							"select menu.*  " +
 									" from menu, restaurants "  +
 									" where rest_name = ? "  +
 									" and menu.rest_id = restaurants.rest_id; "
@@ -428,7 +428,7 @@ public class DerbyDatabase implements IDatabase {
 
 
 					stmt = conn.prepareStatement(
-							"select menu_price  " +
+							"select menu.*  " +
 									" from menu "  +
 									" where menu_item = ? "  
 							);

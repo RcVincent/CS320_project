@@ -6,9 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.ycp.cs320.lab03.controller.Address;
-import edu.ycp.cs320.lab03.controller.Menu;
-import edu.ycp.cs320.lab03.controller.Order;
-import edu.ycp.cs320.lab03.controller.Restaurant;
 
 public class OrderTest {
 	private Order testOrder;
