@@ -7,16 +7,16 @@ import edu.ycp.cs320.lab03.DBpersist.DatabaseProvider;
 import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;
 import edu.ycp.cs320.lab03.DBpersist.IDatabase;
 
-public class showOwnerTheirMenu {
+public class ViewMenuByRestaurantName {
 	private IDatabase db = null;
-	public showOwnerTheirMenu() {
+	public ViewMenuByRestaurantName() {
 		
 		// Create the default IDatabase instance
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		db = DatabaseProvider.getInstance();
 	}
-		public ArrayList<Menu> menuByOwner(String owner){
-			List<Menu> menuList = db.seeMenuByOwner(owner);
+		public ArrayList<Menu> menuByRestaurantName(String rest){
+			List<Menu> menuList = db.menuByRestName(rest);
 			ArrayList<Menu> menus = null;
 			
 			if (menuList.isEmpty()) {

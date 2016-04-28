@@ -26,6 +26,8 @@ public interface IDatabase {
 
 	List<Menu> addItemToMenu(String item, Double price, int rest_id);
 
-	List<Menu> seeMenuByOwner(String owner);
+	List<Menu> menuByRestName(String rest);
+	
+	
 	
 }
