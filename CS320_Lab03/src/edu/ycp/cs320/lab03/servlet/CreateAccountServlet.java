@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab03.controller.AddNumbersController;
-import edu.ycp.cs320.lab03.controller.AddUserToDatabase;
 import edu.ycp.cs320.lab03.controller.Owner;
 import edu.ycp.cs320.lab03.controller.Patron;
 import edu.ycp.cs320.lab03.controller.ProjectController;
-import edu.ycp.cs320.lab03.controller.RestaurantSearch;
 import edu.ycp.cs320.lab03.controller.User;
+import edu.ycp.cs320.lab03.queries.AddUserToDatabase;
+import edu.ycp.cs320.lab03.queries.RestaurantSearch;
 
 
 public class CreateAccountServlet extends HttpServlet {

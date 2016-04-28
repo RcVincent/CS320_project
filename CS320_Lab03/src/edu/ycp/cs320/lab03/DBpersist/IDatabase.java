@@ -3,6 +3,7 @@ package edu.ycp.cs320.lab03.DBpersist;
 import java.util.List;
 
 import edu.ycp.cs320.lab03.controller.Menu;
+import edu.ycp.cs320.lab03.controller.Order;
 import edu.ycp.cs320.lab03.controller.Owner;
 import edu.ycp.cs320.lab03.controller.Pair;
 import edu.ycp.cs320.lab03.controller.Restaurant;
@@ -27,7 +28,11 @@ public interface IDatabase {
 	List<Menu> addItemToMenu(String item, Double price, int rest_id);
 
 	List<Menu> menuByRestName(String rest);
+
+	List<Menu> getPriceOfMenuItem(String item);
+
+	List<Order> ceateOrderInTable(int patId, int orderNum, String item, Double price);
 	
 	
-	
+
 }

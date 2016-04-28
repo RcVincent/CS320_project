@@ -1,22 +1,24 @@
-package edu.ycp.cs320.lab03.controller;
+package edu.ycp.cs320.lab03.queries;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import edu.ycp.cs320.lab03.DBpersist.DatabaseProvider;
 import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;
 import edu.ycp.cs320.lab03.DBpersist.IDatabase;
 
-public class DeleteUserFromDatabase {
+public class AddUserToDatabase {
 	private IDatabase db = null;
-	public DeleteUserFromDatabase() {
+	public AddUserToDatabase() {
 		
 		// Create the default IDatabase instance
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		db = DatabaseProvider.getInstance();
 	
 	}
-	public void DeleteUser(String name, String pswd){
+	public void AddUser(String name, String pswd, String email, String type, String first, String last){
 		
-		db.DeleteUserFromDatabase(name, pswd);
+		db.addUserToDatabase(name, pswd, email, type, first, last);
 	}
 }

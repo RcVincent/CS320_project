@@ -1,4 +1,4 @@
-package edu.ycp.cs320.lab03.controller;
+package edu.ycp.cs320.lab03.queries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,31 +6,31 @@ import java.util.List;
 import edu.ycp.cs320.lab03.DBpersist.DatabaseProvider;
 import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;
 import edu.ycp.cs320.lab03.DBpersist.IDatabase;
+import edu.ycp.cs320.lab03.controller.Menu;
+import edu.ycp.cs320.lab03.controller.Restaurant;
 
-public class RestaurantSearch {
+public class GetPriceOfMenuItem {
 	private IDatabase db = null;
-	public RestaurantSearch() {
+	public GetPriceOfMenuItem() {
 		
 		// Create the default IDatabase instance
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		db = DatabaseProvider.getInstance();
 	}
-		public ArrayList<Restaurant> RestByCity(String city){
-			List<Restaurant> restList = db.getListOfRestaurantsByCity(city);
-			ArrayList<Restaurant> rests = null;
+		public ArrayList<Menu> priceOfItem(String item){
+			List<Menu> mList = db.getPriceOfMenuItem(item);
+			ArrayList<Menu> menus = null;
 			
-			if (restList.isEmpty()) {
+			if (mList.isEmpty()) {
 				System.out.println("No restaurants found");
 				return null;
 			}
 			else {
-				rests = new ArrayList<Restaurant>();
-				for (Restaurant rest : restList) {
-					rests.add(rest);
+				menus = new ArrayList<Menu>();
+				for (Menu m : mList) {
+					menus.add(m);
 				}			
 			}
-			
-			// return authors for this title
-			return rests;
+			return menus;
 	}
 }
