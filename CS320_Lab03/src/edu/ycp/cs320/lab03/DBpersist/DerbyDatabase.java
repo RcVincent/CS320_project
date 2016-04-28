@@ -273,7 +273,7 @@ public class DerbyDatabase implements IDatabase {
 					// return all users and see that the one entered was deleted
 					
 					stmt2 = conn.prepareStatement(
-							"select user_userName from users " 	+
+							"select * from users " 	+
 									" where user_userName = ? "
 							);
 					//ensure new userName is in database
@@ -548,7 +548,7 @@ public class DerbyDatabase implements IDatabase {
 									" 		generated always as identity (start with 1, increment by 1), " +
 									" rest_id integer, "   +
 									" menu_item varchar(40), "      +
-									" menu_price varchar(20) "      +
+									" menu_price double"      +
 									")"
 							);
 					stmt3.executeUpdate();
@@ -659,7 +659,7 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("Loading initial data...");
 		db.loadInitialData();
 		System.out.println("loaded intial data");
-		System.out.println("Major Success!");
+		System.out.println("dropped again loser");
 	}
 
 
