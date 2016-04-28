@@ -92,11 +92,13 @@ td.label {
 
 			<div id="LinkContent">
 				<div id="LinkName">Home</div>
-				<div id="ContentBody">
-					<button>
-						<a href="/lab03/Homepage">Click here to return to the home page</a>
-					</button>
-				</div>
+				<form action="${pageContext.servletContext.contextPath}/Homepage" method="post">
+					<table>
+							<tr>
+								<td><input type="Submit" name="submit" value="Click to go to Homepage"/></td>
+							</tr>
+						</table>
+					</form>
 			</div>
 
 			<br>

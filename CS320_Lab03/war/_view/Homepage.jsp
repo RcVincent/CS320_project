@@ -114,7 +114,7 @@ td.label {
 						<td><input type="search" name="search" size="12" placeholder="Search"/></td>
 						<td><input type="Submit" name="submit" value="Search"/></td>
 						<td><input type="radio" name="searchType" value="city" checked>City</td>
-						<td><input type="radio" name="searchType" value="name">Name</td>
+
 					</form>
 				</tr>
 			</table>
@@ -145,8 +145,25 @@ td.label {
 				</form>
 			</div>
 		</div>
+	<c:if test="${! empty utype}">
+	<br>
+		<div id="LinkContent">
+			<div id="LinkName">Your Restaurants</div>
+				<div>
+					<form action="${pageContext.servletContext.contextPath}/OwnerPage"
+							method="get">
+							<table>
+								<tr>
+								<td><input type="Submit" name="submit" value="Click to view Your Restaurants"/></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</c:if>
 	</div>
-	<c:if test="${! empty search}">
+	<c:if test="${! empty rest}">
 		<div id="results">Search Results</div>
 		<div id="Restaurants">
 			<c:forEach items="${rest}" var="restaurant">
@@ -167,7 +184,7 @@ td.label {
 		</div>
 	</c:if>
 
-	<c:if test="${ empty search}">
+	<c:if test="${ empty rest}">
 		<div id="results">Make America Fat Again</div>
 	</c:if>
 	<div class="fixed">

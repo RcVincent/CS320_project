@@ -15,6 +15,6 @@ public class AddItemToMenu {
 	}
 	public void AddUser(String item, Double price, int rest_id){
 		
-		//db.addItemToMenu(item, price, rest_id);
+		db.addItemToMenu(item, price, rest_id);
 	}
 }

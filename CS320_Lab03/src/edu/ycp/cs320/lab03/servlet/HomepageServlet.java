@@ -25,7 +25,13 @@ public class HomepageServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 		}
-
+		String utype = null;
+		String userType = (String) req.getSession().getAttribute("type");
+		// Add parameters as request attributes
+		if(userType.equals("owner")){
+			utype = "owner";
+		}
+		req.setAttribute("utype", utype);
 		// now we have the user's User object,
 		// proceed to handle request...
 		req.getRequestDispatcher("/_view/Homepage.jsp").forward(req, resp);
@@ -38,18 +44,13 @@ public class HomepageServlet extends HttpServlet {
 		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
 		String city = null;
+
 		search = new RestaurantSearch();
 		ArrayList<Restaurant> rest = null;
 		city = req.getParameter("search");
-		rest = search.RestByCity(city);;
-
-
-
-		// Add parameters as request attributes
+		rest = search.RestByCity(city);
+		
 		req.setAttribute("rest", rest);
-		req.setAttribute("search", city);
-		// Add result objects as request attributes
-		req.setAttribute("errorMessage", errorMessage);
 
 
 		// Forward to view to render the result HTML document
