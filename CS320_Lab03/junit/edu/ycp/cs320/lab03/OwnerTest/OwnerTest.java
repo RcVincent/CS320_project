@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.ycp.cs320.lab03.controller.Owner;
-import edu.ycp.cs320.lab03.controller.Restaurant;
+import edu.ycp.cs320.lab03.model.Owner;
+import edu.ycp.cs320.lab03.model.Restaurant;
 
 public class OwnerTest {
 	private Owner BigO;
@@ -14,7 +14,7 @@ public class OwnerTest {
 	private Restaurant r2;
 	@Before
 	public void setUp() throws Exception{
-		BigO = new Owner("name", "password");
+		BigO = new Owner();
 		BigO.addToRestaurants(r1);
 		BigO.addToRestaurants(r2);
 	}

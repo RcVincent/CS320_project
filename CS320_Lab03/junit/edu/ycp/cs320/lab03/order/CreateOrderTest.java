@@ -5,20 +5,19 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.ycp.cs320.lab03.controller.Address;
-import edu.ycp.cs320.lab03.controller.Menu;
-import edu.ycp.cs320.lab03.controller.Order;
-import edu.ycp.cs320.lab03.controller.Restaurant;
+import edu.ycp.cs320.lab03.model.Menu;
+import edu.ycp.cs320.lab03.model.Order;
+import edu.ycp.cs320.lab03.model.Restaurant;
 
 public class CreateOrderTest {
 	private Order testOrder;
 	private Order testOrder2;
 	
-	private Address add; 
+ 
 	private Restaurant r;
 	
-	private Float price1 = (float) 10.99;
-	private Float price2 = (float) 4.99;
+	private Double price1 = 10.99;
+	private Double price2 = 4.99;
 
 	private Menu testMenu1;
 	private String pizza = "pizza"; 
@@ -30,17 +29,17 @@ public class CreateOrderTest {
 		testMenu1 = new Menu(); 
 	
 		
-		add = new Address(175, "Jackson St", "York", "PA", 17403); 
 		
-		r = new Restaurant("Name", add); 
+		
+		r = new Restaurant(); 
 		r.setMenu(testMenu1);
 		
 		r.getMenu().addToMenu(pizza, price1);
 		r.getMenu().addToMenu(Sandwich, price2); 
 			
 		
-		testOrder = new Order("Sandwich", r, false); 
-		testOrder2 = new Order("pizza", r, true);
+		testOrder = new Order(); 
+		testOrder2 = new Order();
 		
 		
 		
@@ -51,8 +50,8 @@ public class CreateOrderTest {
 	
 	@Test
 	public void getConfirmationNumberTest() throws Exception {
-		testOrder.getConfirmationNumber();
-		testOrder2.getConfirmationNumber();
+		testOrder.getorderNumber();
+		testOrder2.getorderNumber();
 	}
 	
 	@Test
@@ -63,8 +62,8 @@ public class CreateOrderTest {
 	
 	@Test
 	public void TestTakeOut() {
-		assertFalse(testOrder.isTakeOut());
-		assertTrue(testOrder2.isTakeOut());
+		assertFalse(testOrder.getTakeOut());
+		assertTrue(testOrder2.getTakeOut());
 	}
 }
 

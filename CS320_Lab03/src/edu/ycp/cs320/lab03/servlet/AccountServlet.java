@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab03.controller.AddNumbersController;
 import edu.ycp.cs320.lab03.controller.ProjectController;
-import edu.ycp.cs320.lab03.controller.User;
+import edu.ycp.cs320.lab03.model.User;
 
 
 public class AccountServlet extends HttpServlet {
@@ -18,6 +18,13 @@ public class AccountServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		String user = (String) req.getSession().getAttribute("username");
+		if (user == null) {
+			// user is not logged in, or the session expired
+			resp.sendRedirect(req.getContextPath() + "/Login");
+			return;
+		}
+		
 		req.getRequestDispatcher("/_view/Account.jsp").forward(req, resp);
 	}
 
@@ -26,26 +33,31 @@ public class AccountServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		// Decode form parameters and dispatch to controller
-		User use = null;
 		String errorMessage = null;
+		String firstname = null;
+		String lastname = null;
+		String email = null;
+		String username = null;
+		String AccountType = null;
 		try {
 			
-			String username = use.getUsername();
-			
-
+			firstname = (String) req.getSession().getAttribute("firstname");
+			lastname = (String) req.getSession().getAttribute("lastname");
+			email = (String) req.getSession().getAttribute("email");
+			username = (String) req.getSession().getAttribute("username");
+			AccountType  = (String) req.getSession().getAttribute("AccountType");
 			
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid parameters";
 		}
 
 		// Add parameters as request attributes
-//		req.setAttribute("firstName", req.getParameter("firstName"));
-//		req.setAttribute("lastName", req.getParameter("lastName"));
-		req.setAttribute("userName", req.getParameter("userName"));
-//		req.setAttribute("password", req.getParameter("password"));
-//		req.setAttribute("email", req.getAttribute("email"));
-
-		// Add result objects as request attributes
+		req.setAttribute("firstname", firstname);
+		req.setAttribute("lastname", lastname);
+		req.setAttribute("email", email);
+		req.setAttribute("username", username);
+		req.setAttribute("AccountType", AccountType);
+		
 
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/Account.jsp").forward(req, resp);

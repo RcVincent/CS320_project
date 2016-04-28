@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.lab03.controller.Patron;
 import edu.ycp.cs320.lab03.controller.ProjectController;
+import edu.ycp.cs320.lab03.model.Patron;
 
 public class FavoritesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -16,6 +16,12 @@ public class FavoritesServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		String user = (String) req.getSession().getAttribute("username");
+		if (user == null) {
+			// user is not logged in, or the session expired
+			resp.sendRedirect(req.getContextPath() + "/Login");
+			return;
+		}
 		req.getRequestDispatcher("/_view/Favorites.jsp").forward(req, resp);
 	}
 	

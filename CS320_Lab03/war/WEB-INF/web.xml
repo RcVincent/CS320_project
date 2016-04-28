@@ -39,6 +39,11 @@
     <servlet-name>FavoritesServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab03.servlet.FavoritesServlet</servlet-class>
    </servlet>
+   <servlet>
+    <servlet-name>BakersDonutsServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab03.servlet.BakersDonutsServlet</servlet-class>
+   </servlet>
+ 
   
   <!-- AJAX servlets. -->
   <servlet>
@@ -83,7 +88,10 @@
     <servlet-name>FavoritesServlet</servlet-name>
     <url-pattern>/Favorites</url-pattern>
   </servlet-mapping>
-   
+    <servlet-mapping>
+    <servlet-name>BakersDonutsServlet</servlet-name>
+    <url-pattern>/Baker's Donuts</url-pattern>
+  </servlet-mapping>   
 
 
   <!--  AJAX servlet mappings. -->

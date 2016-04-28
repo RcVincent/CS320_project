@@ -7,15 +7,15 @@ import java.awt.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.ycp.cs320.lab03.controller.Menu;
-import edu.ycp.cs320.lab03.controller.Restaurant;
+import edu.ycp.cs320.lab03.model.Menu;
+import edu.ycp.cs320.lab03.model.Restaurant;
 
 public class MenuAddITemsTest {
 	private Menu menu; 
 	
-	private Float price1;
-	private Float price2;
-	private Float price3;
+	private Double price1;
+	private Double price2;
+	private Double price3;
 	
 	@Before
 	public void  setUp() throws Exception {
@@ -24,9 +24,9 @@ public class MenuAddITemsTest {
 		
 		
 		//set up test item prices
-		price1 =  (float) 10.99;
-		price2 = (float) 4.50;
-		price3 = (float) 7.50;	
+		price1 = 10.99;
+		price2 = 4.50;
+		price3 = 7.50;	
 		
 		menu.addToMenu("hamburger", price1);
 		menu.addToMenu("hotdog", price2);

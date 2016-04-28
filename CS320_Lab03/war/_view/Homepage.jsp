@@ -7,14 +7,12 @@
 <title>Track N Snack Home</title>
 <style type="text/css">
 #PageName {
-	color: darkblue;
-	font-size: 200%;
+	color: white;
+	font-size: 250%;
 	text-align: center;
-	border-top: 3px solid darkblue;
-	border-bottom: 3px solid darkblue;
+	background-color: darkblue;
 	font-variant: small-caps;
 }
-
 #LinkContent {
 	float: left;
 	border: 1px solid darkblue;
@@ -23,7 +21,6 @@
 	margin-top: 13px;
 	margin-bottom: 13px;
 }
-
 #LinkName {
 	color: darkblue;
 	font-size: 150%;
@@ -58,18 +55,37 @@ button {
 .error {
 	color: red;
 }
-#results{
+
+#Restaurants {
+	float: left;
+	border: 3px solid darkblue;
+	width: 50%;
+	margin-left: 150px;
+	margin-top: 13px;
+	margin-bottom: 13px;
+	font-size: 150%;
+}
+
+#results {
 	margin-top: 20px;
 	margin-left: 150px;
 	width: 50%;
-	color: darkblue;
+	color: white;
 	font-size: 200%;
 	text-align: center;
+	background-color: darkblue;
 	border-top: 3px solid darkblue;
 	border-bottom: 3px solid darkblue;
 	font-variant: small-caps;
 	float: left;
+	
 }
+
+#resultList {
+	font-size: 150%;
+	text-align: center;
+}
+
 td.label {
 	text-align: right;
 }
@@ -82,57 +98,75 @@ td.label {
 		<div class="error">${errorMessage}</div>
 	</c:if>
 
-	<form action="${pageContext.servletContext.contextPath}/Homepage" method = "post">
 
-		<div id="PageName">Track N Snack</div>
-
-		<div id="Content">
-
-			<div id="LinkContent">
-				<div id="LinkName">Search</div>
-
-				<table>
-					<tr>
+	<div id="PageName">Track N Snack</div>
+	<div id="Content">
+		<div id="LinkContent">
+			<div id="LinkName">Search</div>
+			<table>
+				<tr>
+					<form action="${pageContext.servletContext.contextPath}/Homepage"
+						method="post">
 						<td class="label"></td>
-						<td><input type="search" name="search" size="12" required/></td>
-						<td><input type="Submit" name="submit" value="Search" /></td>
-					</tr>
-				</table>
-			</div>
-
-			<br>
-
-			<div id="LinkContent">
-				<div id="LinkName">Favorites</div>
-				<div id="ContentBody">
+						<td><input type="search" name="search" size="12" placeholder="Search"/></td>
+						<td><input type="Submit" name="submit" value="Search"/></td>
+						<td><input type="radio" name="searchType" value="city" checked>City</td>
+						<td><input type="radio" name="searchType" value="name">Name</td>
+					</form>
+				</tr>
+			</table>
+		</div>
+		<br>
+		<div id="LinkContent">
+			<div id="LinkName">Favorites</div>
+			<div id="ContentBody">
+				<div>
 					<button>
-						<a href="/lab03/Favorites">Click here to view favorites</a>
-					</button>
-				</div>
-			</div>
-
-			<br>
-
-			<div id="LinkContent">
-				<div id="LinkName">Your Account</div>
-				<div id="ContentBody">
-					<button>
-						<a href="/lab03/Account">Click here to view your account details</a>
+						<a href="/lab03/Favorites"><type= "button">Click to
+							view Favorites</a>
 					</button>
 				</div>
 			</div>
 		</div>
-		<c:if test="${! empty search}">
-			<div id="results">Search Results</div>
-		</c:if>
-		<c:if test="${ empty search}">
-			<div id="results">Because Food</div>
-		</c:if>
-		<div class="fixed">
-			<button>
-				<a href="/lab03/Login">Logout</a>
-			</button>
+		<br>
+		<div id="LinkContent">
+			<div id="LinkName">Your Account</div>
+			<div>
+				<button>
+					<a href="/lab03/Account"><type= "button">Click to view
+						account info</a>
+				</button>
+			</div>
 		</div>
-	</form>
+	</div>
+	<c:if test="${! empty search}">
+		<div id="results">Search Results</div>
+		<div id="Restaurants">
+			<c:forEach items="${rest}" var="restaurant">
+				<div id="LinkContent">
+					<div id="LinkName">${restaurant.name}</div>
+					<table>
+						<tr>
+							<td class="label"></td>
+							<form
+								action="${pageContext.servletContext.contextPath}/${restaurant.name }"
+								method="get">
+								<td><input type="submit" value="Click to view page"></td>
+							</form>
+						</tr>
+					</table>
+				</div>
+			</c:forEach>
+		</div>
+	</c:if>
+
+	<c:if test="${ empty search}">
+		<div id="results">Make America Fat Again</div>
+	</c:if>
+	<div class="fixed">
+		<button>
+			<a href="/lab03/Login"><type="button">Logout </a>
+		</button>
+	</div>
 </body>
 </html>

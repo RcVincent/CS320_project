@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.ycp.cs320.lab03.controller.Address;
-import edu.ycp.cs320.lab03.controller.Menu;
-import edu.ycp.cs320.lab03.controller.Order;
-import edu.ycp.cs320.lab03.controller.Restaurant;
+
+import edu.ycp.cs320.lab03.model.Menu;
+import edu.ycp.cs320.lab03.model.Order;
+import edu.ycp.cs320.lab03.model.Restaurant;
 
 public class RestaurantTest {
 	private Restaurant r;
@@ -19,18 +19,18 @@ public class RestaurantTest {
 	private Order TestOrder; 
 	private Order TestOrder2;
 	private Order TestOrder3;
-	private Address add; 
+
 	private Menu menu; 
 	
-	private Float price1 = (float) 14.99;
-	private Float price2 = (float) 9.99; 
-	private Float price3 = (float) 6.99;
+	private Double price1 =  14.99;
+	private Double price2 =  9.99; 
+	private Double price3 =  6.99;
 	
 	
 	@Before
 	public void setUp() throws Exception {
-		add = new Address(175, "Jackson St", "York", "PA", 17403); 
-		r = new Restaurant("Yorktown", add); 
+		
+		r = new Restaurant();
 		menu = new Menu(); 
 		r.setMenu(menu);
 		
@@ -40,9 +40,9 @@ public class RestaurantTest {
 		
 		
 		
-		TestOrder = new Order("Large Pizza", r, false); 
-		TestOrder2 = new Order("Medium Pizza", r, false);
-		TestOrder3 = new Order("Small Pizza", r, false);
+		TestOrder = new Order(); 
+		TestOrder2 = new Order();
+		TestOrder3 = new Order();
 		
 		r.ordersList.add(TestOrder);
 		r.ordersList.add(TestOrder2);
