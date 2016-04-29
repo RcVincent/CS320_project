@@ -507,10 +507,10 @@ public class DerbyDatabase implements IDatabase {
 	//Get the price of an item to build an order
 	//***********************************************
 	@Override
-	public List<Menu> getPriceOfMenuItem(final String item) {
-		return executeTransaction(new Transaction<List<Menu>>() {
+	public Menu getPriceOfMenuItem(final String item) {
+		return executeTransaction(new Transaction<Menu>() {
 			@Override
-			public List<Menu> execute(Connection conn) throws SQLException {
+			public Menu execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
@@ -523,7 +523,7 @@ public class DerbyDatabase implements IDatabase {
 									" where menu_item = ? "  
 							);
 					stmt.setString(1, item);
-					List<Menu> result = new ArrayList<Menu>();
+					Menu result = new Menu();
 					resultSet = stmt.executeQuery();
 
 					// for testing that a result was returned
@@ -534,7 +534,7 @@ public class DerbyDatabase implements IDatabase {
 
 						Menu m = new Menu();
 						loadMenu(m, resultSet, 1);
-						result.add(m);
+						result = m;
 					}
 
 					// check if the title was found
@@ -580,8 +580,8 @@ public class DerbyDatabase implements IDatabase {
 									" where order_number = ? " +
 									" and patron_id = ? "
 							);
-					stmt2.setString(1, item);
-					
+					stmt2.setInt(1, orderNum);
+					stmt2.setInt(2, patId);
 					resultSet = stmt2.executeQuery();
 
 					// for testing that a result was returned

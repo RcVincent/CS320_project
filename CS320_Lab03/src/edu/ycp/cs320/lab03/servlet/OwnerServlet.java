@@ -34,9 +34,6 @@ public class OwnerServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-
-		// Add parameters as request attributes
-		//req.setAttribute("rest", req.getSession().getAttribute("rest"));
 		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/OwnerPage.jsp").forward(req, resp);

@@ -35,7 +35,7 @@ public interface IDatabase {
 	
 	List<Menu> menuByRestName(String rest);
 
-	List<Menu> getPriceOfMenuItem(String item);
+	Menu getPriceOfMenuItem(String item);
 
 	List<Order> ceateOrderInTable(int patId, int orderNum, String item, Double price);
 

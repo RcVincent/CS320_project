@@ -17,20 +17,14 @@ public class GetPriceOfMenuItem {
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		db = DatabaseProvider.getInstance();
 	}
-		public ArrayList<Menu> priceOfItem(String item){
-			List<Menu> mList = db.getPriceOfMenuItem(item);
-			ArrayList<Menu> menus = null;
+		public Menu priceOfItem(String item){
+			Menu MenItem = db.getPriceOfMenuItem(item);
 			
-			if (mList.isEmpty()) {
+			if (MenItem == null) {
 				System.out.println("No restaurants found");
 				return null;
 			}
-			else {
-				menus = new ArrayList<Menu>();
-				for (Menu m : mList) {
-					menus.add(m);
-				}			
-			}
-			return menus;
+
+			return MenItem;
 	}
 }
