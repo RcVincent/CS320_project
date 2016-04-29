@@ -50,12 +50,14 @@ button{
 			</tr>
 			<tr>
 				<td class="label">Password:</td>
-				<td><input type="password" name="password" size="12"  /></td>
+
+				<td><input type="password" name="password" size="12" /></td>
 			</tr>
 		</table>
 		<div>
 			<input type="Submit" name="submit" value="Login" />
 		</form>
+
 		</div>
 		<div>
 			<form action="${pageContext.servletContext.contextPath}/CreateAccount" method="get">
