@@ -50,16 +50,18 @@ button{
 			</tr>
 			<tr>
 				<td class="label">Password:</td>
+
 				<td><input type="password" name="password" size="12" /></td>
 			</tr>
 		</table>
 		<div>
 			<input type="Submit" name="submit" value="Login" />
+	</form>
 		</div>
 		<div>
 			<button><a href="/lab03/CreateAccount"><type= "button">Click to create account</a></button>
 		</div>
 		</div>
-	</form>
+	
 </body>
 </html>

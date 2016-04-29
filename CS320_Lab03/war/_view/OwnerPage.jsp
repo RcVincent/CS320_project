@@ -97,7 +97,7 @@ td.label {
 							<td class = "Address">${restaurant.address },</td>
 							<td class = "Address">${restaurant.city },</td>
 							<td class = "Address">${restaurant.zipCode }</td>
-							<form action="${pageContext.servletContext.contextPath}/${restaurant.name }" method="get">
+							<form action="${pageContext.servletContext.contextPath}/${restaurant.name }" method="post">
 								<td><input type="submit" value="Click to view your page"></td>
 							</form>
 						</tr>

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.lab03.controller.ProjectController;
 import edu.ycp.cs320.lab03.model.Restaurant;
 import edu.ycp.cs320.lab03.model.User;
-import edu.ycp.cs320.lab03.query.RestaurantSearch;
+import edu.ycp.cs320.lab03.queries.RestaurantSearch;
 
 public class HomepageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

@@ -11,8 +11,6 @@ import java.util.List;
 
 import edu.ycp.cs320.lab03.model.Menu;
 import edu.ycp.cs320.lab03.model.Order;
-import edu.ycp.cs320.lab03.model.Owner;
-import edu.ycp.cs320.lab03.model.Patron;
 import edu.ycp.cs320.lab03.model.Restaurant;
 import edu.ycp.cs320.lab03.model.User;
 
@@ -180,6 +178,7 @@ public class DerbyDatabase implements IDatabase {
 				} finally {
 					DBUtil.closeQuietly(resultSet);
 					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
 				}
 			}
 		});
@@ -244,7 +243,7 @@ public class DerbyDatabase implements IDatabase {
 			@Override
 			public List<User> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
-				PreparedStatement stmt2 = null;
+				PreparedStatement stmt2 = null; 
 				ResultSet resultSet = null;
 
 				try {
@@ -288,6 +287,7 @@ public class DerbyDatabase implements IDatabase {
 				} finally {
 					DBUtil.closeQuietly(resultSet);
 					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
 				}
 			}
 		});
@@ -350,6 +350,7 @@ public class DerbyDatabase implements IDatabase {
 				} finally {
 					DBUtil.closeQuietly(resultSet);
 					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
 				}
 			}
 		});
@@ -407,7 +408,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
 				ResultSet resultSet = null;
-				ResultSet resultSet2 = null;
+//				ResultSet resultSet2 = null; unused
 
 
 				try {
@@ -434,7 +435,7 @@ public class DerbyDatabase implements IDatabase {
 							);
 					stmt3.setString(1, item);
 					
-					resultSet2 = stmt3.executeQuery();
+					resultSet = stmt3.executeQuery();
 
 					// for testing that a result was returned
 					Boolean found = false;
@@ -457,10 +458,74 @@ public class DerbyDatabase implements IDatabase {
 				} finally {
 					DBUtil.closeQuietly(resultSet);
 					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
 				}
 			}
 		});
 	}
+	//*************************************
+	//delete item from menu
+	//*************************************
+	@Override
+	public Menu deleteFromMenu(final String item) {
+		return executeTransaction(new Transaction<Menu>() {
+			@Override
+			public Menu execute(Connection conn) throws SQLException {
+//				PreparedStatement stmt = null; unused
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				ResultSet resultSet = null;
+				ResultSet resultSet2 = null;
+
+				try {
+					
+					
+					stmt2 = conn.prepareStatement(
+							" delete from menu " +
+									" where menu_item = ?"
+							);
+					stmt2.setString(1, item);
+					
+					stmt2.executeUpdate();
+					
+					stmt3 = conn.prepareStatement(
+							"select * " +
+									" from menu " +
+									" where menu_name = ?"
+							);
+					stmt3.setString(1, item);
+					
+					resultSet2 = stmt3.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+					Menu result = new Menu();
+					while (resultSet2.next()) {
+						found = true;
+						Menu m = new Menu();
+						loadMenu(m, resultSet, 1);
+						result = m;
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + item + "> was not found in the menu table");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet2);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+				}
+			}
+		});
+		
+	}
+	
 
 	//************************************
 	//Show user a menu
@@ -619,6 +684,7 @@ public class DerbyDatabase implements IDatabase {
 				} finally {
 					DBUtil.closeQuietly(resultSet);
 					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
 				}
 			}
 		});
@@ -673,8 +739,55 @@ public class DerbyDatabase implements IDatabase {
 		});
 		
 	}
+	//****************************
+	//get orders for a restaurant
+	//***************************
+	@Override
+	public List<Order> getOrdersByRestaurant(final String rest) {
+		return executeTransaction(new Transaction<List<Order>>() {
+			@Override
+			public List<Order> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+
+				try {
 
 
+					stmt = conn.prepareStatement(
+							"select orders.*  " +
+									" from orders "  +
+									" where rest_name = ? "  
+							);
+					stmt.setString(1, rest);
+					List<Order> result = new ArrayList<Order>();
+					resultSet = stmt.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						Order o = new Order();
+						loadOrder(o, resultSet, 1);
+						result.add(o);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + rest + "> had no orders for their food");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
 		
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
@@ -720,7 +833,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/austin/Desktop/CS201/eclipse/CS320_Project/project.db;create=true");
+		Connection conn = DriverManager.getConnection("jdbc:derby:H:/workspace.newDBarea;create=true");
 
 		// Set autocommit to false to allow multiple the execution of
 		// multiple queries/statements as part of the same transaction.
@@ -926,6 +1039,5 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("loaded intial data");
 		System.out.println("dropped again loser");
 	}
-	
 
 }
