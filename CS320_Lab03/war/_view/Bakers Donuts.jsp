@@ -105,7 +105,7 @@ td.label {
 
 			<div id="LinkContent">
 				<div id="LinkName">Menu</div>
-					<form action="${pageContext.servletContext.contextPath}/Menu" method="get">
+					<form action="${pageContext.servletContext.contextPath}/Menu" method="post">
 					<table>
 							<tr>
 								<td><input type="Submit" name="submit" value="Click to view our menu"/></td>

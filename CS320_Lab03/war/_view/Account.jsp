@@ -48,7 +48,7 @@
 					<td class="label">Account Type:</td>
 					<td>${AccountType}</td>
 				</tr>
-				<tr><form action="${pageContext.servletContext.contextPath}/Homepage" method="get">
+				<tr><form action="${pageContext.servletContext.contextPath}/Homepage" method="post">
 					<td><input type="Submit" name="submit" value="Click to go to Homepage"/></td>
 					</form>
 				</tr>

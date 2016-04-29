@@ -30,19 +30,8 @@ public class BakersDonutsServlet extends HttpServlet {
 		
 		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
-		String rest = null;
-		try {
-			rest = req.getParameter("restaurant.name");
-
-
-		} catch (NumberFormatException e) {
-			errorMessage = "Invalid value";
-		}
-		
-		// Add parameters as request attributes
-		req.setAttribute("restName", rest);
-		
-		
+		String rest = "Bakers Donuts";
+		req.getSession().setAttribute("restaurant", rest);
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
 		

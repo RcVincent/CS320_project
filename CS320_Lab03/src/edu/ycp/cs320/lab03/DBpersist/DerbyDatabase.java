@@ -452,11 +452,12 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	//*******************************
-	//owner sees items in their menu
-	//*******************************
+
+	//************************************
+	//Show user a menu
+	//**************************************
 	@Override
-	public List<Menu> seeMenuByOwner(final String owner) {
+	public List<Menu> menuByRestName(final String rest) {
 		return executeTransaction(new Transaction<List<Menu>>() {
 			@Override
 			public List<Menu> execute(Connection conn) throws SQLException {
@@ -467,13 +468,12 @@ public class DerbyDatabase implements IDatabase {
 
 
 					stmt = conn.prepareStatement(
-							"select menu_item, menu_price  " +
-									" from menu, users, restaurants "  +
-									" where users.user_userName = ? "  +
-									" and users.user_id = restaurants.user_id " +
-									" and menu.rest_id = restaurants.rest_id; "
+							"select menu.*  " +
+									" from menu, restaurants "  +
+									" where rest_name = ? "  +
+									" and menu.rest_id = restaurants.rest_id "
 							);
-					stmt.setString(1, owner);
+					stmt.setString(1, rest);
 					List<Menu> result = new ArrayList<Menu>();
 					resultSet = stmt.executeQuery();
 
@@ -490,7 +490,7 @@ public class DerbyDatabase implements IDatabase {
 
 					// check if the title was found
 					if (!found) {
-						System.out.println("<" + owner + "> was not found in the Menus table");
+						System.out.println("<" + rest + "> was not found in the restaurant table");
 					}
 
 					return result;
@@ -503,6 +503,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+
 
 		
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
@@ -754,7 +755,6 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("loaded intial data");
 		System.out.println("dropped again loser");
 	}
-
 
 
 }
