@@ -416,8 +416,11 @@ public class DerbyDatabase implements IDatabase {
 									" where rest_name = ? "
 							);
 					stmt.setString(1, rest_name);
-					int rest_id = stmt.executeUpdate();
-					
+					resultSet = stmt.executeQuery();
+					int rest_id = 0;
+					if(resultSet.next()) {
+						rest_id = resultSet.getInt(1);
+					}
 					stmt2 = conn.prepareStatement(
 							"insert into menu(rest_id, menu_item, menu_price) " +
 									" values(?, ?, ?) "
@@ -430,7 +433,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt3 = conn.prepareStatement(
 							"select * " +
 									" from menu " +
-									" where menu_name = ?"
+									" where menu_item = ?"
 							);
 					stmt3.setString(1, item);
 					
@@ -439,10 +442,10 @@ public class DerbyDatabase implements IDatabase {
 					// for testing that a result was returned
 					Boolean found = false;
 					List<Menu> result = new ArrayList<Menu>();
-					while (resultSet.next()) {
+					while (resultSet2.next()) {
 						found = true;
 						Menu m = new Menu();
-						loadMenu(m, resultSet, 1);
+						loadMenu(m, resultSet2, 1);
 						result.add(m);
 					}
 

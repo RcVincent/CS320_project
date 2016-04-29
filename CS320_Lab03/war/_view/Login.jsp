@@ -55,11 +55,13 @@ button{
 		</table>
 		<div>
 			<input type="Submit" name="submit" value="Login" />
+		</form>
 		</div>
 		<div>
-			<button><a href="/lab03/CreateAccount"><type= "button">Click to create account</a></button>
+			<form action="${pageContext.servletContext.contextPath}/CreateAccount" method="get">
+			<input type="Submit" name="submit" value="Create Account" />
+			</form>
 		</div>
 		</div>
-	</form>
 </body>
 </html>
