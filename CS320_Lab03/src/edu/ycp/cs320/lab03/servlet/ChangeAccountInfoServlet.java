@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.lab03.controller.ProjectController;
 
 import edu.ycp.cs320.lab03.model.User;
-import edu.ycp.cs320.lab03.queries.ChangeUsername;
-import edu.ycp.cs320.lab03.queries.matchUsernameWithPassword;
+import edu.ycp.cs320.lab03.query.ChangeUsername;
+import edu.ycp.cs320.lab03.query.matchUsernameWithPassword;
 
 
 public class ChangeAccountInfoServlet extends HttpServlet {
@@ -42,31 +42,39 @@ public class ChangeAccountInfoServlet extends HttpServlet {
 		String username = null;
 		String newUsername = null;
 		String password = null;
-			username = req.getParameter("username");
-			newUsername = req.getParameter("newUsername");
-			password = req.getParameter("password");
-			match = new matchUsernameWithPassword();
-			ArrayList<User> user = null;
-			user = match.matchUser(username);
-			if(user.size()>0){
-				User u = user.get(0);
-				ProjectController controller = new ProjectController();
-				//if user is authenticated, call homepage
-				if(controller.authenticate(u, password)){
-					change = new ChangeUsername();
-					change.changeUsername(username, newUsername, password);
-					req.getSession().setAttribute("username", newUsername);
-					errorMessage = "New username was successfully created";
-					req.setAttribute("errorMessage", errorMessage);
-					resp.sendRedirect(req.getContextPath() + "/Homepage");
-				}
-				else{
-					errorMessage = "Incorrect Username or Password";
-					req.setAttribute("errorMessage", errorMessage);
-					req.getRequestDispatcher("/_view/ChangeUsername.jsp").forward(req, resp);
-				}
+		
+		//get parameters from the jsp
+		username = req.getParameter("username");
+		newUsername = req.getParameter("newUsername");
+		password = req.getParameter("password");
+		
+		//Validate login credentials
+		match = new matchUsernameWithPassword();
+		ArrayList<User> user = null;
+		user = match.matchUser(username);
+		if(user.size()>0){
+			User u = user.get(0);
+			ProjectController controller = new ProjectController();
+			
+			//if user is authenticated, call change password
+			if(controller.authenticate(u, password)){
+				change = new ChangeUsername();
+				change.changeUsername(username, newUsername, password);
+				
+				//set session username to new username
+				req.getSession().setAttribute("username", newUsername);
+				errorMessage = "New username was successfully created";
+				req.setAttribute("errorMessage", errorMessage);
+				resp.sendRedirect(req.getContextPath() + "/Homepage");
 			}
-			//otherwise, print an error message
+			else{
+				
+				errorMessage = "Incorrect Username or Password";
+				req.setAttribute("errorMessage", errorMessage);
+				req.getRequestDispatcher("/_view/ChangeUsername.jsp").forward(req, resp);
+			}
+		}
+		//otherwise, print an error message
 	}
 
 }

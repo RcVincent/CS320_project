@@ -399,33 +399,42 @@ public class DerbyDatabase implements IDatabase {
 	//Add item to menu
 	//************************
 	@Override
-	public List<Menu> addItemToMenu(final String item, final Double price, final int rest_id) {
+	public List<Menu> addItemToMenu(final String item, final Double price, final String rest_name) {
 		return executeTransaction(new Transaction<List<Menu>>() {
 			@Override
 			public List<Menu> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
 				ResultSet resultSet = null;
+				ResultSet resultSet2 = null;
 
 
 				try {
 					stmt = conn.prepareStatement(
+							"select rest_id from restaurants " +
+									" where rest_name = ? "
+							);
+					stmt.setString(1, rest_name);
+					int rest_id = stmt.executeUpdate();
+					
+					stmt2 = conn.prepareStatement(
 							"insert into menu(rest_id, menu_item, menu_price) " +
 									" values(?, ?, ?) "
 							);
-					stmt.setInt(1, rest_id);
-					stmt.setString(2, item);
-					stmt.setDouble(3, price);
-					stmt.executeUpdate();
+					stmt2.setInt(1, rest_id);
+					stmt2.setString(2, item);
+					stmt2.setDouble(3, price);
+					stmt2.executeUpdate();
 					
-					stmt2 = conn.prepareStatement(
+					stmt3 = conn.prepareStatement(
 							"select * " +
 									" from menu " +
 									" where menu_name = ?"
 							);
-					stmt2.setString(1, item);
+					stmt3.setString(1, item);
 					
-					resultSet = stmt2.executeQuery();
+					resultSet2 = stmt3.executeQuery();
 
 					// for testing that a result was returned
 					Boolean found = false;
@@ -556,7 +565,7 @@ public class DerbyDatabase implements IDatabase {
 	//build an order with items and prices
 	//******************************************
 	@Override
-	public List<Order> ceateOrderInTable(final int patId, final int orderNum, final String item, final Double price) {
+	public List<Order> ceateOrderInTable(final int patId, final String rest, final int orderNum, final String item, final Double price) {
 		return executeTransaction(new Transaction<List<Order>>() {
 			@Override
 			public List<Order> execute(Connection conn) throws SQLException {
@@ -566,22 +575,27 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(
-							" insert into orders(patron_id, order_number, item, price) " +
-									" values(?, ?, ?, ?) "
+							" insert into orders(patron_id, rest_name, order_number, item, price) " +
+									" values(?, ?, ?, ?, ?) "
 							);
 					stmt.setInt(1, patId);
-					stmt.setInt(2, orderNum);
-					stmt.setString(3, item);
-					stmt.setDouble(4, price);
+					stmt.setString(2, rest);
+					stmt.setInt(3, orderNum);
+					stmt.setString(4, item);
+					stmt.setDouble(5, price);
 					stmt.executeUpdate();
 					
 					stmt2 = conn.prepareStatement(
 							" select * from orders " +
 									" where order_number = ? " +
-									" and patron_id = ? "
+									" and patron_id = ? "      +
+									" and rest_name = ? "
 							);
 					stmt2.setInt(1, orderNum);
 					stmt2.setInt(2, patId);
+					stmt2.setString(3, rest);
+					
+
 					resultSet = stmt2.executeQuery();
 
 					// for testing that a result was returned
@@ -609,7 +623,56 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	//********************************************************
+	//send back an order based on the confirmation number
+	//**********************************************************
+	@Override
+	public List<Order> getOrderByConfirmationNumber(final Integer orderNumber) {
+		return executeTransaction(new Transaction<List<Order>>() {
+			@Override
+			public List<Order> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
 
+				try {
+
+
+					stmt = conn.prepareStatement(
+							"select orders.*  " +
+									" from orders "  +
+									" where order_number = ? "  
+							);
+					stmt.setInt(1, orderNumber);
+					List<Order> result = new ArrayList<Order>();
+					resultSet = stmt.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						Order o = new Order();
+						loadOrder(o, resultSet, 1);
+						result.add(o);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + orderNumber + "> was not found in the restaurant table");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+		
+	}
 
 
 		
@@ -665,7 +728,7 @@ public class DerbyDatabase implements IDatabase {
 
 		return conn;
 	}
-
+	//these build the collections to return to the servlets, controlles
 	private void loadUser(User user, ResultSet resultSet, int index) throws SQLException {
 		user.setUserId(resultSet.getInt(index++));
 		user.setUserName(resultSet.getString(index++));
@@ -694,13 +757,14 @@ public class DerbyDatabase implements IDatabase {
 	private void loadOrder(Order o, ResultSet resultSet, int index) throws SQLException {
 		o.setOrderId(resultSet.getInt(index++));
 		o.setPatronId(resultSet.getInt(index++));
+		o.setRest(resultSet.getString(index++));
 		o.setorderNumber(resultSet.getInt(index++));
 		o.setItem(resultSet.getString(index++));
 		o.setPrice(resultSet.getDouble(index++));
 	}
 
 
-
+	//creating the tables
 	public void createTables() {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
@@ -725,7 +789,7 @@ public class DerbyDatabase implements IDatabase {
 							);	
 					stmt1.executeUpdate();
 
-
+					//the users referenced in the user_id constraing are owners
 					stmt2 = conn.prepareStatement(
 							"create table restaurants (" +
 									"	rest_id integer primary key " +
@@ -738,7 +802,7 @@ public class DerbyDatabase implements IDatabase {
 									")"
 							);
 					stmt2.executeUpdate();
-					
+					//the following tables do not use a constraint to avoid overlapping foreign keys
 					stmt3 = conn.prepareStatement(
 							" create table menu (" +
 									" menu_id integer primary key " +
@@ -749,14 +813,15 @@ public class DerbyDatabase implements IDatabase {
 									")"
 							);
 					stmt3.executeUpdate();
-					
+					//order is attached to a patron
 					stmt4 = conn.prepareStatement(
 							" create table orders (" +
 									" order_id integer primary key " +
 									" 		generated always as identity (start with 1, increment by 1), " +
 									" patron_id integer, "    +
+									" rest_name varchar(40),"  +
 									" order_number integer, " +
-									" item varchar(40), "		  +
+									" item varchar(40), "	  +
 									" price double"		  +
 									")"
 							);
@@ -773,7 +838,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-
+	//loading initial data for basic website navigation
 	public void loadInitialData() {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
@@ -799,7 +864,6 @@ public class DerbyDatabase implements IDatabase {
 					insertUsers = conn.prepareStatement("insert into users (user_userName, user_passWord, user_email, user_accountType, user_firstName, user_Lastname) "
 							+ "		values (?, ?, ?, ?, ?, ?)");
 					for (User u : userList) {
-						//						insertUsers.setInt(1, u.getUserId());
 						insertUsers.setString(1, u.getUserName());
 						insertUsers.setString(2, u.getPassWord());
 						insertUsers.setString(3, u.getEmail());
@@ -862,5 +926,6 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("loaded intial data");
 		System.out.println("dropped again loser");
 	}
+	
 
 }

@@ -4,14 +4,10 @@ import java.util.List;
 
 import edu.ycp.cs320.lab03.model.Menu;
 import edu.ycp.cs320.lab03.model.Order;
-import edu.ycp.cs320.lab03.model.Owner;
-import edu.ycp.cs320.lab03.model.Pair;
 import edu.ycp.cs320.lab03.model.Restaurant;
 import edu.ycp.cs320.lab03.model.User;
 
-//import edu.ycp.cs320.booksdb.model.Author;
-//import edu.ycp.cs320.booksdb.model.Book;
-//import edu.ycp.cs320.booksdb.model.Pair;
+
 
 public interface IDatabase {
 
@@ -27,7 +23,7 @@ public interface IDatabase {
 
 	List<User> changeUsername(String name, String newName, String pswd);
 
-	List<Menu> addItemToMenu(String item, Double price, int rest_id);
+	List<Menu> addItemToMenu(String item, Double price, String rest_id);
 
 
 	List<Restaurant> getListOfRestaurantsByOwner(String username);
@@ -37,6 +33,8 @@ public interface IDatabase {
 
 	Menu getPriceOfMenuItem(String item);
 
-	List<Order> ceateOrderInTable(int patId, int orderNum, String item, Double price);
+	List<Order> ceateOrderInTable(int patId, String rest, int orderNum, String item, Double price);
 
+	List<Order> getOrderByConfirmationNumber(Integer orderNumber);
+	
 }

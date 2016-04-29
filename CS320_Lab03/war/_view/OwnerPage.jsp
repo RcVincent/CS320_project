@@ -4,7 +4,7 @@
 
 <html>
 <head>
-<title>Wag's ribs</title>
+<title>Owner Page</title>
 <style type="text/css">
 #PageName {
 	color: white;

@@ -13,15 +13,13 @@ import edu.ycp.cs320.lab03.model.Menu;
 import edu.ycp.cs320.lab03.model.Order;
 import edu.ycp.cs320.lab03.model.User;
 import edu.ycp.cs320.lab03.queries.GetPriceOfMenuItem;
-import edu.ycp.cs320.lab03.queries.ViewMenuByRestaurantName;
-import edu.ycp.cs320.lab03.queries.buildOrder;
+import edu.ycp.cs320.lab03.query.ViewMenuByRestaurantName;
+import edu.ycp.cs320.lab03.query.buildOrder;
 
 public class MenuServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ViewMenuByRestaurantName menu = null;
-	private GetPriceOfMenuItem price = null;
-	private buildOrder newOrder = null;
-	private getAccountInfo info = null;
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -40,37 +38,34 @@ public class MenuServlet extends HttpServlet {
 		
 		// Decode form parameters and dispatch to controller
 		//Gets all the menu items selected by the user
-		String[] orders = req.getParameterValues("Order");
-		
+		String[] order = null;
+
 		//Create an array of menu items
 		ArrayList<Menu> items = null;
 		menu = new ViewMenuByRestaurantName();
+		
+		//If user is an owner show them add item to menu
+		String utype = null;
+		String userType = (String) req.getSession().getAttribute("type");
+		// Add parameters as request attributes
+		if(userType.equals("owner")){
+			utype = "owner";
+		}
+		String itemToAdd = (String) req.getAttribute("item");
+		double NewItemPrice = (double) req.getAttribute("price");
 		
 		String rest = (String) req.getSession().getAttribute("restaurant");
 		//get menu items based on the restaurant name
 		items = menu.menuByRestaurantName(rest);
 		req.setAttribute("items", items);
-		
-		//get user account info for their userID
-		info = new getAccountInfo();
-		User u = info.getInfo((String)req.getSession().getAttribute("username")).get(0);
-		
-		//Build an order from the values the user selects
-		Order orderNum = new Order();
-		int num = orderNum.getorderNumber();
-		req.getSession().setAttribute("orderNum", num);
-		newOrder = new buildOrder();
-		
+		order = req.getParameterValues("Order");
 		// If there are items in order, build the order
-		if(orders != null){
-			for(int i=0; i< orders.length; i++){
-				Menu item = new Menu();
-				price = new GetPriceOfMenuItem();
-				item = price.priceOfItem(orders[i]);
-				newOrder.createOrder(u.getUserId(), num, item.getItem(), item.getPrice());
-			}
+		if(order != null){
+			req.getSession().setAttribute("orderItems", order);
 			resp.sendRedirect(req.getContextPath() + "/Order");
 		}
-		req.getRequestDispatcher("/_view/Menu.jsp").forward(req, resp);
+		else{
+			req.getRequestDispatcher("/_view/Menu.jsp").forward(req, resp);
+		}
 	}
 }
