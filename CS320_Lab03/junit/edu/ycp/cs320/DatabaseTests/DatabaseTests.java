@@ -129,7 +129,7 @@ public class DatabaseTests {
 			users = new ArrayList<User>(); 
 			for(User u : users) {
 				users.add(u); 
-				System.out.println(u.getUserName() + ", " + u.getPassWord() + ", " + u.getFirstName() + ", " + u.getLastName());
+				System.out.println(u.getUserName() + ", " + u.getFirstName() + ", " + u.getLastName());
 			}
 		}
 	}
