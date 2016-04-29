@@ -12,8 +12,8 @@ import edu.ycp.cs320.lab03.controller.ProjectController;
 import edu.ycp.cs320.lab03.model.Owner;
 import edu.ycp.cs320.lab03.model.Patron;
 import edu.ycp.cs320.lab03.model.User;
-import edu.ycp.cs320.lab03.queries.AddUserToDatabase;
-import edu.ycp.cs320.lab03.queries.RestaurantSearch;
+import edu.ycp.cs320.lab03.query.AddUserToDatabase;
+import edu.ycp.cs320.lab03.query.RestaurantSearch;
 
 
 public class CreateAccountServlet extends HttpServlet {

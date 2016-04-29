@@ -8,8 +8,9 @@ public class Order{
 	private String item;
 	private boolean takeOut;
 	private Random random;
-	private int orderId; //for database access
-	private int patronId; //for database access
+	private int orderId; //for database accesses
+	private int patronId; //for database accesses
+	private String rest;   //for database accesses
 	private int orderNumber;
 	public TreeMap<String, Double> fullOrder = new TreeMap<String, Double>();
 	
@@ -74,6 +75,16 @@ public class Order{
 	public void setItem(String item) {
 		this.item = item;
 	}
+
+	public String getRest() {
+		return rest;
+	}
+
+	public void setRest(String rest) {
+		this.rest = rest;
+	}
+
+
 
 }
 

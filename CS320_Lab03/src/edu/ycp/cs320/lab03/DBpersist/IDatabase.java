@@ -31,7 +31,9 @@ public interface IDatabase {
 
 	List<Menu> getPriceOfMenuItem(String item);
 
-	List<Order> ceateOrderInTable(int patId, int orderNum, String item, Double price);
+	List<Order> ceateOrderInTable(int patId, String rest, int orderNum, String item, Double price);
 
-
+	List<Order> getOrderByConfirmationNumber(Integer orderNumber);
+	
+	
 }

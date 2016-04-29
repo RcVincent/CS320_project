@@ -1,8 +1,5 @@
-package edu.ycp.cs320.lab03.queries;
+package edu.ycp.cs320.lab03.query;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 import edu.ycp.cs320.lab03.DBpersist.DatabaseProvider;
 import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;

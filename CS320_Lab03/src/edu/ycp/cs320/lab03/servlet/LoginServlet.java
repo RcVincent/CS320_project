@@ -13,7 +13,7 @@ import edu.ycp.cs320.lab03.controller.ProjectController;
 import edu.ycp.cs320.lab03.model.Patron;
 import edu.ycp.cs320.lab03.model.Restaurant;
 import edu.ycp.cs320.lab03.model.User;
-import edu.ycp.cs320.lab03.queries.matchUsernameWithPassword;
+import edu.ycp.cs320.lab03.query.matchUsernameWithPassword;
 
 
 public class LoginServlet extends HttpServlet {
