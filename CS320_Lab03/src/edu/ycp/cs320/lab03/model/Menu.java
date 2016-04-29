@@ -8,7 +8,6 @@ import java.util.TreeMap;
 public class Menu {
 	private List itemList;
 	private String item;
-	private String sprice; //for database
 	private int menuId;   //for database
 	private int restId;   //for database
 	private Double price;
@@ -43,24 +42,6 @@ public class Menu {
 	public void setItem(String item) {
 		this.item = item;
 		
-	}
-
-	public String getSprice() {
-		return sprice;
-	}
-	public void setSprice(String sprice) {
-		this.sprice = sprice;
-		//this method also sets the double as a price to accumulate the order total
-		setPrice(toDouble(this.sprice));
-	}
-
-	private double toDouble(String s) {
-		
-		if (s == null || s.equals("")) {
-		      return (Double) null;
-		    } else {
-		      return Double.parseDouble(s);
-		    }
 	}
 
 	public Double getPrice() {
