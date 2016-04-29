@@ -21,7 +21,7 @@ public class BakersDonutsServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 		}
-		req.getRequestDispatcher("/_view/Baker's Donuts.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/Bakers Donuts.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -30,24 +30,13 @@ public class BakersDonutsServlet extends HttpServlet {
 		
 		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
-		String rest = null;
-		try {
-			rest = req.getParameter("restaurant.name");
-
-
-		} catch (NumberFormatException e) {
-			errorMessage = "Invalid value";
-		}
-		
-		// Add parameters as request attributes
-		req.setAttribute("restName", rest);
-		
-		
+		String rest = "Bakers Donuts";
+		req.getSession().setAttribute("restaurant", rest);
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
 		
 		
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/Baker's Donuts.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/Bakers Donuts.jsp").forward(req, resp);
 	}
 }

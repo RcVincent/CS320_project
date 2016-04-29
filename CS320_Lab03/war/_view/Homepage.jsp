@@ -55,7 +55,10 @@ button {
 .error {
 	color: red;
 }
+.Address {
+	font-size: 15px;
 
+}
 #Restaurants {
 	float: left;
 	border: 3px solid darkblue;
@@ -111,7 +114,7 @@ td.label {
 						<td><input type="search" name="search" size="12" placeholder="Search"/></td>
 						<td><input type="Submit" name="submit" value="Search"/></td>
 						<td><input type="radio" name="searchType" value="city" checked>City</td>
-						<td><input type="radio" name="searchType" value="name">Name</td>
+
 					</form>
 				</tr>
 			</table>
@@ -132,14 +135,35 @@ td.label {
 		<div id="LinkContent">
 			<div id="LinkName">Your Account</div>
 			<div>
-				<button>
-					<a href="/lab03/Account"><type= "button">Click to view
-						account info</a>
-				</button>
+				<form action="${pageContext.servletContext.contextPath}/Account"
+						method="post">
+						<table>
+							<tr>
+								<td><input type="Submit" name="submit" value="Click to view Account Info"/></td>
+							</tr>
+						</table>
+				</form>
 			</div>
 		</div>
+	<c:if test="${! empty utype}">
+	<br>
+		<div id="LinkContent">
+			<div id="LinkName">Your Restaurants</div>
+				<div>
+					<form action="${pageContext.servletContext.contextPath}/OwnerPage"
+							method="get">
+							<table>
+								<tr>
+								<td><input type="Submit" name="submit" value="Click to view Your Restaurants"/></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</c:if>
 	</div>
-	<c:if test="${! empty search}">
+	<c:if test="${! empty rest}">
 		<div id="results">Search Results</div>
 		<div id="Restaurants">
 			<c:forEach items="${rest}" var="restaurant">
@@ -147,10 +171,10 @@ td.label {
 					<div id="LinkName">${restaurant.name}</div>
 					<table>
 						<tr>
-							<td class="label"></td>
-							<form
-								action="${pageContext.servletContext.contextPath}/${restaurant.name }"
-								method="get">
+							<td class = "Address">${restaurant.address },</td>
+							<td class = "Address">${restaurant.city },</td>
+							<td class = "Address">${restaurant.zipCode }</td>
+							<form action="${pageContext.servletContext.contextPath}/${restaurant.name }" method="post">
 								<td><input type="submit" value="Click to view page"></td>
 							</form>
 						</tr>
@@ -160,7 +184,7 @@ td.label {
 		</div>
 	</c:if>
 
-	<c:if test="${ empty search}">
+	<c:if test="${ empty rest}">
 		<div id="results">Make America Fat Again</div>
 	</c:if>
 	<div class="fixed">

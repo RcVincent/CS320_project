@@ -11,6 +11,22 @@
     <servlet-class>edu.ycp.cs320.lab03.servlet.IndexServlet</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>OwnerServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab03.servlet.OwnerServlet</servlet-class>
+  </servlet>
+     <servlet>
+    <servlet-name>OrderServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab03.servlet.OrderServlet</servlet-class>
+  </servlet>
+   <servlet>
+    <servlet-name>ChangeAccountInfoServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab03.servlet.ChangeAccountInfoServlet</servlet-class>
+  </servlet>
+   <servlet>
+    <servlet-name>MenuServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab03.servlet.MenuServlet</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>AddNumbersServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab03.servlet.AddNumbersServlet</servlet-class>
   </servlet>
@@ -60,6 +76,10 @@
     <servlet-name>IndexServlet</servlet-name>
     <url-pattern>/index</url-pattern>
   </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>MenuServlet</servlet-name>
+    <url-pattern>/Menu</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>AddNumbersServlet</servlet-name>
     <url-pattern>/addNumbers</url-pattern>
@@ -73,8 +93,16 @@
     <url-pattern>/Login</url-pattern>
   </servlet-mapping>
    <servlet-mapping>
+    <servlet-name>OrderServlet</servlet-name>
+    <url-pattern>/Order</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
     <servlet-name>HomepageServlet</servlet-name>
     <url-pattern>/Homepage</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
+    <servlet-name>ChangeAccountInfoServlet</servlet-name>
+    <url-pattern>/ChangeUsername</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>CreateAccountServlet</servlet-name>
@@ -90,9 +118,12 @@
   </servlet-mapping>
     <servlet-mapping>
     <servlet-name>BakersDonutsServlet</servlet-name>
-    <url-pattern>/Baker's Donuts</url-pattern>
+    <url-pattern>/Bakers Donuts</url-pattern>
   </servlet-mapping>   
-
+  <servlet-mapping>
+    <servlet-name>OwnerServlet</servlet-name>
+    <url-pattern>/OwnerPage</url-pattern>
+  </servlet-mapping> 
 
   <!--  AJAX servlet mappings. -->
   <servlet-mapping>

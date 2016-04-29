@@ -78,6 +78,52 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	@Override
+	public List<Restaurant> getListOfRestaurantsByOwner(final String username) {
+		return executeTransaction(new Transaction<List<Restaurant>>() {
+			@Override
+			public List<Restaurant> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+
+				try {
+
+
+					stmt = conn.prepareStatement(
+							"select restaurants.* from restaurants, users " +
+							" where users.user_userName = ? " +
+							" and users.user_id = restaurants.user_id"
+							);
+					stmt.setString(1, username);
+					List<Restaurant> result = new ArrayList<Restaurant>();
+					resultSet = stmt.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						Restaurant rest = new Restaurant();
+						loadRestaurant(rest, resultSet, 1);
+						result.add(rest);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + username + "> was not found in the restaurants table");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
 	//********************
 	//adding a user to the database
 	//********************
@@ -187,6 +233,8 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+
+
 	//********************************
 	//Delete a user from the database
 	//********************************
@@ -263,7 +311,7 @@ public class DerbyDatabase implements IDatabase {
 							"update users " +
 									" set user_userName = ? " +
 									" where user_userName = ? " +
-									" and user_userpassWord = ? "
+									" and user_passWord = ? "
 							);
 					stmt.setString(1, newName);
 					stmt.setString(2, name);
@@ -306,36 +354,87 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+
+	@Override
+	public List<User> getAccountInfo(final String name) {
+		
+		return executeTransaction(new Transaction<List<User>>() {
+			@Override
+			public List<User> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				try {
+					stmt = conn.prepareStatement(
+							"select * from Users " +
+									" where user_userName = ? "
+							);
+					stmt.setString(1, name);
+					List<User> result = new ArrayList<User>();
+					resultSet = stmt.executeQuery();
+					Boolean found = false;
+					while (resultSet.next()) {
+						found = true;
+
+						User u = new User();
+						loadUser(u, resultSet, 1);
+						result.add(u);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + name + "> was not found in the Users table");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
 	//***********************
 	//Add item to menu
 	//************************
 	@Override
-	public List<Menu> addItemToMenu(final String item, final Double price, final int rest_id) {
+	public List<Menu> addItemToMenu(final String item, final Double price, final String rest_name) {
 		return executeTransaction(new Transaction<List<Menu>>() {
 			@Override
 			public List<Menu> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
 				ResultSet resultSet = null;
+				ResultSet resultSet2 = null;
+
 
 				try {
 					stmt = conn.prepareStatement(
+							"select rest_id from restaurants " +
+									" where rest_name = ? "
+							);
+					stmt.setString(1, rest_name);
+					int rest_id = stmt.executeUpdate();
+					
+					stmt2 = conn.prepareStatement(
 							"insert into menu(rest_id, menu_item, menu_price) " +
 									" values(?, ?, ?) "
 							);
-					stmt.setInt(1, rest_id);
-					stmt.setString(2, item);
-					stmt.setDouble(3, price);
-					stmt.executeUpdate();
+					stmt2.setInt(1, rest_id);
+					stmt2.setString(2, item);
+					stmt2.setDouble(3, price);
+					stmt2.executeUpdate();
 					
-					stmt2 = conn.prepareStatement(
+					stmt3 = conn.prepareStatement(
 							"select * " +
 									" from menu " +
 									" where menu_name = ?"
 							);
-					stmt2.setString(1, item);
+					stmt3.setString(1, item);
 					
-					resultSet = stmt2.executeQuery();
+					resultSet2 = stmt3.executeQuery();
 
 					// for testing that a result was returned
 					Boolean found = false;
@@ -381,7 +480,7 @@ public class DerbyDatabase implements IDatabase {
 							"select menu.*  " +
 									" from menu, restaurants "  +
 									" where rest_name = ? "  +
-									" and menu.rest_id = restaurants.rest_id; "
+									" and menu.rest_id = restaurants.rest_id "
 							);
 					stmt.setString(1, rest);
 					List<Menu> result = new ArrayList<Menu>();
@@ -417,10 +516,10 @@ public class DerbyDatabase implements IDatabase {
 	//Get the price of an item to build an order
 	//***********************************************
 	@Override
-	public List<Menu> getPriceOfMenuItem(final String item) {
-		return executeTransaction(new Transaction<List<Menu>>() {
+	public Menu getPriceOfMenuItem(final String item) {
+		return executeTransaction(new Transaction<Menu>() {
 			@Override
-			public List<Menu> execute(Connection conn) throws SQLException {
+			public Menu execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
@@ -433,7 +532,7 @@ public class DerbyDatabase implements IDatabase {
 									" where menu_item = ? "  
 							);
 					stmt.setString(1, item);
-					List<Menu> result = new ArrayList<Menu>();
+					Menu result = new Menu();
 					resultSet = stmt.executeQuery();
 
 					// for testing that a result was returned
@@ -444,7 +543,7 @@ public class DerbyDatabase implements IDatabase {
 
 						Menu m = new Menu();
 						loadMenu(m, resultSet, 1);
-						result.add(m);
+						result = m;
 					}
 
 					// check if the title was found
@@ -476,8 +575,8 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(
-							" insert into orders(patron_id, rest_id, order_number, item, price) " +
-									" values(?, ?, ?, ?) "
+							" insert into orders(patron_id, rest_name, order_number, item, price) " +
+									" values(?, ?, ?, ?, ?) "
 							);
 					stmt.setInt(1, patId);
 					stmt.setString(2, rest);
@@ -496,6 +595,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt2.setInt(2, patId);
 					stmt2.setString(3, rest);
 					
+
 					resultSet = stmt2.executeQuery();
 
 					// for testing that a result was returned
@@ -575,8 +675,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 
-	
-
+		
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
 			return doExecuteTransaction(txn);
@@ -621,7 +720,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:H:/workspace.newDBarea;create=true");
+		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/austin/Desktop/CS201/eclipse/CS320_Project/project.db;create=true");
 
 		// Set autocommit to false to allow multiple the execution of
 		// multiple queries/statements as part of the same transaction.
@@ -778,13 +877,17 @@ public class DerbyDatabase implements IDatabase {
 
 
 					insertRestaurants = conn.prepareStatement("insert into restaurants (user_id, rest_name, rest_address, rest_city, rest_zipcode) "
+
 							+ "	values (?, ?, ?, ?, ?)");
+
 					for (Restaurant rest: restList) {
 						insertRestaurants.setInt(1, rest.getUserId());
+
 						insertRestaurants.setString(2,rest.getName());
 						insertRestaurants.setString(3, rest.getAddress());
 						insertRestaurants.setString(4, rest.getCity());
 						insertRestaurants.setString(5, rest.getZipCode());
+
 						insertRestaurants.addBatch();
 					}
 					insertRestaurants.executeBatch();
