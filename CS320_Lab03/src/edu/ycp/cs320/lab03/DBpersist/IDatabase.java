@@ -4,14 +4,10 @@ import java.util.List;
 
 import edu.ycp.cs320.lab03.model.Menu;
 import edu.ycp.cs320.lab03.model.Order;
-import edu.ycp.cs320.lab03.model.Owner;
-import edu.ycp.cs320.lab03.model.Pair;
 import edu.ycp.cs320.lab03.model.Restaurant;
 import edu.ycp.cs320.lab03.model.User;
 
-//import edu.ycp.cs320.booksdb.model.Author;
-//import edu.ycp.cs320.booksdb.model.Book;
-//import edu.ycp.cs320.booksdb.model.Pair;
+
 
 public interface IDatabase {
 
