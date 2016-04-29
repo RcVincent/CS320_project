@@ -1,20 +1,20 @@
-package edu.ycp.cs320.lab03.controller;
+package edu.ycp.cs320.lab03.queries;
 
 import edu.ycp.cs320.lab03.DBpersist.DatabaseProvider;
 import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;
 import edu.ycp.cs320.lab03.DBpersist.IDatabase;
 
-public class AddItemToMenu {
+public class ChangeUsername {
 	private IDatabase db = null;
-	public AddItemToMenu() {
+	public ChangeUsername() {
 		
 		// Create the default IDatabase instance
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		db = DatabaseProvider.getInstance();
 	
 	}
-	public void AddUser(String item, Double price, int rest_id){
+	public void changeUsername(String name, String newName, String pswd){
 		
-		db.addItemToMenu(item, price, rest_id);
+		db.changeUsername(name, newName, pswd);
 	}
 }

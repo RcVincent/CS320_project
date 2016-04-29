@@ -9,12 +9,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ycp.cs320.lab03.controller.Menu;
-import edu.ycp.cs320.lab03.controller.Order;
-import edu.ycp.cs320.lab03.controller.Owner;
-import edu.ycp.cs320.lab03.controller.Patron;
-import edu.ycp.cs320.lab03.controller.Restaurant;
-import edu.ycp.cs320.lab03.controller.User;
+import edu.ycp.cs320.lab03.model.Menu;
+import edu.ycp.cs320.lab03.model.Order;
+import edu.ycp.cs320.lab03.model.Owner;
+import edu.ycp.cs320.lab03.model.Patron;
+import edu.ycp.cs320.lab03.model.Restaurant;
+import edu.ycp.cs320.lab03.model.User;
 
 public class DerbyDatabase implements IDatabase {
 	static {
@@ -503,6 +503,113 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	//***********************************************
+	//Get the price of an item to build an order
+	//***********************************************
+	@Override
+	public List<Menu> getPriceOfMenuItem(final String item) {
+		return executeTransaction(new Transaction<List<Menu>>() {
+			@Override
+			public List<Menu> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+
+				try {
+
+
+					stmt = conn.prepareStatement(
+							"select menu.*  " +
+									" from menu "  +
+									" where menu_item = ? "  
+							);
+					stmt.setString(1, item);
+					List<Menu> result = new ArrayList<Menu>();
+					resultSet = stmt.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						Menu m = new Menu();
+						loadMenu(m, resultSet, 1);
+						result.add(m);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + item + "> was not found in the restaurant table");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	//******************************************
+	//build an order with items and prices
+	//******************************************
+	@Override
+	public List<Order> ceateOrderInTable(final int patId, final int orderNum, final String item, final Double price) {
+		return executeTransaction(new Transaction<List<Order>>() {
+			@Override
+			public List<Order> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				ResultSet resultSet = null;
+
+				try {
+					stmt = conn.prepareStatement(
+							" insert into orders(patron_id, order_number, item, price) " +
+									" values(?, ?, ?, ?) "
+							);
+					stmt.setInt(1, patId);
+					stmt.setInt(2, orderNum);
+					stmt.setString(3, item);
+					stmt.setDouble(4, price);
+					stmt.executeUpdate();
+					
+					stmt2 = conn.prepareStatement(
+							" select * from orders " +
+									" where order_number = ? " +
+									" and patron_id = ? "
+							);
+					stmt2.setString(1, item);
+					
+					resultSet = stmt2.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+					List<Order> result = new ArrayList<Order>();
+					while (resultSet.next()) {
+						found = true;
+						Order o = new Order();
+						loadOrder(o, resultSet, 1);
+						result.add(o);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + item + "> was not found in the menu table");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
 
 
 		
@@ -755,6 +862,5 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("loaded intial data");
 		System.out.println("dropped again loser");
 	}
-
 
 }

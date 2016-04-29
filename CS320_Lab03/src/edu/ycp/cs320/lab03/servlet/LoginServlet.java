@@ -7,9 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import edu.ycp.cs320.lab03.controller.ProjectController;
-import edu.ycp.cs320.lab03.controller.User;
-import edu.ycp.cs320.lab03.controller.matchUsernameWithPassword;
+
+import edu.ycp.cs320.lab03.model.User;
+import edu.ycp.cs320.lab03.queries.matchUsernameWithPassword;
 
 
 public class LoginServlet extends HttpServlet {
@@ -42,14 +44,17 @@ public class LoginServlet extends HttpServlet {
 				//Set the session true and set their username
 				req.getSession(true).setAttribute("username", username);
 				req.getSession().setAttribute("type", u.getAccountType());
+				//If user is an owner send them to a page of their restaurants
 				if(u.getAccountType().equals("owner")){
 					resp.sendRedirect(req.getContextPath() + "/OwnerPage");
 				}
+				//If user is a patron send to the homepage
 				else{
 					resp.sendRedirect(req.getContextPath() + "/Homepage");
 				}
 
 			}
+			//display error meassage for incorrect username or password
 			else{
 				errorMessage = "Incorrect Username or Password";
 				req.setAttribute("errorMessage", errorMessage);

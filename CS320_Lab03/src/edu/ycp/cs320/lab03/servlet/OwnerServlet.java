@@ -2,19 +2,16 @@ package edu.ycp.cs320.lab03.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.lab03.queries.RestaurantSearch;
-import edu.ycp.cs320.lab03.controller.ProjectController;
 import edu.ycp.cs320.lab03.model.Restaurant;
-import edu.ycp.cs320.lab03.model.User;
+import edu.ycp.cs320.lab03.controller.RestaurantSearch;
 
-public class HomepageServlet extends HttpServlet {
+public class OwnerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RestaurantSearch search = null;
 	@Override
@@ -26,32 +23,22 @@ public class HomepageServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 		}
-		req.getRequestDispatcher("/_view/Homepage.jsp").forward(req, resp);
+		search = new RestaurantSearch();
+		ArrayList<Restaurant> rest = null;
+		String username = (String)req.getSession().getAttribute("username");
+		rest = search.RestByOwner(username);
+		req.setAttribute("rest", rest);
+		req.getRequestDispatcher("/_view/OwnerPage.jsp").forward(req, resp);
 	}
-
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		// Decode form parameters and dispatch to controller
-		String city = null;
-		//Call new restaurants search
-		search = new RestaurantSearch();
-		ArrayList<Restaurant> rest = null;
-		//get parameters from jsp
-		city = req.getParameter("search");
-		rest = search.RestByCity(city);
-		String utype = null;
-		String userType = (String) req.getSession().getAttribute("type");
 		// Add parameters as request attributes
-		if(userType.equals("owner")){
-			utype = "owner";
-		}
-		req.setAttribute("utype", utype);
-		req.setAttribute("rest", rest);
-
+		//req.setAttribute("rest", req.getSession().getAttribute("rest"));
+		
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/Homepage.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/OwnerPage.jsp").forward(req, resp);
 	}
-
 }

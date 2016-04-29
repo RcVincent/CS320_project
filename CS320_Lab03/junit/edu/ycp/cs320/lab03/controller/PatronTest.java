@@ -5,7 +5,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
-import edu.ycp.cs320.lab03.controller.Patron;
+
+import edu.ycp.cs320.lab03.model.Patron;
+import edu.ycp.cs320.lab03.model.Restaurant;
 
 
 public class PatronTest {

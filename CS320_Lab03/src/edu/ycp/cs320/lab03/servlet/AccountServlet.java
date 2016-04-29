@@ -1,6 +1,6 @@
 package edu.ycp.cs320.lab03.servlet;
 
-import java.awt.List;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.lab03.controller.AddNumbersController;
-import edu.ycp.cs320.lab03.controller.ProjectController;
-import edu.ycp.cs320.lab03.controller.User;
+
+
 import edu.ycp.cs320.lab03.controller.getAccountInfo;
+
+import edu.ycp.cs320.lab03.model.User;
+
 
 
 public class AccountServlet extends HttpServlet {

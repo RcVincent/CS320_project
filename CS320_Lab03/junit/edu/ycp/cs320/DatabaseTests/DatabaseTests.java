@@ -12,10 +12,10 @@ import org.junit.Test;
 import edu.ycp.cs320.lab03.DBpersist.DatabaseProvider;
 import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;
 import edu.ycp.cs320.lab03.DBpersist.IDatabase;
-import edu.ycp.cs320.lab03.controller.Owner;
-import edu.ycp.cs320.lab03.controller.Patron;
-import edu.ycp.cs320.lab03.controller.Restaurant;
-import edu.ycp.cs320.lab03.controller.User;
+import edu.ycp.cs320.lab03.model.Owner;
+import edu.ycp.cs320.lab03.model.Patron;
+import edu.ycp.cs320.lab03.model.Restaurant;
+import edu.ycp.cs320.lab03.model.User;
 
 public class DatabaseTests {
 	private IDatabase db = null;

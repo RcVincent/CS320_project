@@ -10,9 +10,13 @@
     <servlet-name>IndexServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab03.servlet.IndexServlet</servlet-class>
   </servlet>
-    <servlet>
+  <servlet>
     <servlet-name>OwnerServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab03.servlet.OwnerServlet</servlet-class>
+  </servlet>
+     <servlet>
+    <servlet-name>OrderServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab03.servlet.OrderServlet</servlet-class>
   </servlet>
    <servlet>
     <servlet-name>ChangeAccountInfoServlet</servlet-name>
@@ -87,6 +91,10 @@
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/Login</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
+    <servlet-name>OrderServlet</servlet-name>
+    <url-pattern>/Order</url-pattern>
   </servlet-mapping>
    <servlet-mapping>
     <servlet-name>HomepageServlet</servlet-name>
