@@ -12,13 +12,15 @@ import edu.ycp.cs320.lab03.controller.getAccountInfo;
 import edu.ycp.cs320.lab03.model.Menu;
 import edu.ycp.cs320.lab03.model.Order;
 import edu.ycp.cs320.lab03.model.User;
+import edu.ycp.cs320.lab03.queries.AddItemToMenu;
 import edu.ycp.cs320.lab03.queries.GetPriceOfMenuItem;
-import edu.ycp.cs320.lab03.query.ViewMenuByRestaurantName;
-import edu.ycp.cs320.lab03.query.buildOrder;
+import edu.ycp.cs320.lab03.queries.ViewMenuByRestaurantName;
+import edu.ycp.cs320.lab03.queries.buildOrder;
 
 public class MenuServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ViewMenuByRestaurantName menu = null;
+	private AddItemToMenu add = null;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -52,7 +54,14 @@ public class MenuServlet extends HttpServlet {
 			utype = "owner";
 		}
 		String itemToAdd = (String) req.getAttribute("item");
-		double NewItemPrice = (double) req.getAttribute("price");
+		double NewItemPrice = 0;
+		String rest_name = (String)req.getSession().getAttribute("restaurant");
+		if(itemToAdd != null){
+			add = new AddItemToMenu();
+			NewItemPrice = (double) req.getAttribute("price");
+			add.AddItem(itemToAdd, NewItemPrice, rest_name);
+		}
+		
 		
 		String rest = (String) req.getSession().getAttribute("restaurant");
 		//get menu items based on the restaurant name

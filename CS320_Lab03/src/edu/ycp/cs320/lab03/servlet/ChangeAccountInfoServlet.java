@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.lab03.controller.ProjectController;
 
 import edu.ycp.cs320.lab03.model.User;
-import edu.ycp.cs320.lab03.query.ChangeUsername;
-import edu.ycp.cs320.lab03.query.matchUsernameWithPassword;
+import edu.ycp.cs320.lab03.queries.ChangeUsername;
+import edu.ycp.cs320.lab03.queries.matchUsernameWithPassword;
 
 
 public class ChangeAccountInfoServlet extends HttpServlet {

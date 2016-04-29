@@ -46,11 +46,11 @@ button{
 					<div class="error">${errorMessage}</div>
 				</c:if>
 				<td class="label">Username:</td>
-				<td><input type="text" name="username" size="12" required /></td>
+				<td><input type="text" name="username" size="12" /></td>
 			</tr>
 			<tr>
 				<td class="label">Password:</td>
-				<td><input type="password" name="password" size="12" required /></td>
+				<td><input type="password" name="password" size="12"  /></td>
 			</tr>
 		</table>
 		<div>
