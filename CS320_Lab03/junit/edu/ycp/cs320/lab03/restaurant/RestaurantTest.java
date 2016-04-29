@@ -1,4 +1,4 @@
-package edu.ycp.cs320.lab03.model;
+package edu.ycp.cs320.lab03.restaurant;
 
 import static org.junit.Assert.*;
 
@@ -8,8 +8,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 
+import edu.ycp.cs320.lab03.model.Menu;
+import edu.ycp.cs320.lab03.model.Order;
+import edu.ycp.cs320.lab03.model.Restaurant;
 
-public class RestauantTest {
+public class RestaurantTest {
 	private Restaurant r;
 	//private ArrayList<Order> o;
 	
@@ -19,19 +22,15 @@ public class RestauantTest {
 
 	private Menu menu; 
 	
-	private Double price1 = (Double) 14.99;
-	private Double price2 = (Double) 9.99; 
-	private Double price3 = (Double) 6.99;
+	private Double price1 =  14.99;
+	private Double price2 =  9.99; 
+	private Double price3 =  6.99;
 	
 	
 	@Before
 	public void setUp() throws Exception {
-
+		
 		r = new Restaurant();
-		r.setName("Yorktown");
-		r.setAddress("123 4th street");
-		r.setCity("york");
-		r.setZipCode("12356");
 		menu = new Menu(); 
 		r.setMenu(menu);
 		

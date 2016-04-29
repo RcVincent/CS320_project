@@ -12,7 +12,6 @@ public class Restaurant {
 	private Menu menu;
 	private int restID;
 	private int UserId;
-//	private Genres gen;
 	public ArrayList<Review> reviews = new ArrayList<Review>();
 	public ArrayList<Order> ordersList = new ArrayList<Order>();
 	

@@ -77,9 +77,5 @@ public class ProjectController {
 		Review rev = new Review(title, review, rating);
 		rest.addReview(rev);
 	}
-//	//these integers will be dependent upon a user choosing a review from a list on the website
-//	public Review readReview(Restaurant rest, int i){
-//		return rest.readReview(i);
-//	}
 
 }

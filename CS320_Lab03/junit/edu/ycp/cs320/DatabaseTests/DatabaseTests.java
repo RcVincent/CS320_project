@@ -129,6 +129,100 @@ public class DatabaseTests {
 			}
 		}
 	}
+	@Test
+	public void addUserToDatabaseTest() {
+		System.out.println("\n*** Adding Users to Database ***");
 
-	
+		//SetUp
+		User UserToBeEntered1 = new User(); 
+		User UserToBeEntered2 = new User();
+		User UserToBeEntered3 = new User(); 
+
+		//Adding Users 
+		List<User> userlist = db.addUserToDatabase(UserToBeEntered1.getUserName(), UserToBeEntered1.getPassWord(), UserToBeEntered1.getEmail(), UserToBeEntered1.getAccountType(), UserToBeEntered1.getFirstName(), UserToBeEntered1.getLastName());	
+		userlist = db.addUserToDatabase(UserToBeEntered2.getUserName(), UserToBeEntered2.getPassWord(), UserToBeEntered2.getEmail(), UserToBeEntered2.getAccountType(), UserToBeEntered2.getFirstName(), UserToBeEntered2.getLastName());
+		userlist = db.addUserToDatabase(UserToBeEntered3.getUserName(), UserToBeEntered3.getPassWord(), UserToBeEntered3.getEmail(), UserToBeEntered3.getAccountType(), UserToBeEntered3.getFirstName(), UserToBeEntered3.getLastName());
+
+
+		//Test Cases
+		assertEquals(3, userlist.size());
+
+
+		//Condition
+		if(userlist.isEmpty()){
+			System.out.println("No users were entered to the database");
+			fail("Something has gone wrong. We will address this later.");
+		}
+		else {
+			users = new ArrayList<User>(); 
+			for(User u : userlist) {
+				users.add(u); 
+				System.out.println(u.getUserName() + ", " + u.getPassWord() + ", " +u.getEmail() + ", " +u.getAccountType() + ", "  + u.getFirstName() + ", " + u.getLastName());
+			}
+		}
+	}
+
+	@Test
+	public void deleteUserFromDatabase() {
+		System.out.println("\n *** Removing Users from Database ***");
+
+
+		//SetUp: copied from the test above to give us something to remove. 
+		User UserToBeEntered1 = new User(); 
+		User UserToBeEntered2 = new User();
+		User UserToBeEntered3 = new User(); 
+
+		//We need to set up these conditions for the removal function. 
+		UserToBeEntered1.setUserName("User1");
+		UserToBeEntered2.setUserName("User2");
+		UserToBeEntered3.setUserName("User3");
+
+		UserToBeEntered1.setPassWord("passWord");
+		UserToBeEntered2.setPassWord("Guest");
+		UserToBeEntered3.setPassWord("Admin"); 
+
+		//Need to add something in order to delete it. 
+		List<User> userlist = db.addUserToDatabase(UserToBeEntered1.getUserName(), UserToBeEntered1.getPassWord(), UserToBeEntered1.getEmail(), UserToBeEntered1.getAccountType(), UserToBeEntered1.getFirstName(), UserToBeEntered1.getLastName());	
+		userlist = db.addUserToDatabase(UserToBeEntered2.getUserName(), UserToBeEntered2.getPassWord(), UserToBeEntered2.getEmail(), UserToBeEntered2.getAccountType(), UserToBeEntered2.getFirstName(), UserToBeEntered2.getLastName());
+		userlist = db.addUserToDatabase(UserToBeEntered3.getUserName(), UserToBeEntered3.getPassWord(), UserToBeEntered3.getEmail(), UserToBeEntered3.getAccountType(), UserToBeEntered3.getFirstName(), UserToBeEntered3.getLastName());
+
+
+		//Test Cases
+		assertEquals(3, userlist.size());
+
+		userlist = db.DeleteUserFromDatabase("User1", "passWord");
+		assertEquals(2, userlist.size()); 
+
+		userlist = db.DeleteUserFromDatabase("User2", "Guest");
+		assertEquals(1, userlist.size()); 
+
+		userlist = db.DeleteUserFromDatabase("User3", "Admin");
+		assertEquals(0, userlist.size()); 
+		//Hopefully the database gets deincrememnted like specified. Can't remove 
+		//two users at the same time(at least right now). 
+	}
+
+	@Test
+	public void ChangeUserNameTest() {
+		//SetUp
+		User TestUser = new User(); 
+		TestUser.setUserName("Imma Boss");
+		TestUser.setPassWord("password");
+
+		String newName = "I am a Boss"; 
+
+		//Why am I getting an unused error here. 
+		List<User> userlist = db.addUserToDatabase(TestUser.getUserName(), TestUser.getPassWord(), TestUser.getEmail(), TestUser.getAccountType(), TestUser.getFirstName(), TestUser.getLastName());
+
+		userlist = db.changeUsername(TestUser.getUserName(), newName, TestUser.getPassWord()); 
+
+
+		assertEquals("I am a Boss", TestUser.getUserName());
+
+		//Only print the message when the operation is successful. 
+		if(TestUser.getUserName() == newName) {
+			System.out.println("\n*** Changing Username ***");
+		}
+	}
 }
+
