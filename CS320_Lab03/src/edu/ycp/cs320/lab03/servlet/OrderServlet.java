@@ -41,6 +41,7 @@ public class OrderServlet extends HttpServlet {
 		Order orderNum = new Order();
 		NumOrder = new GetOrder();
 		int num = orderNum.getorderNumber();
+		req.setAttribute("num", num);
 		newOrder = new buildOrder();
 		double total = 0;
 		for(int i=0; i< order.length; i++){

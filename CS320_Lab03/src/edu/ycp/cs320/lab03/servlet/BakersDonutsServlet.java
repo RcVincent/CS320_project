@@ -31,6 +31,14 @@ public class BakersDonutsServlet extends HttpServlet {
 		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
 		String rest = "Bakers Donuts";
+		String utype = null;
+		String userType = (String) req.getSession().getAttribute("type");
+		// Add parameters as request attributes
+		if(userType.equals("owner")){
+			utype = "owner";
+		}
+		req.setAttribute("utype", utype);
+		
 		req.getSession().setAttribute("restaurant", rest);
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);

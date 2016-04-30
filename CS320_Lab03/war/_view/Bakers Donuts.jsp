@@ -113,7 +113,22 @@ td.label {
 						</table>
 					</form>
 			</div>
-
+		<c:if test="${! empty utype}">
+			<br>
+			<div id="LinkContent">
+			<div id="LinkName">Your Orders</div>
+				<div>
+					<form action="${pageContext.servletContext.contextPath}/RestOrders"
+							method="get">
+						<table>
+							<tr>
+								<td><input type="Submit" name="submit" value="Click to view Your Orders"/></td>
+							</tr>
+						</table>
+						</form>
+					</div>
+				</div>
+			</c:if>
 			<br>
 
 		<div class="fixed">
