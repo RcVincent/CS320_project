@@ -1,9 +1,9 @@
 package edu.ycp.cs320.lab03.projectController;
 
-import edu.ycp.cs320.lab03.controller.ProjectController;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import edu.ycp.cs320.lab03.PsuedoController.ProjectController;
 
 public class ProjectControllerTest {
 	private ProjectController contr; 

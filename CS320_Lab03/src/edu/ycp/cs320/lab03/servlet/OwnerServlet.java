@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.lab03.controllers.RestaurantSearch;
 import edu.ycp.cs320.lab03.model.Restaurant;
-import edu.ycp.cs320.lab03.controller.RestaurantSearch;
 
 public class OwnerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

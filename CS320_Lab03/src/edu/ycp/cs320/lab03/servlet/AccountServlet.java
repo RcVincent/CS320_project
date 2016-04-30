@@ -9,10 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-import edu.ycp.cs320.lab03.controller.getAccountInfo;
-
+import edu.ycp.cs320.lab03.controllers.getAccountInfo;
 import edu.ycp.cs320.lab03.model.User;
 
 

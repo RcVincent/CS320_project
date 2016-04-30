@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.lab03.controller.GuessingGameController;
+import edu.ycp.cs320.lab03.PsuedoController.GuessingGameController;
 import edu.ycp.cs320.lab03.model.GuessingGame;
 
 public class GuessingGameServlet extends HttpServlet {

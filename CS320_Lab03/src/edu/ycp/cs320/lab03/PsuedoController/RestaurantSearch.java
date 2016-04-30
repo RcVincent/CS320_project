@@ -1,4 +1,4 @@
-package edu.ycp.cs320.lab03.queries;
+package edu.ycp.cs320.lab03.PsuedoController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,25 @@ public class RestaurantSearch {
 				}			
 			}
 			
+			// return authors for this title
+			return rests;
+	}
+		public ArrayList<Restaurant> RestByOwner(String username){
+			List<Restaurant> restList = db.getListOfRestaurantsByOwner(username);
+			ArrayList<Restaurant> rests = null;
 			
+			if (restList.isEmpty()) {
+				System.out.println("No restaurants found");
+				return null;
+			}
+			else {
+				rests = new ArrayList<Restaurant>();
+				for (Restaurant rest : restList) {
+					rests.add(rest);
+				}			
+			}
+			
+			// return authors for this title
 			return rests;
 	}
 }
