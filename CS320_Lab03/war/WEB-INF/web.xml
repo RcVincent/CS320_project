@@ -63,7 +63,10 @@
     <servlet-name>BakersDonutsServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab03.servlet.BakersDonutsServlet</servlet-class>
    </servlet>
- 
+   <servlet>
+    <servlet-name>RestOrdersServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab03.servlet.RestOrdersServlet</servlet-class>
+   </servlet>
   
   <!-- AJAX servlets. -->
   <servlet>
@@ -132,7 +135,10 @@
     <servlet-name>OwnerServlet</servlet-name>
     <url-pattern>/OwnerPage</url-pattern>
   </servlet-mapping> 
-
+  <servlet-mapping>
+    <servlet-name>RestOrdersServlet</servlet-name>
+    <url-pattern>/RestOrders</url-pattern>
+  </servlet-mapping> 
   <!--  AJAX servlet mappings. -->
   <servlet-mapping>
     <servlet-name>AddNumbersAjaxServlet</servlet-name>
