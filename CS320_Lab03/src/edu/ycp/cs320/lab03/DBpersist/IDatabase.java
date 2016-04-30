@@ -38,7 +38,7 @@ public interface IDatabase {
 	Menu deleteFromMenu(String item);
 
 	List<Order> getOrdersByRestaurant(String rest);
-	
-	
+
+	List<Order> getOrderByPatronId(Integer patId);
 	
 }

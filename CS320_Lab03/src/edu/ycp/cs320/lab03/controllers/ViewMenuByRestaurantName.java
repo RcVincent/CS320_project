@@ -1,4 +1,4 @@
-package edu.ycp.cs320.lab03.queries;
+package edu.ycp.cs320.lab03.controllers;
 
 import java.util.ArrayList;
 import java.util.List;

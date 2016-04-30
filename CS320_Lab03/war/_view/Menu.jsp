@@ -36,23 +36,17 @@
 					<td> $ ${items.price}0 </td>
 				</tr>
 			</c:forEach>
-			<c:if test="${! empty utype}">
-			<tr><form action="${pageContext.servletContext.contextPath}/Menu" method="post">
-					<td>Item: </td>
-					<td><input type="text" name="item"/></td>
-					<td>Price: </td>
-					<td><input type="text" name="price"/></td>
-					<td><input type="Submit" name="submit" value="Submit Menu Item"/></td>
-					</form>
-				</tr>
-			</c:if>
-				<tr><form action="${pageContext.servletContext.contextPath}/Menu" method="post">
+				<tr>
 					<td><input type="Submit" name="submit" value="Submit your order"/></td>
+		</form>
+		<c:if test="${! empty utype}">
+			<tr><form action="${pageContext.servletContext.contextPath}/AddItem" method="get">
+					<td><input type="Submit" name="submit" value="Add Menu Item"/></td>
 					</form>
-				</tr>
-				<tr><form action="${pageContext.servletContext.contextPath}/Homepage" method="get">
+			</c:if>
+				<form action="${pageContext.servletContext.contextPath}/Homepage" method="post">
 					<td><input type="Submit" name="submit" value="Click to go to Homepage"/></td>
-					</form>
+				</form>
 				</tr>
 			</table>
 			</div>

@@ -8,14 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.lab03.controller.getAccountInfo;
+import edu.ycp.cs320.lab03.controllers.GetOrder;
+import edu.ycp.cs320.lab03.controllers.GetPriceOfMenuItem;
+import edu.ycp.cs320.lab03.controllers.ViewMenuByRestaurantName;
+import edu.ycp.cs320.lab03.controllers.buildOrder;
+import edu.ycp.cs320.lab03.controllers.getAccountInfo;
 import edu.ycp.cs320.lab03.model.Menu;
 import edu.ycp.cs320.lab03.model.Order;
 import edu.ycp.cs320.lab03.model.User;
-import edu.ycp.cs320.lab03.queries.GetOrder;
-import edu.ycp.cs320.lab03.queries.GetPriceOfMenuItem;
-import edu.ycp.cs320.lab03.queries.ViewMenuByRestaurantName;
-import edu.ycp.cs320.lab03.queries.buildOrder;
 
 public class OrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

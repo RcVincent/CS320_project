@@ -11,6 +11,10 @@
     <servlet-class>edu.ycp.cs320.lab03.servlet.IndexServlet</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>AddItemServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab03.servlet.AddItemServlet</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>OwnerServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab03.servlet.OwnerServlet</servlet-class>
   </servlet>
@@ -87,6 +91,10 @@
   <servlet-mapping>
     <servlet-name>GuessingGameServlet</servlet-name>
     <url-pattern>/guessingGame</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddItemServlet</servlet-name>
+    <url-pattern>/AddItem</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>

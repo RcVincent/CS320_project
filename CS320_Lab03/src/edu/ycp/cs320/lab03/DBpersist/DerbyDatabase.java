@@ -408,7 +408,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
 				ResultSet resultSet = null;
-//				ResultSet resultSet2 = null; unused
+				ResultSet resultSet2 = null;
 
 
 				try {
@@ -417,8 +417,11 @@ public class DerbyDatabase implements IDatabase {
 									" where rest_name = ? "
 							);
 					stmt.setString(1, rest_name);
-					int rest_id = stmt.executeUpdate();
-					
+					resultSet = stmt.executeQuery();
+					int rest_id = 0;
+					if(resultSet.next()) {
+						rest_id = resultSet.getInt(1);
+					}
 					stmt2 = conn.prepareStatement(
 							"insert into menu(rest_id, menu_item, menu_price) " +
 									" values(?, ?, ?) "
@@ -431,19 +434,19 @@ public class DerbyDatabase implements IDatabase {
 					stmt3 = conn.prepareStatement(
 							"select * " +
 									" from menu " +
-									" where menu_name = ?"
+									" where menu_item = ?"
 							);
 					stmt3.setString(1, item);
 					
-					resultSet = stmt3.executeQuery();
+					resultSet2 = stmt3.executeQuery();
 
 					// for testing that a result was returned
 					Boolean found = false;
 					List<Menu> result = new ArrayList<Menu>();
-					while (resultSet.next()) {
+					while (resultSet2.next()) {
 						found = true;
 						Menu m = new Menu();
-						loadMenu(m, resultSet, 1);
+						loadMenu(m, resultSet2, 1);
 						result.add(m);
 					}
 
@@ -564,7 +567,7 @@ public class DerbyDatabase implements IDatabase {
 
 					// check if the title was found
 					if (!found) {
-						System.out.println("<" + rest + "> was not found in the restaurant table");
+						System.out.println("<" + rest + "> was not found in the menu table");
 					}
 
 					return result;
@@ -613,7 +616,7 @@ public class DerbyDatabase implements IDatabase {
 
 					// check if the title was found
 					if (!found) {
-						System.out.println("<" + item + "> was not found in the restaurant table");
+						System.out.println("<" + item + "> was not found in the menu table");
 					}
 
 					return result;
@@ -725,7 +728,7 @@ public class DerbyDatabase implements IDatabase {
 
 					// check if the title was found
 					if (!found) {
-						System.out.println("<" + orderNumber + "> was not found in the restaurant table");
+						System.out.println("<" + orderNumber + "> was not found in the orders table");
 					}
 
 					return result;
@@ -788,6 +791,57 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	//*****************************************************
+	//view past orders by a patron using the patron/user Id
+	//****************************************************
+	@Override
+	public List<Order> getOrderByPatronId(final Integer patId) {
+		return executeTransaction(new Transaction<List<Order>>() {
+			@Override
+			public List<Order> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+
+				try {
+
+
+					stmt = conn.prepareStatement(
+							"select orders.*  " +
+									" from orders "  +
+									" where patron_id = ? "  
+							);
+					stmt.setInt(1, patId);
+					List<Order> result = new ArrayList<Order>();
+					resultSet = stmt.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						Order o = new Order();
+						loadOrder(o, resultSet, 1);
+						result.add(o);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + patId + "> was not found in the orders table");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+		
+	}
+	
 		
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
@@ -833,7 +887,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:H:/workspace.newDBarea;create=true");
+		Connection conn = DriverManager.getConnection("jdbc:derby:C:/Users/austin/Desktop/CS201/eclipse/CS320_Project/project.db;create=true");
 
 		// Set autocommit to false to allow multiple the execution of
 		// multiple queries/statements as part of the same transaction.
@@ -1039,5 +1093,6 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("loaded intial data");
 		System.out.println("dropped again loser");
 	}
+
 
 }

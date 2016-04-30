@@ -17,9 +17,8 @@ import edu.ycp.cs320.lab03.model.Menu;
 import edu.ycp.cs320.lab03.model.Order;
 import edu.ycp.cs320.lab03.model.User;
 
-public class MenuServlet extends HttpServlet {
+public class AddItemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ViewMenuByRestaurantName menu = null;
 	private AddItemToMenu add = null;
 	
 	@Override
@@ -32,7 +31,7 @@ public class MenuServlet extends HttpServlet {
 			return;
 		}
 		
-		req.getRequestDispatcher("/_view/Menu.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/AddItem.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -41,42 +40,21 @@ public class MenuServlet extends HttpServlet {
 		
 		// Decode form parameters and dispatch to controller
 		//Gets all the menu items selected by the user
-		String[] order = null;
-
-		//Create an array of menu items
-		ArrayList<Menu> items = null;
-		menu = new ViewMenuByRestaurantName();
-		
-		//If user is an owner show them add item to menu
-		String utype = null;
-		String userType = (String) req.getSession().getAttribute("type");
-		// Add parameters as request attributes
-		if(userType.equals("owner")){
-			utype = "owner";
-		}
-		req.setAttribute("utype", utype);
-		String itemToAdd = (String) req.getAttribute("item");
-		double NewItemPrice = 0;
+		String message = null;
+		String itemToAdd = null;
+		Double NewItemPrice = 0.00;
 		String rest_name = (String)req.getSession().getAttribute("restaurant");
-		if(itemToAdd != null){
+		
+		itemToAdd = req.getParameter("item");
+		if(itemToAdd!=null){	
 			add = new AddItemToMenu();
-			NewItemPrice = (double) req.getAttribute("price");
+			NewItemPrice = Double.parseDouble(req.getParameter("price"));
 			add.AddItem(itemToAdd, NewItemPrice, rest_name);
+			System.out.println("Success");
+			message = "Success";
 		}
+		req.setAttribute("message", message);
+		req.getRequestDispatcher("/_view/AddItem.jsp").forward(req, resp);
 		
-		
-		String rest = (String) req.getSession().getAttribute("restaurant");
-		//get menu items based on the restaurant name
-		items = menu.menuByRestaurantName(rest);
-		req.setAttribute("items", items);
-		order = req.getParameterValues("Order");
-		// If there are items in order, build the order
-		if(order != null){
-			req.getSession().setAttribute("orderItems", order);
-			resp.sendRedirect(req.getContextPath() + "/Order");
-		}
-		else{
-			req.getRequestDispatcher("/_view/Menu.jsp").forward(req, resp);
-		}
 	}
 }

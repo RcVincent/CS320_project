@@ -1,4 +1,4 @@
-package edu.ycp.cs320.lab03.queries;
+package edu.ycp.cs320.lab03.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,30 +8,32 @@ import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;
 import edu.ycp.cs320.lab03.DBpersist.IDatabase;
 import edu.ycp.cs320.lab03.model.Order;
 
-public class GetOrdersByRestaurant {
+
+public class GetOrder {
 	private IDatabase db = null;
-	public GetOrdersByRestaurant() {
+	public GetOrder() {
 		
 		// Create the default IDatabase instance
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		db = DatabaseProvider.getInstance();
 	}
-		public ArrayList<Order> OrdersbyRest(String rest){
-			List<Order> ordersList = db.getOrdersByRestaurant(rest);
+		public ArrayList<Order> orderByNum(Integer orderNumber){
+			List<Order> orderList = db.getOrderByConfirmationNumber(orderNumber);
 			ArrayList<Order> orders = null;
 			
-			if (ordersList.isEmpty()) {
-				System.out.println("No body wants your food");
+			if (orderList.isEmpty()) {
+				System.out.println("No Orders found");
 				return null;
 			}
 			else {
 				orders = new ArrayList<Order>();
-				for (Order o : ordersList) {
-					orders.add(o);
+				for (Order order : orderList) {
+					orders.add(order);
 				}			
 			}
 			
 			
 			return orders;
 	}
+
 }

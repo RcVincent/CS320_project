@@ -7,13 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.lab03.controller.AddNumbersController;
-import edu.ycp.cs320.lab03.controller.ProjectController;
+import edu.ycp.cs320.lab03.PsuedoController.AddNumbersController;
+import edu.ycp.cs320.lab03.PsuedoController.ProjectController;
+import edu.ycp.cs320.lab03.controllers.AddUserToDatabase;
+import edu.ycp.cs320.lab03.controllers.RestaurantSearch;
 import edu.ycp.cs320.lab03.model.Owner;
 import edu.ycp.cs320.lab03.model.Patron;
 import edu.ycp.cs320.lab03.model.User;
-import edu.ycp.cs320.lab03.queries.AddUserToDatabase;
-import edu.ycp.cs320.lab03.queries.RestaurantSearch;
 
 
 public class CreateAccountServlet extends HttpServlet {

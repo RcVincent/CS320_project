@@ -1,4 +1,4 @@
-package edu.ycp.cs320.lab03.controller;
+package edu.ycp.cs320.lab03.PsuedoController;
 
 import java.awt.List;
 import java.util.ArrayList;
