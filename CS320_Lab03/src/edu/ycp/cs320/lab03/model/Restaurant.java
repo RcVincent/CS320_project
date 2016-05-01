@@ -12,6 +12,7 @@ public class Restaurant {
 	private Menu menu;
 	private int restID;
 	private int UserId;
+	private int patronFavId;
 	public ArrayList<Review> reviews = new ArrayList<Review>();
 	public ArrayList<Order> ordersList = new ArrayList<Order>();
 	
@@ -96,6 +97,14 @@ public class Restaurant {
 
 	public void setZipCode(String string) {
 		this.zipCode = string;
+	}
+
+	public int getPatronFavId() {
+		return patronFavId;
+	}
+
+	public void setPatronFavId(int patronFavId) {
+		this.patronFavId = patronFavId;
 	}
 
 	

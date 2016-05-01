@@ -11,6 +11,7 @@ import java.util.List;
 
 import edu.ycp.cs320.lab03.model.Menu;
 import edu.ycp.cs320.lab03.model.Order;
+import edu.ycp.cs320.lab03.model.Patron;
 import edu.ycp.cs320.lab03.model.Restaurant;
 import edu.ycp.cs320.lab03.model.User;
 
@@ -800,12 +801,16 @@ public class DerbyDatabase implements IDatabase {
 		return executeTransaction(new Transaction<List<Order>>() {
 			@Override
 			public List<Order> execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
+				//PreparedStatement stmt = null; unused
 				PreparedStatement stmt1 = null;
-				ResultSet resultSet2 = null;
+				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
+				ResultSet resultSet1 = null;
+				
 
 				try {
+					//first, get patron id from users table 
+					//patron id is not available from jsp in this situation
 					stmt1 = conn.prepareStatement(
 							"select user_id" +
 									" from users " +
@@ -813,10 +818,12 @@ public class DerbyDatabase implements IDatabase {
 							);
 					stmt1.setString(1, username);
 					int patId = 0;
-					resultSet2 = stmt1.executeQuery();
-					while (resultSet2.next()) {
-						patId = resultSet2.getInt(1);
+					resultSet = stmt1.executeQuery();
+					while (resultSet.next()) {
+						patId = resultSet.getInt(1);
 					}
+					
+					//get order by order id
 					stmt = conn.prepareStatement(
 							"select orders.*  " +
 									" from orders "  +
@@ -824,16 +831,16 @@ public class DerbyDatabase implements IDatabase {
 							);
 					stmt.setInt(1, patId);
 					List<Order> result = new ArrayList<Order>();
-					resultSet = stmt.executeQuery();
+					resultSet1 = stmt.executeQuery();
 
 					// for testing that a result was returned
 					Boolean found = false;
 
-					while (resultSet.next()) {
+					while (resultSet1.next()) {
 						found = true;
 
 						Order o = new Order();
-						loadOrder(o, resultSet, 1);
+						loadOrder(o, resultSet1, 1);
 						result.add(o);
 					}
 
@@ -847,7 +854,9 @@ public class DerbyDatabase implements IDatabase {
 
 				} finally {
 					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(resultSet1);
 					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt1);
 				}
 			}
 		});
@@ -901,6 +910,63 @@ public class DerbyDatabase implements IDatabase {
 					// check if the title was found
 					if (!found) {
 						System.out.println("<> users list is empty");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
+				}
+			}
+		});
+	}
+	//********************************************
+	//patron adds a restaurant to their favorites 
+	//********************************************
+	@Override
+	public List<Restaurant> addToFavoriteRests(final String rest, final Integer userId) {
+		return executeTransaction(new Transaction<List<Restaurant>>() {
+			@Override
+			public List<Restaurant> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				ResultSet resultSet = null;
+				//add new restaurant to db
+				try {
+					stmt = conn.prepareStatement(
+							"insert into favRests(patron_id, rest_name) " +
+									" values(?, ?) "
+							);
+					stmt.setInt(1, userId);
+					stmt.setString(2, rest);
+					
+					stmt.executeUpdate();
+					//stmt to return object
+					stmt2 = conn.prepareStatement(
+							"select * " +
+									" from favRests " +
+									" where patron_id = ?"
+							);
+					stmt2.setInt(1, userId);
+					
+					resultSet = stmt2.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+					List<Restaurant> result = new ArrayList<Restaurant>();
+					while (resultSet.next()) {
+						found = true;
+						Restaurant u = new Restaurant();
+						loadRestaurant(u, resultSet, 1);
+						result.add(u);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + rest + "> was not found in the Restaurants table");
 					}
 
 					return result;
@@ -1000,8 +1066,14 @@ public class DerbyDatabase implements IDatabase {
 		o.setRest(resultSet.getString(index++));
 		o.setorderNumber(resultSet.getInt(index++));
 		o.setItem(resultSet.getString(index++));
+		o.setQuantity(resultSet.getInt(index++));
 		o.setPrice(resultSet.getDouble(index++));
 		o.setStatus(resultSet.getString(index++));
+	}
+	private void loadFavoriteRest(Restaurant rest, ResultSet resultSet, int index) throws SQLException {
+		rest.setRestID(resultSet.getInt(index++));
+		rest.setPatronFavId(resultSet.getInt(index++));
+		rest.setName(resultSet.getString(index++));
 	}
 
 
@@ -1014,6 +1086,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
 				PreparedStatement stmt4 = null;
+				PreparedStatement stmt5 = null;
 
 				try {
 					stmt1 = conn.prepareStatement(
@@ -1060,14 +1133,23 @@ public class DerbyDatabase implements IDatabase {
 									" order_id integer primary key " +
 									" 		generated always as identity (start with 1, increment by 1), " +
 									" patron_id integer, "    +
-									" rest_name varchar(40),"  +
+									" rest_name varchar(40)," +
 									" order_number integer, " +
 									" item varchar(40), "	  +
+									" quantity integer,"	  +
 									" price double,"		  +
-									" status varchar(40)"    +
+									" status varchar(40)"     +
 									")"
 							);
 					stmt4.executeUpdate();
+					stmt5 = conn.prepareStatement(
+							" create table favRests (" +
+									" favRestId integer primary key " +
+									" 		generated always as identity (start with 1, increment by 1), " +
+									" patron_id integer, "   +
+									" rest_name varchar(40)" +
+									")"
+							);
 
 
 					return true;
@@ -1166,8 +1248,10 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("Loading initial data...");
 		db.loadInitialData();
 		System.out.println("loaded intial data");
-		System.out.println("dropped again loser");
+		System.out.println("austin got it the first time, you never will");
+		System.out.println("you got it this time, dont get cocky");
 	}
+
 
 
 }

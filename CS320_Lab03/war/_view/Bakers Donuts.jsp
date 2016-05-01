@@ -13,6 +13,7 @@
 	background-color: darkblue;
 	font-variant: small-caps;
 }
+
 #LinkContent {
 	float: left;
 	border: 1px solid darkblue;
@@ -32,7 +33,15 @@
 }
 #Content {
 	float: left;
+
 }
+
+button {
+	margin-top: 3px;
+	margin-left: 5px;
+	margin-bottom: 5px;
+}
+
 div.fixed {
 	position: fixed;
 	bottom: 10px;
@@ -44,54 +53,72 @@ button {
 	margin-left: 5px;
 	margin-bottom: 5px;
 }
+
 </style>
 </head>
 
 <body>
+
+
+	<c:if test="${! empty errorMessage}">
+		<div class="error">${errorMessage}</div>
+	</c:if>
+
 		<div id="PageName">Baker's Donuts</div>
 
-		<div id="Content">
 
-			<div id="LinkContent">
-				<div id="LinkName">Home</div>
-				<form action="${pageContext.servletContext.contextPath}/Homepage" method="get">
-					<table>
-							<tr>
-								<td><input type="Submit" name="submit" value="Click to go to Homepage"/></td>
-							</tr>
-						</table>
-					</form>
-			</div>
 
-			<br>
+	<div id="Content">
+		<div id="LinkContent">
+			<div id="LinkName">Home</div>
+			<form action="${pageContext.servletContext.contextPath}/Homepage"
+				method="post">
+				<table>
+					<tr>
+						<td><input type="Submit" name="submit"
+							value="Click to go to Homepage" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
 
-			<div id="LinkContent">
-				<div id="LinkName">Menu</div>
-					<form action="${pageContext.servletContext.contextPath}/Menu" method="post">
-					<table>
-							<tr>
-								<td><input type="Submit" name="submit" value="Click to view our menu"/></td>
-							</tr>
-						</table>
-					</form>
-			</div>
+		<br>
+
+		<div id="LinkContent">
+			<div id="LinkName">Menu</div>
+			<form action="${pageContext.servletContext.contextPath}/Menu"
+				method="post">
+				<table>
+					<tr>
+						<td><input type="Submit" name="submit"
+							value="Click to view our menu" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
 		<c:if test="${! empty utype}">
 			<br>
 			<div id="LinkContent">
-			<div id="LinkName">Your Orders</div>
+				<div id="LinkName">Your Orders</div>
 				<div>
 					<form action="${pageContext.servletContext.contextPath}/RestOrders"
-							method="get">
+						method="get">
 						<table>
 							<tr>
-								<td><input type="Submit" name="submit" value="Click to view Your Orders"/></td>
+								<td><input type="Submit" name="submit"
+									value="Click to view Your Orders" /></td>
 							</tr>
 						</table>
-						</form>
-					</div>
+					</form>
 				</div>
-			</c:if>
-			<br>
+			</div>
+		</c:if>
+		<br> <a href="https://twitter.com/share"
+			class="twitter-share-button" data-via="krum_austin" data-size="large"
+			data-hashtags="sweetJSPs">Tweet</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+		if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+':
+		//platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
 		<div class="fixed">
 			<button>
