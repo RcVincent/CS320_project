@@ -634,7 +634,7 @@ public class DerbyDatabase implements IDatabase {
 	//build an order with items and prices
 	//******************************************
 	@Override
-	public List<Order> ceateOrderInTable(final int patId, final String rest, final int orderNum, final String item, final Double price, final String status) {
+	public List<Order> ceateOrderInTable(final int patId, final String rest, final int orderNum, final String item, final int quantity, final Double price, final String status) {
 		return executeTransaction(new Transaction<List<Order>>() {
 			@Override
 			public List<Order> execute(Connection conn) throws SQLException {
@@ -644,15 +644,16 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(
-							" insert into orders(patron_id, rest_name, order_number, item, price, status) " +
-									" values(?, ?, ?, ?, ?, ?) "
+							" insert into orders(patron_id, rest_name, order_number, item, quantity, price, status) " +
+									" values(?, ?, ?, ?, ?, ?, ?) "
 							);
 					stmt.setInt(1, patId);
 					stmt.setString(2, rest);
 					stmt.setInt(3, orderNum);
 					stmt.setString(4, item);
-					stmt.setDouble(5, price);
-					stmt.setString(6, status);
+					stmt.setInt(5, quantity);
+					stmt.setDouble(6, price);
+					stmt.setString(7, status);
 					stmt.executeUpdate();
 					
 					stmt2 = conn.prepareStatement(
