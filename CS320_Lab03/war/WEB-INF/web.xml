@@ -56,8 +56,8 @@
     <servlet-class>edu.ycp.cs320.lab03.servlet.AccountServlet</servlet-class>
    </servlet>
    <servlet>
-    <servlet-name>FavoritesServlet</servlet-name>
-    <servlet-class>edu.ycp.cs320.lab03.servlet.FavoritesServlet</servlet-class>
+    <servlet-name>RecentOrdersServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab03.servlet.RecentOrdersServlet</servlet-class>
    </servlet>
    <servlet>
     <servlet-name>BakersDonutsServlet</servlet-name>
@@ -124,8 +124,8 @@
     <url-pattern>/Account</url-pattern>
   </servlet-mapping>
     <servlet-mapping>
-    <servlet-name>FavoritesServlet</servlet-name>
-    <url-pattern>/Favorites</url-pattern>
+    <servlet-name>RecentOrdersServlet</servlet-name>
+    <url-pattern>/RecentOrders</url-pattern>
   </servlet-mapping>
     <servlet-mapping>
     <servlet-name>BakersDonutsServlet</servlet-name>

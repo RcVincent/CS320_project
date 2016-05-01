@@ -35,5 +35,22 @@ public class GetOrder {
 			
 			return orders;
 	}
-
+		public ArrayList<Order> orderByUser(String username){
+			List<Order> orderList = db.getOrderByPatronUname(username);
+			ArrayList<Order> orders = null;
+			
+			if (orderList.isEmpty()) {
+				System.out.println("No Orders found");
+				return null;
+			}
+			else {
+				orders = new ArrayList<Order>();
+				for (Order order : orderList) {
+					orders.add(order);
+				}			
+			}
+			
+			
+			return orders;
+	}
 }

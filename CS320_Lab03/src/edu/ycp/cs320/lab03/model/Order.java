@@ -12,6 +12,7 @@ public class Order{
 	private int patronId; //for database accesses
 	private String rest;   //for database accesses
 	private int orderNumber;
+	private String status;
 	public TreeMap<String, Double> fullOrder = new TreeMap<String, Double>();
 	
 	
@@ -41,8 +42,12 @@ public class Order{
 	public void setorderNumber(int orderNumber) {
 		this.orderNumber = orderNumber;
 	}
-
-
+	public void setStatus(String status){
+		this.status = status;
+	}
+	public String getStatus(){
+		return status;
+	}
 	public int getOrderId() {
 		return orderId;
 	}

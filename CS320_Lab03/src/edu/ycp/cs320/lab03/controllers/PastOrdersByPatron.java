@@ -17,8 +17,8 @@ public class PastOrdersByPatron {
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		db = DatabaseProvider.getInstance();
 	}
-		public ArrayList<Order> orderByPatronId(Integer patId){
-			List<Order> orderList = db.getOrderByPatronId(patId);
+		public ArrayList<Order> orderByPatronId(String pat){
+			List<Order> orderList = db.getOrderByPatronUname(pat);
 			ArrayList<Order> orders = null;
 			
 			if (orderList.isEmpty()) {

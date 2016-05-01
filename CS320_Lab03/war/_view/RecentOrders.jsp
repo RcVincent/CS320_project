@@ -4,7 +4,7 @@
 
 <html>
 <head>
-<title>Owner Page</title>
+<title>Recent Orders</title>
 <style type="text/css">
 #PageName {
 	color: white;
@@ -13,61 +13,16 @@
 	background-color: darkblue;
 	font-variant: small-caps;
 }
-body{
-	color: darkblue;
-}
-.Address {
-	font-size: 15px;
-	font-color: black;
-}
-#LinkContent {
-	float: left;
-	border: 1px solid darkblue;
-	width: 400px;
-	margin-left: 13px;
-	margin-top: 13px;
-	margin-bottom: 13px;
-}
-
-#LinkName {
-	color: darkblue;
-	font-size: 150%;
-	border-bottom: 2px solid darkblue;
-	width: 300px;
-	margin-left: 13px;
-	margin_bottom: 20px;
-}
-
-#ContactBody {
-	margin-left: 20px;
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
-
 #Content {
     margin: 50px auto;
 	border: 1px solid darkblue;
 	width: 400px;
 	padding: 10px;
 }
-button {
-	margin-top: 3px;
-	margin-left: 5px;
-	margin-bottom: 5px;
-}
 div.fixed {
 	position: fixed;
 	bottom: 10px;
 	right: 10px;
-}
-
-button {
-	margin-top: 3px;
-	margin-left: 5px;
-	margin-bottom: 5px;
-}
-td.label {
-	text-align: right;
 }
 input[type=submit]{
 	padding: 5px;
@@ -80,7 +35,7 @@ input[type=submit]{
 	<div id="PageName">Your Orders</div>
 	<div id="Content">
 			<c:forEach items="${orderNum}" var="order">
-			<form action="${pageContext.servletContext.contextPath}/RestOrders" method="post">
+			<form action="${pageContext.servletContext.contextPath}/RecentOrders" method="post">
 					<table>
 						<tr>
 							<td>Order Number: <input type="Submit" name="submit" value="${order}"/></td>
@@ -89,8 +44,14 @@ input[type=submit]{
 					</table>
 			</form>
 			</c:forEach>
+			<table>
+			<c:if test="${! empty status}">
+				<tr>
+					<td>Status: </td>
+					<td> ${status}</td>
+				</tr>
+				</c:if>
 			<c:forEach items="${items}" var="item">
-				<table>
 					<tr>
 						<td>${item.item}</td>
 						<td>${item.price }</td>

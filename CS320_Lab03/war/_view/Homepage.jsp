@@ -98,7 +98,19 @@ td.label {
 </head>
 
 <body>
-
+	<div id="fb-root"></div>
+	<script>
+			(function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id))
+					return;
+				js = d.createElement(s);
+				js.id = id;
+				js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		</script>
+	</div>
 	<c:if test="${! empty errorMessage}">
 		<div class="error">${errorMessage}</div>
 	</c:if>
@@ -125,16 +137,44 @@ td.label {
 		</div>
 		<br>
 		<div id="LinkContent">
-			<div id="LinkName">Favorites</div>
+			<div id="LinkName">Recent Orders</div>
 			<div id="ContentBody">
 				<div>
-					<button>
-						<a href="/lab03/Favorites"><type= "button">Click to
-							view Favorites</a>
-					</button>
+					<form
+						action="${pageContext.servletContext.contextPath}/RecentOrders"
+						method="get">
+						<table>
+							<tr>
+								<td><input type="Submit" name="submit"
+									value="Click to view Recent Orders" /></td>
+							</tr>
+						</table>
+					</form>
 				</div>
 			</div>
 		</div>
+		<br>
+		<div id="LinkContent">
+			<div id="LinkName">Your Account</div>
+			<div>
+				<form action="${pageContext.servletContext.contextPath}/Account"
+					method="post">
+					<table>
+						<tr>
+							<td><input type="Submit" name="submit"
+								value="Click to view Account Info" /></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+
+		</div>
+		
+		<br>
+		<div class="fb-like" data-href="http://localhost:8081/lab03/Homepage"
+			data-width="50" data-layout="button" data-action="recommend"
+			data-show-faces="false" data-share="false"></div>
+		<br>
 		<br> <a href="https://twitter.com/tracksnack"
 			class="twitter-follow-button" data-show-count="false">Follow
 			@tracksnack</a>
@@ -150,20 +190,7 @@ td.label {
 				}
 			}(document, 'script', 'twitter-wjs');
 		</script>
-		<div id="LinkContent">
-			<div id="LinkName">Your Account</div>
-			<div>
-				<form action="${pageContext.servletContext.contextPath}/Account"
-					method="post">
-					<table>
-						<tr>
-							<td><input type="Submit" name="submit"
-								value="Click to view Account Info" /></td>
-						</tr>
-					</table>
-				</form>
-			</div>
-		</div>
+
 		<c:if test="${! empty utype}">
 			<br>
 			<div id="LinkContent">
@@ -213,6 +240,5 @@ td.label {
 		<button>
 			<a href="/lab03/Login"><type="button">Logout </a>
 		</button>
-	</div>
 </body>
 </html>

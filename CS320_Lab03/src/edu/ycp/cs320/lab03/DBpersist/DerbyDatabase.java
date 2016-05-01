@@ -633,7 +633,7 @@ public class DerbyDatabase implements IDatabase {
 	//build an order with items and prices
 	//******************************************
 	@Override
-	public List<Order> ceateOrderInTable(final int patId, final String rest, final int orderNum, final String item, final Double price) {
+	public List<Order> ceateOrderInTable(final int patId, final String rest, final int orderNum, final String item, final Double price, final String status) {
 		return executeTransaction(new Transaction<List<Order>>() {
 			@Override
 			public List<Order> execute(Connection conn) throws SQLException {
@@ -643,14 +643,15 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(
-							" insert into orders(patron_id, rest_name, order_number, item, price) " +
-									" values(?, ?, ?, ?, ?) "
+							" insert into orders(patron_id, rest_name, order_number, item, price, status) " +
+									" values(?, ?, ?, ?, ?, ?) "
 							);
 					stmt.setInt(1, patId);
 					stmt.setString(2, rest);
 					stmt.setInt(3, orderNum);
 					stmt.setString(4, item);
 					stmt.setDouble(5, price);
+					stmt.setString(6, status);
 					stmt.executeUpdate();
 					
 					stmt2 = conn.prepareStatement(
@@ -795,16 +796,33 @@ public class DerbyDatabase implements IDatabase {
 	//view past orders by a patron using the patron/user Id
 	//****************************************************
 	@Override
-	public List<Order> getOrderByPatronId(final Integer patId) {
+	public List<Order> getOrderByPatronUname(final String username) {
 		return executeTransaction(new Transaction<List<Order>>() {
 			@Override
 			public List<Order> execute(Connection conn) throws SQLException {
+				//PreparedStatement stmt = null; unused
+				PreparedStatement stmt1 = null;
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
+				ResultSet resultSet1 = null;
+				
 
 				try {
-
-
+					//first, get patron id from users table 
+					//patron id is not available from jsp in this situation
+					stmt1 = conn.prepareStatement(
+							"select user_id" +
+									" from users " +
+									" where user_userName = ?"
+							);
+					stmt1.setString(1, username);
+					int patId = 0;
+					resultSet = stmt1.executeQuery();
+					while (resultSet.next()) {
+						patId = resultSet.getInt(1);
+					}
+					
+					//get order by order id
 					stmt = conn.prepareStatement(
 							"select orders.*  " +
 									" from orders "  +
@@ -812,16 +830,16 @@ public class DerbyDatabase implements IDatabase {
 							);
 					stmt.setInt(1, patId);
 					List<Order> result = new ArrayList<Order>();
-					resultSet = stmt.executeQuery();
+					resultSet1 = stmt.executeQuery();
 
 					// for testing that a result was returned
 					Boolean found = false;
 
-					while (resultSet.next()) {
+					while (resultSet1.next()) {
 						found = true;
 
 						Order o = new Order();
-						loadOrder(o, resultSet, 1);
+						loadOrder(o, resultSet1, 1);
 						result.add(o);
 					}
 
@@ -835,7 +853,9 @@ public class DerbyDatabase implements IDatabase {
 
 				} finally {
 					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(resultSet1);
 					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt1);
 				}
 			}
 		});
@@ -928,6 +948,7 @@ public class DerbyDatabase implements IDatabase {
 		o.setorderNumber(resultSet.getInt(index++));
 		o.setItem(resultSet.getString(index++));
 		o.setPrice(resultSet.getDouble(index++));
+		o.setStatus(resultSet.getString(index++));
 	}
 
 
@@ -989,7 +1010,8 @@ public class DerbyDatabase implements IDatabase {
 									" rest_name varchar(40),"  +
 									" order_number integer, " +
 									" item varchar(40), "	  +
-									" price double"		  +
+									" price double,"		  +
+									" status varchar(40)"    +
 									")"
 							);
 					stmt4.executeUpdate();
@@ -1091,7 +1113,7 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("Loading initial data...");
 		db.loadInitialData();
 		System.out.println("loaded intial data");
-		System.out.println("dropped again loser");
+		System.out.println("austin got it the first time, you never will");
 	}
 
 

@@ -33,28 +33,39 @@ public class OrderServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 		}
+		//get account info of user in order to create an order based on their id
 		info = new getAccountInfo();
 		User u = info.getInfo((String)req.getSession().getAttribute("username")).get(0);
 		String[] order = (String[])req.getSession().getAttribute("orderItems");
-		
-		//Build an order from the values the user selects
+		int userId = u.getUserId();
+	
+		//Set the order number
 		Order orderNum = new Order();
-		NumOrder = new GetOrder();
 		int num = orderNum.getorderNumber();
-		req.setAttribute("num", num);
+		String rest = (String)req.getSession().getAttribute("restaurant");
+		
+		//initialize order variables
+		//when user creates the order, it will always be pending
+		NumOrder = new GetOrder();
+		String status = "Pending";
 		newOrder = new buildOrder();
 		double total = 0;
+		//goes through all items selected and builds the order
 		for(int i=0; i< order.length; i++){
 			Menu item = new Menu();
 			price = new GetPriceOfMenuItem();
 			item = price.priceOfItem(order[i]);
 			double ItemPrice = item.getPrice();
 			total+=ItemPrice;
-			newOrder.createOrder(u.getUserId(), (String)req.getSession().getAttribute("restaurant"), num, item.getItem(), ItemPrice);
+			newOrder.createOrder(userId, rest , num, item.getItem(), ItemPrice, status);
 		}
 		ArrayList<Order> theOrder = NumOrder.orderByNum(num);
+		
+		//set all attributes for the jsp
 		req.setAttribute("order", theOrder);
 		req.setAttribute("total", total);
+		req.setAttribute("status", status);
+		req.setAttribute("num", num);
 		req.getRequestDispatcher("/_view/Order.jsp").forward(req, resp);
 	}
 	

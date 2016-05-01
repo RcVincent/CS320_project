@@ -13,11 +13,14 @@
 	background-color: darkblue;
 	font-variant: small-caps;
 }
+<<<<<<< HEAD
 
 body {
 	color: darkblue;
 }
 
+=======
+>>>>>>> refs/remotes/akrum18/master
 #LinkContent {
 	float: left;
 	border: 1px solid darkblue;
@@ -35,21 +38,17 @@ body {
 	margin-left: 13px;
 	margin_bottom: 20px;
 }
-
-#ContactBody {
-	margin-left: 20px;
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
-
 #Content {
 	float: left;
+<<<<<<< HEAD
 }
 
 button {
 	margin-top: 3px;
 	margin-left: 5px;
 	margin-bottom: 5px;
+=======
+>>>>>>> refs/remotes/akrum18/master
 }
 
 div.fixed {
@@ -63,6 +62,7 @@ button {
 	margin-left: 5px;
 	margin-bottom: 5px;
 }
+<<<<<<< HEAD
 
 .error {
 	color: red;
@@ -84,15 +84,20 @@ button {
 td.label {
 	text-align: right;
 }
+=======
+>>>>>>> refs/remotes/akrum18/master
 </style>
 </head>
 
 <body>
 
+
 	<c:if test="${! empty errorMessage}">
 		<div class="error">${errorMessage}</div>
 	</c:if>
-	<div id="PageName">Baker's Donuts</div>
+
+		<div id="PageName">Baker's Donuts</div>
+
 
 	<div id="Content">
 
