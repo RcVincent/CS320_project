@@ -1,22 +1,12 @@
 package edu.ycp.cs320.lab03.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab03.controllers.AddItemToMenu;
-import edu.ycp.cs320.lab03.controllers.GetPriceOfMenuItem;
-import edu.ycp.cs320.lab03.controllers.ViewMenuByRestaurantName;
-import edu.ycp.cs320.lab03.controllers.buildOrder;
-import edu.ycp.cs320.lab03.controllers.getAccountInfo;
-import edu.ycp.cs320.lab03.model.Menu;
-import edu.ycp.cs320.lab03.model.Order;
-import edu.ycp.cs320.lab03.model.User;
-
 public class AddItemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AddItemToMenu add = null;

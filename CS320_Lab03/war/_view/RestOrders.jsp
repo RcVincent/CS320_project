@@ -13,13 +13,6 @@
 	background-color: darkblue;
 	font-variant: small-caps;
 }
-body{
-	color: darkblue;
-}
-.Address {
-	font-size: 15px;
-	font-color: black;
-}
 #LinkContent {
 	float: left;
 	border: 1px solid darkblue;
@@ -92,25 +85,26 @@ input[type=submit]{
 			<c:if test="${! empty items}">
 				<table>
 					<tr>
-						<td>Status: </td>
-						<td> ${status}</td>
-						<td><input type="radio" name="status" value="In Progress" checked>In Progress</td>
-						<td><input type="radio" name="status" value="Complete" >Complete</td>
+						<td>Status:</td>
+						<td>${status}</td>
+					</tr>
+					<tr>
 						<form action="${pageContext.servletContext.contextPath}/RestOrders" method="post">
-						<input type="hidden" name="orderNumber" id="orderNumber" value="${orderNum }"/>
+						<td><input type="radio" name="status" value="In Progress">In Progress</td>
+						<td><input type="radio" name="status" value="Complete" >Complete</td>
+						<input type="hidden" name="orderNumber" id="orderNumber" value="${orderNumber }"/>
 						<td><input type="Submit" name="submit" value="Change Status" ></td>
 						</form>
 					</tr>
 			<c:forEach items="${items}" var="item">
-				
 					<tr>
-						<td>${item.item}</td>
-						<td>${item.price }</td>
+						<td class = "label">${item.item}</td>
+						<td class = "label">${item.price}</td>
 					</tr>
-				</table>
 			</c:forEach>
+			</table>
 			</c:if>
-			<form action="${pageContext.servletContext.contextPath}/Homepage" method="post">
+			<form action="${pageContext.servletContext.contextPath}/Homepage" method="get">
 					<input type="Submit" name="submit" value="Click to go to Homepage"/>
 			</form>
 	</div>

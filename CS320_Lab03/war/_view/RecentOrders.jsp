@@ -54,10 +54,11 @@ input[type=submit]{
 			<c:forEach items="${items}" var="item">
 					<tr>
 						<td>${item.item}</td>
-						<td>${item.price }</td>
-				</table>
+						<td>$ ${item.price }0</td>
+					</tr>
 			</c:forEach>
-			<form action="${pageContext.servletContext.contextPath}/Homepage" method="post">
+			</table>
+			<form action="${pageContext.servletContext.contextPath}/Homepage" method="get">
 					<input type="Submit" name="submit" value="Click to go to Homepage"/>
 			</form>
 	</div>

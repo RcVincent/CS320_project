@@ -78,7 +78,7 @@ button {
 				</div>
 				<br>
 			</c:forEach>
-			<form action="${pageContext.servletContext.contextPath}/Homepage" method="post">
+			<form action="${pageContext.servletContext.contextPath}/Homepage" method="get">
 					<input type="Submit" name="submit" value="Click to go to Homepage"/>
 			</form>
 		</div>

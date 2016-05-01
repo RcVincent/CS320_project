@@ -23,10 +23,11 @@ public class OwnerServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 		}
+		//Initialize variables
 		search = new RestaurantSearch();
 		ArrayList<Restaurant> rest = null;
-		String username = (String)req.getSession().getAttribute("username");
-		rest = search.RestByOwner(username);
+		//search restaurants by owner
+		rest = search.RestByOwner(user);
 		req.setAttribute("rest", rest);
 		req.getRequestDispatcher("/_view/OwnerPage.jsp").forward(req, resp);
 	}

@@ -54,7 +54,7 @@ button {
 
 			<div id="LinkContent">
 				<div id="LinkName">Home</div>
-				<form action="${pageContext.servletContext.contextPath}/Homepage" method="post">
+				<form action="${pageContext.servletContext.contextPath}/Homepage" method="get">
 					<table>
 							<tr>
 								<td><input type="Submit" name="submit" value="Click to go to Homepage"/></td>

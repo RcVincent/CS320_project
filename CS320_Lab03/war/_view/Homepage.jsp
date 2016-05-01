@@ -117,6 +117,7 @@ td.label {
 				</tr>
 			</table>
 		</div>
+		<c:if test="${empty utype}">
 		<br>
 		<div id="LinkContent">
 			<div id="LinkName">Recent Orders</div>
@@ -133,6 +134,7 @@ td.label {
 				</div>
 			</div>
 		</div>
+		</c:if>
 		<br>
 		<div id="LinkContent">
 			<div id="LinkName">Your Account</div>

@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.lab03.PsuedoController.ProjectController;
-
 public class BakersDonutsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +27,6 @@ public class BakersDonutsServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		// Decode form parameters and dispatch to controller
-		String errorMessage = null;
 		String rest = "Bakers Donuts";
 		String utype = null;
 		String userType = (String) req.getSession().getAttribute("type");
@@ -40,8 +37,6 @@ public class BakersDonutsServlet extends HttpServlet {
 		req.setAttribute("utype", utype);
 		
 		req.getSession().setAttribute("restaurant", rest);
-		// Add result objects as request attributes
-		req.setAttribute("errorMessage", errorMessage);
 		
 		
 		// Forward to view to render the result HTML document

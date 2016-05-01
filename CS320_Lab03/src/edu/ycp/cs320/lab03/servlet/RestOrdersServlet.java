@@ -2,6 +2,7 @@ package edu.ycp.cs320.lab03.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,10 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab03.controllers.GetOrder;
 import edu.ycp.cs320.lab03.controllers.GetOrdersByRestaurant;
-import edu.ycp.cs320.lab03.controllers.RestaurantSearch;
 import edu.ycp.cs320.lab03.controllers.UpdateOrderStatus;
 import edu.ycp.cs320.lab03.model.Order;
-import edu.ycp.cs320.lab03.model.Restaurant;
 
 public class RestOrdersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -31,14 +30,22 @@ public class RestOrdersServlet extends HttpServlet {
 		}
 		orders = new GetOrdersByRestaurant();
 		ArrayList<Order> order = null;
+		
+		//get the restaurant name to be passed to the order call
 		String rest = (String)req.getSession().getAttribute("restaurant");
 		order = orders.OrdersbyRest(rest);
+		
+		//Array for the order numbers to be displayed
 		ArrayList<Integer> orderNum= new ArrayList<Integer>();
+		
+		//reverse the orders so the most recent one is displayed
+		Collections.reverse(order);
 		for(int i=0; i<order.size(); i++){
-			if(orderNum.contains(order.get(i).getorderNumber())){
+			if(orderNum.contains(order.get(i).getorderNumber()) || order.get(i).getStatus().equals("Complete")){
 				int count = 0;
 			}
 			else{
+				//add order number to the order array
 				orderNum.add(order.get(i).getorderNumber());
 			}
 		}
@@ -50,18 +57,26 @@ public class RestOrdersServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+		//Initialize variables
 		ArrayList<Order> OrderByNum = new ArrayList<Order>();
 		int orderNumber = 0;
-		orderNumber = Integer.parseInt(req.getParameter("orderNumber"));
 		byNum = new GetOrder();
 		update = new UpdateOrderStatus();
-		
 		String status = null;
+		
+		//get the order number
+		orderNumber = Integer.parseInt(req.getParameter("orderNumber"));
+		//get the new status
 		status = req.getParameter("status");
 		if(status != null){
 			update.changeStatus(status, orderNumber);
+			System.out.println("success");
 		}
+		//get the items from the order
 		OrderByNum = byNum.orderByNum(orderNumber);
+		//set the variables
+		req.setAttribute("orderNumber", orderNumber);
 		req.setAttribute("items", OrderByNum);
 		req.setAttribute("status", status);
 		// Forward to view to render the result HTML document

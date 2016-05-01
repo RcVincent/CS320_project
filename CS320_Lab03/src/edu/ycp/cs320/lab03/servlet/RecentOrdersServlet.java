@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab03.controllers.GetOrder;
-import edu.ycp.cs320.lab03.controllers.GetOrdersByRestaurant;
 import edu.ycp.cs320.lab03.model.Order;
 
 public class RecentOrdersServlet extends HttpServlet {
@@ -25,10 +24,13 @@ public class RecentOrdersServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 		}
+		//Initialize variables
 		order = new GetOrder();
 		ArrayList<Order> CustOrder = null;
-		CustOrder = order.orderByUser(user);
 		ArrayList<Integer> orderNum= new ArrayList<Integer>();
+		//get all orders made by a customer
+		CustOrder = order.orderByUser(user);
+		//add the order number to the array to be displayed
 		for(int i=0; i<CustOrder.size(); i++){
 			if(orderNum.isEmpty()){
 				orderNum.add(CustOrder.get(0).getorderNumber());
@@ -40,7 +42,9 @@ public class RecentOrdersServlet extends HttpServlet {
 				orderNum.add(CustOrder.get(i).getorderNumber());
 			}
 		}
+		//reverse the array to show the most recent ones on top
 		Collections.reverse(orderNum);
+		//add the nums to array
 		ArrayList<Integer> recents = new ArrayList<Integer>();
 		if(orderNum.size()>5){
 			for(int j=0; j<5; j++){
@@ -65,9 +69,16 @@ public class RecentOrdersServlet extends HttpServlet {
 		int orderNumber = 0;
 		orderNumber = Integer.parseInt(req.getParameter("orderNumber"));
 		order = new GetOrder();
+		double total = 0;
+		
+		//get the order items
 		OrderByNum = order.orderByNum(orderNumber);
+		for(int i =0; i<OrderByNum.size(); i++){
+			total+=OrderByNum.get(i).getPrice();
+		}
 		String status = OrderByNum.get(0).getStatus();
 		req.setAttribute("items", OrderByNum);
+		req.setAttribute("price", total);
 		req.setAttribute("status", status);
 		req.setAttribute("recentOrders", OrderByNum);
 		req.getRequestDispatcher("/_view/RecentOrders.jsp").forward(req, resp);
