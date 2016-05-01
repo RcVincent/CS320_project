@@ -11,6 +11,7 @@ public class Order{
 	private int orderId; //for database accesses
 	private int patronId; //for database accesses
 	private String rest;   //for database accesses
+	private int quantity;  //number of items to order
 	private int orderNumber;
 	private String status;
 	public TreeMap<String, Double> fullOrder = new TreeMap<String, Double>();
@@ -87,6 +88,14 @@ public class Order{
 
 	public void setRest(String rest) {
 		this.rest = rest;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 

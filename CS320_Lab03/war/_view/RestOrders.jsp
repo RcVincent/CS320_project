@@ -97,6 +97,7 @@ input[type=submit]{
 						<td><input type="radio" name="status" value="In Progress" checked>In Progress</td>
 						<td><input type="radio" name="status" value="Complete" >Complete</td>
 						<form action="${pageContext.servletContext.contextPath}/RestOrders" method="post">
+						<input type="hidden" name="orderNumber" id="orderNumber" value="${orderNum }"/>
 						<td><input type="Submit" name="submit" value="Change Status" ></td>
 						</form>
 					</tr>
