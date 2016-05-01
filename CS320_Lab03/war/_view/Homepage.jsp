@@ -13,6 +13,7 @@
 	background-color: darkblue;
 	font-variant: small-caps;
 }
+
 #LinkContent {
 	float: left;
 	border: 1px solid darkblue;
@@ -21,6 +22,7 @@
 	margin-top: 13px;
 	margin-bottom: 13px;
 }
+
 #LinkName {
 	color: darkblue;
 	font-size: 150%;
@@ -55,10 +57,11 @@ button {
 .error {
 	color: red;
 }
+
 .Address {
 	font-size: 15px;
-
 }
+
 #Restaurants {
 	float: left;
 	border: 3px solid darkblue;
@@ -81,7 +84,6 @@ button {
 	border-bottom: 3px solid darkblue;
 	font-variant: small-caps;
 	float: left;
-	
 }
 
 #resultList {
@@ -111,9 +113,11 @@ td.label {
 					<form action="${pageContext.servletContext.contextPath}/Homepage"
 						method="post">
 						<td class="label"></td>
-						<td><input type="search" name="search" size="12" placeholder="Search"/></td>
-						<td><input type="Submit" name="submit" value="Search"/></td>
-						<td><input type="radio" name="searchType" value="city" checked>City</td>
+						<td><input type="search" name="search" size="12"
+							placeholder="Search" /></td>
+						<td><input type="Submit" name="submit" value="Search" /></td>
+						<td><input type="radio" name="searchType" value="city"
+							checked>City</td>
 
 					</form>
 				</tr>
@@ -131,37 +135,53 @@ td.label {
 				</div>
 			</div>
 		</div>
-		<br>
+		<br> <a href="https://twitter.com/tracksnack"
+			class="twitter-follow-button" data-show-count="false">Follow
+			@tracksnack</a>
+		<script>
+			!function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+						.test(d.location) ? 'http' : 'https';
+				if (!d.getElementById(id)) {
+					js = d.createElement(s);
+					js.id = id;
+					js.src = p + '://platform.twitter.com/widgets.js';
+					fjs.parentNode.insertBefore(js, fjs);
+				}
+			}(document, 'script', 'twitter-wjs');
+		</script>
 		<div id="LinkContent">
 			<div id="LinkName">Your Account</div>
 			<div>
 				<form action="${pageContext.servletContext.contextPath}/Account"
-						method="post">
-						<table>
-							<tr>
-								<td><input type="Submit" name="submit" value="Click to view Account Info"/></td>
-							</tr>
-						</table>
+					method="post">
+					<table>
+						<tr>
+							<td><input type="Submit" name="submit"
+								value="Click to view Account Info" /></td>
+						</tr>
+					</table>
 				</form>
 			</div>
 		</div>
-	<c:if test="${! empty utype}">
-	<br>
-		<div id="LinkContent">
-			<div id="LinkName">Your Restaurants</div>
+		<c:if test="${! empty utype}">
+			<br>
+			<div id="LinkContent">
+				<div id="LinkName">Your Restaurants</div>
 				<div>
 					<form action="${pageContext.servletContext.contextPath}/OwnerPage"
-							method="get">
-							<table>
-								<tr>
-								<td><input type="Submit" name="submit" value="Click to view Your Restaurants"/></td>
-								</tr>
-							</table>
-						</form>
-					</div>
+						method="get">
+						<table>
+							<tr>
+								<td><input type="Submit" name="submit"
+									value="Click to view Your Restaurants" /></td>
+							</tr>
+						</table>
+					</form>
 				</div>
 			</div>
-		</c:if>
+	</div>
+	</c:if>
 	</div>
 	<c:if test="${! empty rest}">
 		<div id="results">Search Results</div>
@@ -171,10 +191,12 @@ td.label {
 					<div id="LinkName">${restaurant.name}</div>
 					<table>
 						<tr>
-							<td class = "Address">${restaurant.address },</td>
-							<td class = "Address">${restaurant.city },</td>
-							<td class = "Address">${restaurant.zipCode }</td>
-							<form action="${pageContext.servletContext.contextPath}/${restaurant.name }" method="post">
+							<td class="Address">${restaurant.address },</td>
+							<td class="Address">${restaurant.city },</td>
+							<td class="Address">${restaurant.zipCode }</td>
+							<form
+								action="${pageContext.servletContext.contextPath}/${restaurant.name }"
+								method="post">
 								<td><input type="submit" value="Click to view page"></td>
 							</form>
 						</tr>
