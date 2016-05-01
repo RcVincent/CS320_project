@@ -43,12 +43,12 @@ public class RecentOrdersServlet extends HttpServlet {
 		Collections.reverse(orderNum);
 		ArrayList<Integer> recents = new ArrayList<Integer>();
 		if(orderNum.size()>5){
-			for(int j=1; j<5; j++){
+			for(int j=0; j<5; j++){
 				recents.add(orderNum.get(j));
 			}
 		}
 		else{
-			for(int k=1; k<orderNum.size(); k++){
+			for(int k=0; k<orderNum.size(); k++){
 				recents.add(orderNum.get(k));
 			}
 		}

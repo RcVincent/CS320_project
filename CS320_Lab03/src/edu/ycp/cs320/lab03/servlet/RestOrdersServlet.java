@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.lab03.controllers.GetOrder;
 import edu.ycp.cs320.lab03.controllers.GetOrdersByRestaurant;
 import edu.ycp.cs320.lab03.controllers.RestaurantSearch;
+import edu.ycp.cs320.lab03.controllers.UpdateOrderStatus;
 import edu.ycp.cs320.lab03.model.Order;
 import edu.ycp.cs320.lab03.model.Restaurant;
 
@@ -18,6 +19,7 @@ public class RestOrdersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private GetOrdersByRestaurant orders = null;
 	private GetOrder byNum = null;
+	private UpdateOrderStatus update = null;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -40,6 +42,7 @@ public class RestOrdersServlet extends HttpServlet {
 				orderNum.add(order.get(i).getorderNumber());
 			}
 		}
+
 		req.setAttribute("orderNum", orderNum);
 		req.getRequestDispatcher("/_view/RestOrders.jsp").forward(req, resp);
 	}
@@ -51,8 +54,16 @@ public class RestOrdersServlet extends HttpServlet {
 		int orderNumber = 0;
 		orderNumber = Integer.parseInt(req.getParameter("orderNumber"));
 		byNum = new GetOrder();
+		update = new UpdateOrderStatus();
+		
+		String status = null;
+		status = req.getParameter("status");
+		if(status != null){
+			update.changeStatus(status, orderNumber);
+		}
 		OrderByNum = byNum.orderByNum(orderNumber);
 		req.setAttribute("items", OrderByNum);
+		req.setAttribute("status", status);
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/RestOrders.jsp").forward(req, resp);
 	}

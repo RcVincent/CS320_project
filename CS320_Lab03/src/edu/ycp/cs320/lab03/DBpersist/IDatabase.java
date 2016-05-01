@@ -41,4 +41,6 @@ public interface IDatabase {
 
 	List<Order> getOrderByPatronUname(String username);
 	
+	List<Order> updateOrderStatus(String status, int orderNum);
+	
 }
