@@ -13,14 +13,12 @@
 	background-color: darkblue;
 	font-variant: small-caps;
 }
-body{
-	color: darkblue;
-}
+
 .Address {
 	font-size: 15px;
 	font-color: black;
 }
-#LinkContent {
+#Rests {
 	float: left;
 	border: 1px solid darkblue;
 	width: 400px;
@@ -29,19 +27,13 @@ body{
 	margin-bottom: 13px;
 }
 
-#LinkName {
+#RestName {
 	color: darkblue;
 	font-size: 150%;
 	border-bottom: 2px solid darkblue;
 	width: 300px;
 	margin-left: 13px;
 	margin_bottom: 20px;
-}
-
-#ContactBody {
-	margin-left: 20px;
-	margin-top: 20px;
-	margin-bottom: 20px;
 }
 
 #Content {
@@ -63,25 +55,6 @@ button {
 	margin-left: 5px;
 	margin-bottom: 5px;
 }
-
-.error {
-	color: red;
-}
-#results{
-	margin-top: 20px;
-	margin-left: 150px;
-	width: 50%;
-	color: darkblue;
-	font-size: 200%;
-	text-align: center;
-	border-top: 3px solid darkblue;
-	border-bottom: 3px solid darkblue;
-	font-variant: small-caps;
-	float: left;
-}
-td.label {
-	text-align: right;
-}
 </style>
 </head>
 
@@ -90,8 +63,8 @@ td.label {
 	<div id="Content">
 		<div id="Restaurants">
 			<c:forEach items="${rest}" var="restaurant">
-				<div id="LinkContent">
-					<div id="LinkName">${restaurant.name}</div>
+				<div id="Rests">
+					<div id="RestName">${restaurant.name}</div>
 					<table>
 						<tr>
 							<td class = "Address">${restaurant.address },</td>

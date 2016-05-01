@@ -13,9 +13,6 @@
 	background-color: darkblue;
 	font-variant: small-caps;
 }
-body{
-	color: darkblue;
-}
 #LinkContent {
 	float: left;
 	border: 1px solid darkblue;
@@ -33,20 +30,8 @@ body{
 	margin-left: 13px;
 	margin_bottom: 20px;
 }
-
-#ContactBody {
-	margin-left: 20px;
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
-
 #Content {
 	float: left;
-}
-button {
-	margin-top: 3px;
-	margin-left: 5px;
-	margin-bottom: 5px;
 }
 div.fixed {
 	position: fixed;
@@ -59,33 +44,10 @@ button {
 	margin-left: 5px;
 	margin-bottom: 5px;
 }
-
-.error {
-	color: red;
-}
-#results{
-	margin-top: 20px;
-	margin-left: 150px;
-	width: 50%;
-	color: darkblue;
-	font-size: 200%;
-	text-align: center;
-	border-top: 3px solid darkblue;
-	border-bottom: 3px solid darkblue;
-	font-variant: small-caps;
-	float: left;
-}
-td.label {
-	text-align: right;
-}
 </style>
 </head>
 
 <body>
-
-	<c:if test="${! empty errorMessage}">
-		<div class="error">${errorMessage}</div>
-	</c:if>
 		<div id="PageName">Baker's Donuts</div>
 
 		<div id="Content">

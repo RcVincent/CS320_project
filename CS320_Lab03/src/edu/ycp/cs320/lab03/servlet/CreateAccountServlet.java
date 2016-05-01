@@ -29,20 +29,25 @@ public class CreateAccountServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		// Decode form parameters and dispatch to controller
+		//initialize variables
 		String firstName = null;
 		String lastName = null;
 		String userName = null;
 		String email = null;
 		String password = null;
 		String AccountType = null;
+		
+		//get values from the jsp
 		firstName = req.getParameter("firstName");
 		lastName = req.getParameter("lastName");
 		userName = req.getParameter("userName");
 		password = req.getParameter("password");
 		email = req.getParameter("email");
 		AccountType = req.getParameter("AccountType");
+		
+		//set session username
 		req.getSession().setAttribute("username", userName);
+		
 		//Create add user instance
 		AddUser = new AddUserToDatabase();	
 		//Adds the user to the database

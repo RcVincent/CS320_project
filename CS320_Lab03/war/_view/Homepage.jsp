@@ -83,12 +83,10 @@ button {
 	float: left;
 	
 }
-
 #resultList {
 	font-size: 150%;
 	text-align: center;
 }
-
 td.label {
 	text-align: right;
 }
@@ -121,13 +119,17 @@ td.label {
 		</div>
 		<br>
 		<div id="LinkContent">
-			<div id="LinkName">Favorites</div>
+			<div id="LinkName">Recent Orders</div>
 			<div id="ContentBody">
 				<div>
-					<button>
-						<a href="/lab03/Favorites"><type= "button">Click to
-							view Favorites</a>
-					</button>
+					<form action="${pageContext.servletContext.contextPath}/RecentOrders"
+						method="get">
+						<table>
+							<tr>
+								<td><input type="Submit" name="submit" value="Click to view Recent Orders"/></td>
+							</tr>
+						</table>
+				</form>
 				</div>
 			</div>
 		</div>

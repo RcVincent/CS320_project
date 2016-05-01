@@ -62,7 +62,7 @@ public class ChangeAccountInfoServlet extends HttpServlet {
 				req.getSession().setAttribute("username", newUsername);
 				errorMessage = "New username was successfully created";
 				req.setAttribute("errorMessage", errorMessage);
-				resp.sendRedirect(req.getContextPath() + "/Homepage");
+				req.getRequestDispatcher("/_view/ChangeUsername.jsp").forward(req, resp);
 			}
 			else{
 				

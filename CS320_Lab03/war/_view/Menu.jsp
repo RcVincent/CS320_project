@@ -6,21 +6,21 @@
 	<head>
 		<title>Bakers Menu</title>
 		<style type="text/css">
-		#PageName {
+#PageName {
 	color: white;
 	font-size: 250%;
 	text-align: center;
 	background-color: darkblue;
 	font-variant: small-caps;
 }
-		#AccountInfo{
-			font-size: 125%;
-			text-align: left;
-			align: center;
-		}
-		table{
-			border-spacing: 10px;
-		}
+#AccountInfo{
+		font-size: 125%;
+		text-align: left;
+		align: center;
+}
+table{
+	border-spacing: 10px;
+}
 		</style>
 	</head>
 
@@ -30,17 +30,19 @@
 			<div id = "AccountInfo">
 			<table>
 				<c:forEach items="${items}" var="items">
-				<div id="LinkContent">
 				<tr>
 					<td><input type="checkbox" name="Order" value= "${items.item}" > ${items.item} </td>
 					<td> $ ${items.price}0 </td>
 				</tr>
 			</c:forEach>
+				
 				<tr>
+				<c:if test="${empty utype}">
 					<td><input type="Submit" name="submit" value="Submit your order"/></td>
+				</c:if>
 		</form>
 		<c:if test="${! empty utype}">
-			<tr><form action="${pageContext.servletContext.contextPath}/AddItem" method="get">
+			<form action="${pageContext.servletContext.contextPath}/AddItem" method="get">
 					<td><input type="Submit" name="submit" value="Add Menu Item"/></td>
 					</form>
 			</c:if>
@@ -49,7 +51,7 @@
 				</form>
 				</tr>
 			</table>
-			</div>
+		</div>
 		
 	</body>
 </html>

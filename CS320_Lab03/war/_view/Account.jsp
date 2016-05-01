@@ -6,21 +6,21 @@
 	<head>
 		<title>Your Account</title>
 		<style type="text/css">
-		#PageName {
+#PageName {
 	color: white;
 	font-size: 250%;
 	text-align: center;
 	background-color: darkblue;
 	font-variant: small-caps;
 }
-		#AccountInfo{
+#AccountInfo{
 			font-size: 125%;
 			text-align: right;
 			align: center;
 		}
-		table{
-			border-spacing: 10px;
-		}
+table{
+	border-spacing: 10px;
+}
 		</style>
 	</head>
 

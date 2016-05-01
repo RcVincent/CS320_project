@@ -6,21 +6,21 @@
 	<head>
 		<title>Order Confirmation</title>
 		<style type="text/css">
-		#PageName {
+#PageName {
 	color: white;
 	font-size: 250%;
 	text-align: center;
 	background-color: darkblue;
 	font-variant: small-caps;
 }
-		#AccountInfo{
+#AccountInfo{
 			font-size: 125%;
 			text-align: left;
 			align: center;
-		}
-		table{
-			border-spacing: 10px;
-		}
+}
+table{
+		border-spacing: 10px;
+}
 		</style>
 	</head>
 
@@ -31,6 +31,10 @@
 				<tr>
 					<td> Order Number:</td>
 					<td> ${num} </td>
+				</tr>
+				<tr>
+					<td> Status: </td>
+					<td> ${status}</td>
 				</tr>
 				<c:forEach items="${order}" var="order">
 				<div id="LinkContent">

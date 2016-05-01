@@ -28,20 +28,15 @@ button{
 	width: 400px;
 	padding: 10px;
 }
-#Content {
-	float: left;
-}
 </style>
 </head>
 
 <body>
 	<div id="PageName">Welcome to Track N Snack</div>	
-	<form action="${pageContext.servletContext.contextPath}/Login" method="post">
-		
 		<div id = "logon">
-
 		<table>
 			<tr>
+			<form action="${pageContext.servletContext.contextPath}/Login" method="post">
 				<c:if test="${! empty errorMessage}">
 					<div class="error">${errorMessage}</div>
 				</c:if>
@@ -53,17 +48,17 @@ button{
 
 				<td><input type="password" name="password" size="12" /></td>
 			</tr>
-		</table>
-		<div>
-			<input type="Submit" name="submit" value="Login" />
-		</form>
-
-		</div>
-		<div>
+			<tr>
+			 <td><input type="Submit" name="submit" value="Login" /></td>
+			 </form>
+			</tr>
+		
 			<form action="${pageContext.servletContext.contextPath}/CreateAccount" method="get">
-			<input type="Submit" name="submit" value="Create Account" />
-			</form>
-		</div>
+			<tr>
+				<td><input type="Submit" name="submit" value="Create Account" /></td>
+			</tr>
+				</form>
+			</table>
 		</div>
 </body>
 </html>

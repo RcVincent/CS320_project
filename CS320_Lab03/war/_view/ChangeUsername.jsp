@@ -7,7 +7,7 @@
 <title>Track N Snack</title>
 <style type="text/css">
 .error {
-	color: red;
+	color: green;
 }
 td.label {
 	text-align: right;
@@ -61,7 +61,7 @@ button{
 				<td><input type="Submit" name="submit" value="Change Username" /></td>
 				</form>
 				<form action="${pageContext.servletContext.contextPath}/Account" method="post">
-				<td><input type="Submit" name="submit" value="Cancel" /></td></form>
+				<td><input type="Submit" name="submit" value="Back" /></td></form>
 			</tr>
 		</table>
 		</div>
