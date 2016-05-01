@@ -89,13 +89,26 @@ input[type=submit]{
 					</table>
 			</form>
 			</c:forEach>
-			<c:forEach items="${items}" var="item">
+			<c:if test="${! empty items}">
 				<table>
+					<tr>
+						<td>Status: </td>
+						<td> ${status}</td>
+						<td><input type="radio" name="status" value="In Progress" checked>In Progress</td>
+						<td><input type="radio" name="status" value="Complete" >Complete</td>
+						<form action="${pageContext.servletContext.contextPath}/RestOrders" method="post">
+						<td><input type="Submit" name="submit" value="Change Status" ></td>
+						</form>
+					</tr>
+			<c:forEach items="${items}" var="item">
+				
 					<tr>
 						<td>${item.item}</td>
 						<td>${item.price }</td>
+					</tr>
 				</table>
 			</c:forEach>
+			</c:if>
 			<form action="${pageContext.servletContext.contextPath}/Homepage" method="post">
 					<input type="Submit" name="submit" value="Click to go to Homepage"/>
 			</form>

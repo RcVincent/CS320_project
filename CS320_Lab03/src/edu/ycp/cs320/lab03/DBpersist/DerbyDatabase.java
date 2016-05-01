@@ -861,6 +861,67 @@ public class DerbyDatabase implements IDatabase {
 		});
 		
 	}
+	/*********************
+	 * Update Order Status
+	 **********************/
+	@Override
+	public List<Order> updateOrderStatus(final String status, final int orderNum) {
+		return executeTransaction(new Transaction<List<Order>>() {
+			@Override
+			public List<Order> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				ResultSet resultSet = null;
+
+				try {
+
+
+					stmt = conn.prepareStatement(
+							"update orders " +
+									" set status = ? " +
+									" where order_number = ? "
+							);
+					stmt.setString(1, status);
+					stmt.setInt(2, orderNum);
+					stmt.executeUpdate();
+
+					// return all users and see that the one entered was deleted
+					
+					stmt2 = conn.prepareStatement(
+							"select * from users " 	+
+									" where user_userName = ? "
+							);
+					//ensure new userName is in database
+					stmt2.setString(1, status);
+					resultSet = stmt2.executeQuery();
+					List<Order> result = new ArrayList<Order>();
+					
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						Order o = new Order();
+						loadOrder(o, resultSet, 1);
+						result.add(o);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<> users list is empty");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
+				}
+			}
+		});
+	}
 	
 		
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
