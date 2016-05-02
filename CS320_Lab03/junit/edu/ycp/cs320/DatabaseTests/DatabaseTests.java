@@ -102,21 +102,21 @@ public class DatabaseTests {
 	public void MatchUsersWithPassword() {
 		System.out.println("\n*** Searching for Users ***"); 
 		
-		String userPassword = "pass"; 
+		String userPassword = "theDonald"; 
 		List<User> userList = db.matchUsernameWithPassword(userPassword); 
-		assertEquals("theDonald", db.matchUsernameWithPassword(userPassword));
+		assertEquals("pass", userList.get(0).getPassWord());
 		
-		String userPassword2 = "pswd";
+		String userPassword2 = "theExpress";
 		userList = db.matchUsernameWithPassword(userPassword2);
-		assertEquals("theExpress", db.matchUsernameWithPassword(userPassword2)); 
+		assertEquals("pswd", userList.get(0).getPassWord()); 
 		
-		String userPassword3 = "passwd"; 
+		String userPassword3 = "userGuy"; 
 		userList = db.matchUsernameWithPassword(userPassword3);
-		assertEquals("userGuy", db.matchUsernameWithPassword(userPassword3));
+		assertEquals("passwd", userList.get(0).getPassWord());
 		
-		String userPassword4 = "psswd"; 
+		String userPassword4 = "anotherUser"; 
 		userList = db.matchUsernameWithPassword(userPassword4);
-		assertEquals("anotherUser", db.matchUsernameWithPassword(userPassword4));
+		assertEquals("psswd", userList.get(0).getPassWord());
 		
 		if(userList.isEmpty()){
 			System.out.println("No users matched to these passwords");

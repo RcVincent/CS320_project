@@ -1,6 +1,7 @@
 package edu.ycp.cs320.lab03.servlet;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -35,6 +36,7 @@ public class OrderServlet extends HttpServlet {
 		info = new getAccountInfo();
 		User u = info.getInfo((String)req.getSession().getAttribute("username")).get(0);
 		String[] order = (String[])req.getSession().getAttribute("orderItems");
+		int[] quantity = (int[])req.getSession().getAttribute("qty");
 		int userId = u.getUserId();
 	
 		//Set the order number
@@ -50,18 +52,20 @@ public class OrderServlet extends HttpServlet {
 		double total = 0;
 		//goes through all items selected and builds the order
 		for(int i=0; i< order.length; i++){
-			Menu item = new Menu();
-			price = new GetPriceOfMenuItem();
-			item = price.priceOfItem(order[i]);
-			double ItemPrice = item.getPrice();
-			total+=ItemPrice;
-			newOrder.createOrder(userId, rest , num, item.getItem(), ItemPrice, status);
+			if(quantity[i]!=0){
+				Menu item = new Menu();
+				price = new GetPriceOfMenuItem();
+				item = price.priceOfItem(order[i]);
+				Double ItemPrice = Double.parseDouble(item.getPrice());
+				total+=quantity[i]*ItemPrice;
+				newOrder.createOrder(userId, rest , num, item.getItem(), quantity[i], item.getPrice(), status);
+			}
 		}
+		DecimalFormat df = new DecimalFormat("###.00");
 		ArrayList<Order> theOrder = NumOrder.orderByNum(num);
-		
 		//set all attributes for the jsp
 		req.setAttribute("order", theOrder);
-		req.setAttribute("total", total);
+		req.setAttribute("total", df.format(total));
 		req.setAttribute("status", status);
 		req.setAttribute("num", num);
 		req.getRequestDispatcher("/_view/Order.jsp").forward(req, resp);

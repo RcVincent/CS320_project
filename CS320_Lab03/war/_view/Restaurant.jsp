@@ -4,7 +4,7 @@
 
 <html>
 <head>
-<title>Bakers Donuts</title>
+<title>${restaurant}</title>
 <style type="text/css">
 #PageName {
 	color: white;
@@ -27,7 +27,7 @@
 	color: darkblue;
 	font-size: 150%;
 	border-bottom: 2px solid darkblue;
-	width: 300px;
+	width: 350px;
 	margin-left: 13px;
 	margin_bottom: 20px;
 }
@@ -64,7 +64,7 @@ button {
 		<div class="error">${errorMessage}</div>
 	</c:if>
 
-		<div id="PageName">Baker's Donuts</div>
+		<div id="PageName">${restaurant}</div>
 
 
 
@@ -72,7 +72,7 @@ button {
 		<div id="LinkContent">
 			<div id="LinkName">Home</div>
 			<form action="${pageContext.servletContext.contextPath}/Homepage"
-				method="post">
+				method="get">
 				<table>
 					<tr>
 						<td><input type="Submit" name="submit"
@@ -87,7 +87,7 @@ button {
 		<div id="LinkContent">
 			<div id="LinkName">Menu</div>
 			<form action="${pageContext.servletContext.contextPath}/Menu"
-				method="post">
+				method="get">
 				<table>
 					<tr>
 						<td><input type="Submit" name="submit"
@@ -96,6 +96,20 @@ button {
 				</table>
 			</form>
 		</div>
+		<c:if test="${ empty utype}">
+		<br>
+		<div id="LinkContent">
+			<div id="LinkName">Add ${restaurant} to Favorites</div>
+			<form action="${pageContext.servletContext.contextPath}/Favorites" method="get">
+				<table>
+					<tr>
+						<input type="hidden" name="restaurant" id="restaurant" value="${restaurant}">
+						<td><input type="Submit" name="submit" value="Click to add to favorites" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		</c:if>
 		<c:if test="${! empty utype}">
 			<br>
 			<div id="LinkContent">

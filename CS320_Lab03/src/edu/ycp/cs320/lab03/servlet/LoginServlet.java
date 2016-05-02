@@ -43,6 +43,7 @@ public class LoginServlet extends HttpServlet {
 				//Set the session true and set their username
 				req.getSession(true).setAttribute("username", username);
 				req.getSession().setAttribute("type", u.getAccountType());
+				req.getSession().setAttribute("userID", u.getUserId());
 				//If user is an owner send them to a page of their restaurants
 				if(u.getAccountType().equals("owner")){
 					resp.sendRedirect(req.getContextPath() + "/OwnerPage");

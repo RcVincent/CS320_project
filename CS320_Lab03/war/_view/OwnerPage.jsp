@@ -70,7 +70,8 @@ button {
 							<td class = "Address">${restaurant.address },</td>
 							<td class = "Address">${restaurant.city },</td>
 							<td class = "Address">${restaurant.zipCode }</td>
-							<form action="${pageContext.servletContext.contextPath}/${restaurant.name }" method="post">
+							<form action="${pageContext.servletContext.contextPath}/Restaurant" method="post">
+								<input type="hidden" name="restaurant" id="restaurant" value="${restaurant.name}">
 								<td><input type="submit" value="Click to view your page"></td>
 							</form>
 						</tr>

@@ -53,10 +53,17 @@ input[type=submit]{
 				</c:if>
 			<c:forEach items="${items}" var="item">
 					<tr>
+						<td>${item.quantity}</td>
 						<td>${item.item}</td>
-						<td>$ ${item.price }0</td>
+						<td>$ ${item.price }</td>
 					</tr>
 			</c:forEach>
+			<c:if test ="${! empty price }">
+					<tr>
+						<td>Total: </td>
+						<td>$ ${price}</td>
+					</tr>
+			</c:if>
 			</table>
 			<form action="${pageContext.servletContext.contextPath}/Homepage" method="get">
 					<input type="Submit" name="submit" value="Click to go to Homepage"/>

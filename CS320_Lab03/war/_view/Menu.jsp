@@ -4,7 +4,7 @@
 
 <html>
 	<head>
-		<title>Bakers Menu</title>
+		<title>${restaurant} Menu</title>
 		<style type="text/css">
 #PageName {
 	color: white;
@@ -26,13 +26,14 @@ table{
 
 	<body>
 	<form action="${pageContext.servletContext.contextPath}/Menu" method="post">
-			<div id = "PageName">Baker's Donuts Menu</div>
+			<div id = "PageName">${restaurant} Menu</div>
 			<div id = "AccountInfo">
 			<table>
 				<c:forEach items="${items}" var="items">
 				<tr>
-					<td><input type="checkbox" name="Order" value= "${items.item}" > ${items.item} </td>
-					<td> $ ${items.price}0 </td>
+					<td><input type="text" name="quantity" size="1" > ${items.item} </td>
+					<input type="hidden" name="itemName" id="itemName" value="${items.item}"/>
+					<td> $ ${items.price} </td>
 				</tr>
 			</c:forEach>
 				

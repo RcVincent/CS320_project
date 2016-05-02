@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab03.controllers.AddItemToMenu;
+import edu.ycp.cs320.lab03.controllers.DeleteItemFromMenu;
 public class AddItemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AddItemToMenu add = null;
+	private DeleteItemFromMenu delete = null;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -31,15 +33,23 @@ public class AddItemServlet extends HttpServlet {
 		// Decode form parameters and dispatch to controller
 		//Gets all the menu items selected by the user
 		String message = null;
+		String itemToRemove = null;
 		String itemToAdd = null;
 		Double NewItemPrice = 0.00;
 		String rest_name = (String)req.getSession().getAttribute("restaurant");
 		
+		itemToRemove = req.getParameter("itemToRemove");
 		itemToAdd = req.getParameter("item");
 		if(itemToAdd!=null){	
 			add = new AddItemToMenu();
 			NewItemPrice = Double.parseDouble(req.getParameter("price"));
 			add.AddItem(itemToAdd, NewItemPrice, rest_name);
+			System.out.println("Success");
+			message = "Success";
+		}
+		if(itemToRemove!=null){	
+			delete = new DeleteItemFromMenu();
+			delete.RemoveItem(itemToRemove);
 			System.out.println("Success");
 			message = "Success";
 		}

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ycp.cs320.lab03.model.Favorites;
 import edu.ycp.cs320.lab03.model.Menu;
 import edu.ycp.cs320.lab03.model.Order;
 import edu.ycp.cs320.lab03.model.Patron;
@@ -77,6 +78,54 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	//*********************************
+		//find restaurants by a given name
+		//*********************************
+		@Override
+		public List<Restaurant> getRestByName(final String name) {
+			return executeTransaction(new Transaction<List<Restaurant>>() {
+				@Override
+				public List<Restaurant> execute(Connection conn) throws SQLException {
+					PreparedStatement stmt = null;
+					ResultSet resultSet = null;
+
+					try {
+
+
+						stmt = conn.prepareStatement(
+								"select * from restaurants " +
+										" where rest_name = ? "
+								);
+						stmt.setString(1, name);
+						List<Restaurant> result = new ArrayList<Restaurant>();
+						resultSet = stmt.executeQuery();
+
+						// for testing that a result was returned
+						Boolean found = false;
+
+						while (resultSet.next()) {
+							found = true;
+
+							Restaurant rest = new Restaurant();
+							loadRestaurant(rest, resultSet, 1);
+							result.add(rest);
+						}
+
+						// check if the title was found
+						if (!found) {
+							System.out.println("<" + name + "> was not found in the restaurants table");
+						}
+
+						return result;
+
+
+					} finally {
+						DBUtil.closeQuietly(resultSet);
+						DBUtil.closeQuietly(stmt);
+					}
+				}
+			});
+		}
 	@Override
 	public List<Restaurant> getListOfRestaurantsByOwner(final String username) {
 		return executeTransaction(new Transaction<List<Restaurant>>() {
@@ -496,7 +545,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt3 = conn.prepareStatement(
 							"select * " +
 									" from menu " +
-									" where menu_name = ?"
+									" where menu_item = ?"
 							);
 					stmt3.setString(1, item);
 					
@@ -634,7 +683,7 @@ public class DerbyDatabase implements IDatabase {
 	//build an order with items and prices
 	//******************************************
 	@Override
-	public List<Order> ceateOrderInTable(final int patId, final String rest, final int orderNum, final String item, final int quantity, final Double price, final String status) {
+	public List<Order> ceateOrderInTable(final int patId, final String rest, final int orderNum, final String item, final int quantity, final String price, final String status) {
 		return executeTransaction(new Transaction<List<Order>>() {
 			@Override
 			public List<Order> execute(Connection conn) throws SQLException {
@@ -652,7 +701,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setInt(3, orderNum);
 					stmt.setString(4, item);
 					stmt.setInt(5, quantity);
-					stmt.setDouble(6, price);
+					stmt.setString(6, price);
 					stmt.setString(7, status);
 					stmt.executeUpdate();
 					
@@ -925,13 +974,61 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	//********************************************
+		//patron adds a restaurant to their favorites 
+		//********************************************
+		@Override
+		public List<Favorites> getFromFavorites(final Integer userId) {
+			return executeTransaction(new Transaction<List<Favorites>>() {
+				@Override
+				public List<Favorites> execute(Connection conn) throws SQLException {
+					PreparedStatement stmt = null;
+					PreparedStatement stmt2 = null;
+					ResultSet resultSet = null;
+					//add new restaurant to db
+					try {
+						stmt2 = conn.prepareStatement(
+								"select * " +
+										" from favRests " +
+										" where patron_id = ?"
+								);
+						stmt2.setInt(1, userId);
+						
+						resultSet = stmt2.executeQuery();
+
+						// for testing that a result was returned
+						Boolean found = false;
+						List<Favorites> result = new ArrayList<Favorites>();
+						while (resultSet.next()) {
+							found = true;
+							Favorites u = new Favorites();
+							loadFavoriteRest(u, resultSet, 1);
+							result.add(u);
+						}
+
+						// check if the title was found
+						if (!found) {
+							System.out.println("<> was not found in the Restaurants table");
+						}
+
+						return result;
+
+
+					} finally {
+						DBUtil.closeQuietly(resultSet);
+						DBUtil.closeQuietly(stmt);
+						DBUtil.closeQuietly(stmt2);
+					}
+				}
+			});
+		}
+	//********************************************
 	//patron adds a restaurant to their favorites 
 	//********************************************
 	@Override
-	public List<Restaurant> addToFavoriteRests(final String rest, final Integer userId) {
-		return executeTransaction(new Transaction<List<Restaurant>>() {
+	public List<Favorites> addToFavoriteRests(final String rest, final Integer userId) {
+		return executeTransaction(new Transaction<List<Favorites>>() {
 			@Override
-			public List<Restaurant> execute(Connection conn) throws SQLException {
+			public List<Favorites> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null;
 				ResultSet resultSet = null;
@@ -957,11 +1054,11 @@ public class DerbyDatabase implements IDatabase {
 
 					// for testing that a result was returned
 					Boolean found = false;
-					List<Restaurant> result = new ArrayList<Restaurant>();
+					List<Favorites> result = new ArrayList<Favorites>();
 					while (resultSet.next()) {
 						found = true;
-						Restaurant u = new Restaurant();
-						loadRestaurant(u, resultSet, 1);
+						Favorites u = new Favorites();
+						loadFavoriteRest(u, resultSet, 1);
 						result.add(u);
 					}
 
@@ -1059,7 +1156,7 @@ public class DerbyDatabase implements IDatabase {
 		m.setMenuId(resultSet.getInt(index++));
 		m.setRestId(resultSet.getInt(index++));
 		m.setItem(resultSet.getString(index++));
-		m.setPrice(resultSet.getDouble(index++));
+		m.setPrice(resultSet.getString(index++));
 	}
 	private void loadOrder(Order o, ResultSet resultSet, int index) throws SQLException {
 		o.setOrderId(resultSet.getInt(index++));
@@ -1068,13 +1165,13 @@ public class DerbyDatabase implements IDatabase {
 		o.setorderNumber(resultSet.getInt(index++));
 		o.setItem(resultSet.getString(index++));
 		o.setQuantity(resultSet.getInt(index++));
-		o.setPrice(resultSet.getDouble(index++));
+		o.setPrice(resultSet.getString(index++));
 		o.setStatus(resultSet.getString(index++));
 	}
-	private void loadFavoriteRest(Restaurant rest, ResultSet resultSet, int index) throws SQLException {
-		rest.setRestID(resultSet.getInt(index++));
-		rest.setPatronFavId(resultSet.getInt(index++));
-		rest.setName(resultSet.getString(index++));
+	private void loadFavoriteRest(Favorites fav, ResultSet resultSet, int index) throws SQLException {
+		fav.setFavID(resultSet.getInt(index++));;
+		fav.setUserID(resultSet.getInt(index++));
+		fav.setName(resultSet.getString(index++));
 	}
 
 
@@ -1124,7 +1221,7 @@ public class DerbyDatabase implements IDatabase {
 									" 		generated always as identity (start with 1, increment by 1), " +
 									" rest_id integer, "   +
 									" menu_item varchar(40), "      +
-									" menu_price double"      +
+									" menu_price varchar(10)"      +
 									")"
 							);
 					stmt3.executeUpdate();
@@ -1138,7 +1235,7 @@ public class DerbyDatabase implements IDatabase {
 									" order_number integer, " +
 									" item varchar(40), "	  +
 									" quantity integer,"	  +
-									" price double,"		  +
+									" price varchar(10),"		  +
 									" status varchar(40)"     +
 									")"
 							);
@@ -1151,7 +1248,7 @@ public class DerbyDatabase implements IDatabase {
 									" rest_name varchar(40)" +
 									")"
 							);
-
+					stmt5.executeUpdate();
 
 					return true;
 				} finally {
@@ -1159,6 +1256,7 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(stmt3);
 					DBUtil.closeQuietly(stmt4);
+					DBUtil.closeQuietly(stmt5);
 				}
 			}
 		});
@@ -1223,7 +1321,7 @@ public class DerbyDatabase implements IDatabase {
 					for (Menu m : menuList) {
 						insertMenus.setInt(1, m.getRestId());
 						insertMenus.setString(2, m.getItem());
-						insertMenus.setDouble(3, m.getPrice());
+						insertMenus.setString(3, m.getPrice());
 						insertMenus.addBatch();
 					}
 					insertMenus.executeBatch();

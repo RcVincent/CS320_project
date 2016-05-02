@@ -17,7 +17,7 @@ public class buildOrder {
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		db = DatabaseProvider.getInstance();
 	}
-		public ArrayList<Order> createOrder(int patId, String rest, int orderNum, String item, int quantity, Double price, String status){
+		public ArrayList<Order> createOrder(int patId, String rest, int orderNum, String item, int quantity, String price, String status){
 			List<Order> orderList = db.ceateOrderInTable(patId, rest, orderNum, item, quantity, price, status);
 			ArrayList<Order> orders = null;
 			

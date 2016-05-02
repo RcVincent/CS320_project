@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.TreeMap;
 
 public class Order{
-	private Double price;
+	private String price;
 	private String item;
 	private boolean takeOut;
 	private Random random;
@@ -66,11 +66,11 @@ public class Order{
 		this.patronId = patronId;
 	}
 
-	public Double getPrice() {
+	public String getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 

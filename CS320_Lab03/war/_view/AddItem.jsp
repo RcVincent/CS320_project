@@ -35,7 +35,7 @@ button{
 </head>
 
 <body>
-	<div id="PageName">Add to your menu</div>	
+	<div id="PageName">Add or Delete item</div>	
 	<form action="${pageContext.servletContext.contextPath}/AddItem" method="post">
 		
 		<div id = "Add an Item to the menu">
@@ -56,14 +56,33 @@ button{
 				<td><input type="text" name="price" size="12"  /></td>
 			</tr>
 		</table>
-		<div>
+		</div>
 			<input type="Submit" name="submit" value="Add Item" />
+		</form>
+		<form action="${pageContext.servletContext.contextPath}/AddItem" method="post">
+		
+		<div id = "Add an Item to the menu">
+		<table>
+			
+				<c:if test="${! empty message}">
+					<tr>
+					   <td><class="error">${message}</class></td>
+					</tr>
+				</c:if>
+			<tr>
+				<td class="label">Item To Remove:</td>
+				<td><input type="text" name="itemToRemove" size="12" /></td>
+			</tr>
+		</table>
+		</div>
+			<input type="Submit" name="submit" value="Remove Item" />
 		</form>
 		</div>
 		<div>
-			<form action="${pageContext.servletContext.contextPath}/Menu" method="post">
-			<input type="Submit" name="submit" value="Cancel" />
+			<form action="${pageContext.servletContext.contextPath}/Menu" method="get">
+			<input type="Submit" name="submit" value="Back" />
 			</form>
+			
 		</div>
 		</div>
 </body>

@@ -2,6 +2,7 @@ package edu.ycp.cs320.lab03.model;
 
 
 import java.awt.List;
+import java.text.DecimalFormat;
 import java.util.TreeMap;
 
 
@@ -10,7 +11,7 @@ public class Menu {
 	private String item;
 	private int menuId;   //for database
 	private int restId;   //for database
-	private Double price;
+	private String price;
 	private TreeMap<String, Double> mapper = new TreeMap<String, Double>();
 
 	public void addToMenu(String item, Double price){
@@ -43,12 +44,16 @@ public class Menu {
 		this.item = item;
 		
 	}
-
-	public Double getPrice() {
-		return price;
+	public String getPrice(){
+		return this.price;
+	}
+	public String getStringPrice() {
+		DecimalFormat dF = new DecimalFormat("##.##");
+		return dF.format(price);
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(String price) {
+	
 		this.price = price;
 	}
 	public void setMenuId(Integer integer) {

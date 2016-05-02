@@ -25,7 +25,20 @@ public class MenuServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 		}
-		
+		String utype = null;
+		String userType = (String) req.getSession().getAttribute("type");
+		// Add parameters as request attributes
+		if(userType.equals("owner")){
+			utype = "owner";
+		}
+		req.setAttribute("utype", utype);
+		//Create an array of menu items
+		ArrayList<Menu> items = null;
+		menu = new ViewMenuByRestaurantName();
+		String rest_name = (String)req.getSession().getAttribute("restaurant");
+		items = menu.menuByRestaurantName(rest_name);
+		req.setAttribute("restaurant", rest_name);
+		req.setAttribute("items", items);
 		req.getRequestDispatcher("/_view/Menu.jsp").forward(req, resp);
 	}
 	
@@ -37,37 +50,26 @@ public class MenuServlet extends HttpServlet {
 		//Gets all the menu items selected by the user
 		String[] order = null;
 
-		//Create an array of menu items
-		ArrayList<Menu> items = null;
-		menu = new ViewMenuByRestaurantName();
 		
-		//If user is an owner show them add item to menu
-		String utype = null;
-		String userType = (String) req.getSession().getAttribute("type");
-		// Add parameters as request attributes
-		if(userType.equals("owner")){
-			utype = "owner";
-		}
-		req.setAttribute("utype", utype);
-		String itemToAdd = (String) req.getAttribute("item");
-		double NewItemPrice = 0;
-		String rest_name = (String)req.getSession().getAttribute("restaurant");
-		if(itemToAdd != null){
-			add = new AddItemToMenu();
-			NewItemPrice = (double) req.getAttribute("price");
-			add.AddItem(itemToAdd, NewItemPrice, rest_name);
-		}
-		
-		
-		String rest = (String) req.getSession().getAttribute("restaurant");
 		//get menu items based on the restaurant name
-		items = menu.menuByRestaurantName(rest);
-		req.setAttribute("items", items);
-		order = req.getParameterValues("Order");
-		// If there are items in order, build the order
-		if(order != null){
-			req.getSession().setAttribute("orderItems", order);
-			resp.sendRedirect(req.getContextPath() + "/Order");
+		String[] qty = null; 
+		qty = req.getParameterValues("quantity");
+		if(qty!=null){
+			int[] qtyInt = new int[qty.length];
+			order = req.getParameterValues("itemName");
+			// If there are items in order, build the order
+			if(order != null){
+				for(int i=0; i<qty.length; i++){
+					if(qty[i].equals("") || qty[i]==null || qty[i].equals("0")){
+						qty[i] = "0";
+					}
+					qtyInt[i] = Integer.parseInt(qty[i]);
+				}
+				System.out.println("coooll");
+				req.getSession().setAttribute("qty", qtyInt);
+				req.getSession().setAttribute("orderItems", order);
+				resp.sendRedirect(req.getContextPath() + "/Order");
+			}
 		}
 		else{
 			req.getRequestDispatcher("/_view/Menu.jsp").forward(req, resp);

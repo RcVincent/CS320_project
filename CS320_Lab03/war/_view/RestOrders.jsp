@@ -72,6 +72,9 @@ input[type=submit]{
 <body>
 	<div id="PageName">Your Orders</div>
 	<div id="Content">
+			<c:if test="${!empty message }">
+				<div> ${message}</div>
+			</c:if>
 			<c:forEach items="${orderNum}" var="order">
 			<form action="${pageContext.servletContext.contextPath}/RestOrders" method="post">
 					<table>
@@ -96,13 +99,20 @@ input[type=submit]{
 						<td><input type="Submit" name="submit" value="Change Status" ></td>
 						</form>
 					</tr>
+				</table>
+				<table>
 			<c:forEach items="${items}" var="item">
 					<tr>
+						<td class = "label">${item.quantity}</td>
 						<td class = "label">${item.item}</td>
+						<td> @ </td>
 						<td class = "label">${item.price}</td>
 					</tr>
 			</c:forEach>
 			</table>
+			<form action="${pageContext.servletContext.contextPath}/RestOrders" method="get">
+					<input type="Submit" name="submit" value="Click to go Back"/>
+			</form>
 			</c:if>
 			<form action="${pageContext.servletContext.contextPath}/Homepage" method="get">
 					<input type="Submit" name="submit" value="Click to go to Homepage"/>

@@ -13,7 +13,7 @@ public class DeleteItemFromMenu {
 		db = DatabaseProvider.getInstance();
 		
 	}
-	public void AddUser(String item){
+	public void RemoveItem(String item){
 		
 		db.deleteFromMenu(item);
 	}

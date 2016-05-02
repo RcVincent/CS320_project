@@ -30,27 +30,32 @@ public class RestOrdersServlet extends HttpServlet {
 		}
 		orders = new GetOrdersByRestaurant();
 		ArrayList<Order> order = null;
-		
+		String message = null;
 		//get the restaurant name to be passed to the order call
 		String rest = (String)req.getSession().getAttribute("restaurant");
 		order = orders.OrdersbyRest(rest);
 		
 		//Array for the order numbers to be displayed
 		ArrayList<Integer> orderNum= new ArrayList<Integer>();
-		
-		//reverse the orders so the most recent one is displayed
-		Collections.reverse(order);
-		for(int i=0; i<order.size(); i++){
-			if(orderNum.contains(order.get(i).getorderNumber()) || order.get(i).getStatus().equals("Complete")){
-				int count = 0;
+		if(order!=null){
+			//reverse the orders so the most recent one is displayed
+			Collections.reverse(order);
+			for(int i=0; i<order.size(); i++){
+				if(orderNum.contains(order.get(i).getorderNumber()) || order.get(i).getStatus().equals("Complete")){
+					int count = 0;
+				}
+				else{
+					//add order number to the order array
+					orderNum.add(order.get(i).getorderNumber());
+				}
 			}
-			else{
-				//add order number to the order array
-				orderNum.add(order.get(i).getorderNumber());
-			}
+		}
+		else{
+			message = "No Orders";
 		}
 
 		req.setAttribute("orderNum", orderNum);
+		req.setAttribute("message", message);
 		req.getRequestDispatcher("/_view/RestOrders.jsp").forward(req, resp);
 	}
 	

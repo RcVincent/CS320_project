@@ -2,6 +2,7 @@ package edu.ycp.cs320.lab03.DBpersist;
 
 import java.util.List;
 
+import edu.ycp.cs320.lab03.model.Favorites;
 import edu.ycp.cs320.lab03.model.Menu;
 import edu.ycp.cs320.lab03.model.Order;
 import edu.ycp.cs320.lab03.model.Restaurant;
@@ -12,6 +13,8 @@ import edu.ycp.cs320.lab03.model.User;
 public interface IDatabase {
 
 	List<Restaurant> getListOfRestaurantsByCity(String name);
+	
+	List<Restaurant> getRestByName(String name);
 
 	List<User> matchUsernameWithPassword(String name);
 	
@@ -31,7 +34,7 @@ public interface IDatabase {
 
 	Menu getPriceOfMenuItem(String item);
 
-	List<Order> ceateOrderInTable(int patId, String rest, int orderNum, String item, int quantity, Double price, String status);
+	List<Order> ceateOrderInTable(int patId, String rest, int orderNum, String item, int quantity, String price, String status);
 
 	List<Order> getOrderByConfirmationNumber(Integer orderNumber);
 
@@ -43,6 +46,8 @@ public interface IDatabase {
 	
 	List<Order> updateOrderStatus(String status, int orderNum);
 
-	List<Restaurant> addToFavoriteRests(String rest, Integer userId);
+	List<Favorites> addToFavoriteRests(String rest, Integer userId);
+
+	List<Favorites> getFromFavorites(Integer userId);
 	
 }

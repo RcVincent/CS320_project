@@ -98,7 +98,7 @@ public class InitialData {
 				m.setMenuId(MenuId++);
 				m.setRestId(Integer.parseInt(i.next()));
 				m.setItem(i.next());
-				m.setPrice(Double.parseDouble(i.next()));
+				m.setPrice(i.next());
 				MenuList.add(m);
 			}
 			System.out.println("MenuList loaded from CSV file");			

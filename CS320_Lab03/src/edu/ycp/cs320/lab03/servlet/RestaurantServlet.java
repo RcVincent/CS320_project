@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class BakersDonutsServlet extends HttpServlet {
+public class RestaurantServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -19,7 +19,7 @@ public class BakersDonutsServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 		}
-		req.getRequestDispatcher("/_view/Bakers Donuts.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/Restaurant.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -27,7 +27,7 @@ public class BakersDonutsServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		// Decode form parameters and dispatch to controller
-		String rest = "Bakers Donuts";
+		String rest = req.getParameter("restaurant");
 		String utype = null;
 		String userType = (String) req.getSession().getAttribute("type");
 		// Add parameters as request attributes
@@ -40,6 +40,6 @@ public class BakersDonutsServlet extends HttpServlet {
 		
 		
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/Bakers Donuts.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/Restaurant.jsp").forward(req, resp);
 	}
 }

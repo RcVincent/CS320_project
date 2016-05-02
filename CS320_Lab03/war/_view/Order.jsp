@@ -21,6 +21,9 @@
 table{
 		border-spacing: 10px;
 }
+td.label{
+	text-align: right;
+}
 		</style>
 	</head>
 
@@ -33,19 +36,24 @@ table{
 					<td> ${num} </td>
 				</tr>
 				<tr>
-					<td> Status: </td>
-					<td> ${status}</td>
+					<td class = "label"> Status: </td>
+					<td class = "label"> ${status}</td>
 				</tr>
+			</table>
+			<table>
 				<c:forEach items="${order}" var="order">
-				<div id="LinkContent">
 				<tr>
+					<td> ${order.quantity} </td>
 					<td> ${order.item} </td>
+					<td> @ </td>
 					<td> $ ${order.price} </td>
 				</tr>
 			</c:forEach>
+			</table>
+			<table>
 				<tr>
-					<td> Total price: </td>
-					<td> $ ${total} </td>
+					<td class = "label"> Total price: </td>
+					<td class = "label"> $ ${total} </td>
 				</tr>
 				<tr><form action="${pageContext.servletContext.contextPath}/Homepage" method="get">
 					<td><input type="Submit" name="submit" value="Click to go to Homepage"/></td>

@@ -52,4 +52,22 @@ public class RestaurantSearch {
 			// return authors for this title
 			return rests;
 	}
+		public ArrayList<Restaurant> RestByName(String name){
+			List<Restaurant> restList = db.getRestByName(name);
+			ArrayList<Restaurant> rests = null;
+			
+			if (restList.isEmpty()) {
+				System.out.println("No restaurants found");
+				return null;
+			}
+			else {
+				rests = new ArrayList<Restaurant>();
+				for (Restaurant rest : restList) {
+					rests.add(rest);
+				}			
+			}
+			
+			// return authors for this title
+			return rests;
+	}
 }

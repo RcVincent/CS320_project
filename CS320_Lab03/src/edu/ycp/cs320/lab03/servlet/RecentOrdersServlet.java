@@ -1,6 +1,7 @@
 package edu.ycp.cs320.lab03.servlet;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -74,11 +75,12 @@ public class RecentOrdersServlet extends HttpServlet {
 		//get the order items
 		OrderByNum = order.orderByNum(orderNumber);
 		for(int i =0; i<OrderByNum.size(); i++){
-			total+=OrderByNum.get(i).getPrice();
+			total+= OrderByNum.get(i).getQuantity()*Double.parseDouble(OrderByNum.get(i).getPrice());
 		}
+		DecimalFormat df = new DecimalFormat("###.00");
 		String status = OrderByNum.get(0).getStatus();
 		req.setAttribute("items", OrderByNum);
-		req.setAttribute("price", total);
+		req.setAttribute("price", df.format(total));
 		req.setAttribute("status", status);
 		req.setAttribute("recentOrders", OrderByNum);
 		req.getRequestDispatcher("/_view/RecentOrders.jsp").forward(req, resp);

@@ -85,7 +85,15 @@ button {
 	font-variant: small-caps;
 	float: left;
 }
+#TrackNSnack{
+	margin-top: 20px;
+	margin-left: 150px;
+	width: 50%;
+	font-size: 125%;
+	font-variant: small-caps;
+	float: left;
 
+}
 #resultList {
 	font-size: 150%;
 	text-align: center;
@@ -128,8 +136,8 @@ td.label {
 						<td><input type="search" name="search" size="12"
 							placeholder="Search" /></td>
 						<td><input type="Submit" name="submit" value="Search" /></td>
-						<td><input type="radio" name="searchType" value="city"
-							checked>City</td>
+						<td><input type="radio" name="searchType" value="city" checked>City</td>
+						<td><input type="radio" name="searchType" value="name">Name</td>
 
 					</form>
 				</tr>
@@ -154,6 +162,22 @@ td.label {
 				</div>
 			</div>
 		</div>
+		<br>
+		<div id="LinkContent">
+			<div id="LinkName">Your Favorites</div>
+			<div>
+				<form action="${pageContext.servletContext.contextPath}/Favorites"
+					method="post">
+					<table>
+						<tr>
+							<td><input type="Submit" name="submit"
+								value="Click to view Favorites" /></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+
+		</div>
 		</c:if>
 		<br>
 		<div id="LinkContent">
@@ -171,8 +195,25 @@ td.label {
 			</div>
 
 		</div>
-		
-		<br>
+
+		<c:if test="${! empty utype}">
+			<br>
+			<div id="LinkContent">
+				<div id="LinkName">Your Restaurants</div>
+				<div>
+					<form action="${pageContext.servletContext.contextPath}/OwnerPage"
+						method="get">
+						<table>
+							<tr>
+								<td><input type="Submit" name="submit"
+									value="Click to view Your Restaurants" /></td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+	</c:if>
+	<br>
 		<div class="fb-like" data-href="http://localhost:8081/lab03/Homepage"
 			data-width="50" data-layout="button" data-action="recommend"
 			data-show-faces="false" data-share="false"></div>
@@ -192,25 +233,6 @@ td.label {
 				}
 			}(document, 'script', 'twitter-wjs');
 		</script>
-
-		<c:if test="${! empty utype}">
-			<br>
-			<div id="LinkContent">
-				<div id="LinkName">Your Restaurants</div>
-				<div>
-					<form action="${pageContext.servletContext.contextPath}/OwnerPage"
-						method="get">
-						<table>
-							<tr>
-								<td><input type="Submit" name="submit"
-									value="Click to view Your Restaurants" /></td>
-							</tr>
-						</table>
-					</form>
-				</div>
-			</div>
-	</div>
-	</c:if>
 	</div>
 	<c:if test="${! empty rest}">
 		<div id="results">Search Results</div>
@@ -224,8 +246,9 @@ td.label {
 							<td class="Address">${restaurant.city },</td>
 							<td class="Address">${restaurant.zipCode }</td>
 							<form
-								action="${pageContext.servletContext.contextPath}/${restaurant.name }"
+								action="${pageContext.servletContext.contextPath}/Restaurant"
 								method="post">
+								<input type="hidden" name="restaurant" id="restaurant" value="${restaurant.name}">
 								<td><input type="submit" value="Click to view page"></td>
 							</form>
 						</tr>
@@ -237,6 +260,14 @@ td.label {
 
 	<c:if test="${ empty rest}">
 		<div id="results">Make America Fat Again</div>
+		<div id="TrackNSnack">
+		Track N Snack was created and designed with the main goal
+		of making ordering food easier. Users can search for
+		restaurants, go to the restaurant's page, view the menu, 
+		place an order, and add the restaurant to a list of favorites.
+		For restaurants, the restaurant can update their menu, veiw
+		orders, as well as update the status of orders for the customers.
+		</div>
 	</c:if>
 	<div class="fixed">
 		<button>
