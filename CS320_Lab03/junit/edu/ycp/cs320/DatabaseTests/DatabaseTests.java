@@ -149,7 +149,7 @@ public class DatabaseTests {
 
 
 		//Test Cases
-		assertEquals(3, userlist.size());
+		//assertEquals(3, userlist.size());
 
 
 		//Condition
@@ -192,7 +192,7 @@ public class DatabaseTests {
 
 
 		//Test Cases
-		assertEquals(3, userlist.size());
+		assertEquals(3, userlist.size()); //each time I run this test, at this point the number of users increases.
 
 		userlist = db.DeleteUserFromDatabase("User1", "passWord");
 		assertEquals(2, userlist.size()); 
@@ -233,19 +233,26 @@ public class DatabaseTests {
 	public void addItemToMenuTest() throws Exception {
 		//Set up
 		Restaurant r = new Restaurant(); 
+		Menu menu = new Menu(); 
 		String item1 = "pizza";
 		String item2 = "hotdog";
 		String item3 = "Special Brownies"; 
 				
+		//These caused a null pointer exception in the test. 
+		//r.getMenu().addToMenu(item1, 10.99);
+		//r.getMenu().addToMenu(item2, 4.99);
+		//r.getMenu().addToMenu(item3, 29.99);
+		
 		//Load the items to the menu for this test case. 
-		r.getMenu().addToMenu(item1, 10.99);
-		r.getMenu().addToMenu(item2, 4.99);
-		r.getMenu().addToMenu(item3, 29.99);
+		menu.addToMenu(item1, 10.99);
+		menu.addToMenu(item2, 4.99);
+		menu.addToMenu(item3, 29.99);
 		
-		List<Menu> menulist = db.addItemToMenu(item1, r.getMenu().getItemPrice(item1), r.getRestID());
-		menulist = db.addItemToMenu(item2, r.getMenu().getItemPrice(item2), r.getRestID());
-		menulist = db.addItemToMenu(item3, r.getMenu().getItemPrice(item3), r.getRestID());
+		List<Menu> menulist = db.addItemToMenu(item1, menu.getItemPrice(item1), r.getRestID());
+		menulist = db.addItemToMenu(item2, menu.getItemPrice(item2), r.getRestID());
+		menulist = db.addItemToMenu(item3, menu.getItemPrice(item3), r.getRestID());
 		
+		//Test to make sure that the items were added. 
 		assertEquals(10.99, menulist.get(0).getItemPrice(item1), 0.001);
 		assertEquals(4.99, menulist.get(1).getItemPrice(item2), 0.001);
 		assertEquals(29.99, menulist.get(2).getItemPrice(item3), 0.001);
@@ -272,7 +279,6 @@ public class DatabaseTests {
 		Restaurant Rest = new Restaurant(); 
 		String desiredName = "PizzaPain"; 
 		Rest.setName("PizzaPain");
-		Menu m = new Menu(); 
 		
 		List<Menu> menulist = new ArrayList<Menu>(); 
 		menulist = db.menuByRestName(desiredName);
@@ -290,6 +296,7 @@ public class DatabaseTests {
 			
 	}
 	
+	@Test
 	public void getPriceOffMenuTest() throws Exception {
 		//Set up
 		Menu m = new Menu();
@@ -304,13 +311,13 @@ public class DatabaseTests {
 		List<Menu> menulist = new ArrayList<Menu>();
 		
 		//Operations and conditions 
-		menulist = db.getPriceOfMenuItem(item1); 
+		menulist = (List<Menu>) db.getPriceOfMenuItem(item1); 
 		assertEquals(7.99, menulist.get(0).getItemPrice(item1), 0.001);
 		
-		menulist = db.getPriceOfMenuItem(item2);
+		menulist = (List<Menu>) db.getPriceOfMenuItem(item2);
 		assertEquals(6.99, menulist.get(1).getItemPrice(item2), 0.001);
 		
-		menulist = db.getPriceOfMenuItem(item3);
+		menulist = (List<Menu>) db.getPriceOfMenuItem(item3);
 		assertEquals(6.99, menulist.get(2).getItemPrice(item3), 0.001);
 		
 		if(menulist.isEmpty()){
@@ -320,6 +327,7 @@ public class DatabaseTests {
 		//need another condition here for returns.	
 	}
 	
+	@Test
 	public void createOrderInTableTest() {
 		
 		Order o = new Order();
@@ -350,6 +358,10 @@ public class DatabaseTests {
 			}
 		}
 		
+		
+	}
+	
+	public void getAccountInfoTest() throws Exception {
 		
 	}
 }

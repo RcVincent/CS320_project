@@ -318,7 +318,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setString(2, name);
 					stmt.setString(3, pswd);
 					stmt.executeUpdate();
-
+					System.out.printf("Querry Completed: Update user's name");
 					// return all users and see that the one entered was deleted
 					
 					stmt2 = conn.prepareStatement(
@@ -328,6 +328,7 @@ public class DerbyDatabase implements IDatabase {
 					//ensure new userName is in database
 					stmt2.setString(1, newName);
 					resultSet = stmt2.executeQuery();
+					System.out.printf("Where does the querry die?");
 					List<User> result = new ArrayList<User>();
 					
 					Boolean found = false;
