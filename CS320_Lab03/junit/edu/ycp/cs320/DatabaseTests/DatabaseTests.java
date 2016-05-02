@@ -247,7 +247,8 @@ public class DatabaseTests {
 		menu.addToMenu(item1, 10.99);
 		menu.addToMenu(item2, 4.99);
 		menu.addToMenu(item3, 29.99);
-
+		
+		//I will work on fixing these tests tomorrow - 5/2/2016
 		List<Menu> menulist = db.addItemToMenu(item1, menu.getItemPrice(item1), r.getRestID());
 		menulist = db.addItemToMenu(item2, menu.getItemPrice(item2), r.getRestID());
 		menulist = db.addItemToMenu(item3, menu.getItemPrice(item3), r.getRestID());
@@ -339,7 +340,8 @@ public class DatabaseTests {
 		Restaurant r2 = new Restaurant();  
 
 		List<Order> orderList = new ArrayList<Order>(); 
-
+		
+		//I will work on fixing these tests tomorrow - 5/2/2016
 		orderList = db.ceateOrderInTable(p.getPatronId(), o.getorderNumber(), r.getMenu().getItem(), r.getMenu().getItemPrice(r.getMenu().getItem()));
 		assertEquals(1, orderList.size());
 		orderList = db.ceateOrderInTable(p.getPatronId(), o2.getorderNumber(), r.getMenu().getItem(), r.getMenu().getItemPrice(r.getMenu().getItem()));
