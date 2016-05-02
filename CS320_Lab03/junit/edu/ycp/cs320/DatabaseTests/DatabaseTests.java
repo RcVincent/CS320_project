@@ -88,17 +88,17 @@ public class DatabaseTests {
 		restaurantCount = db.getListOfRestaurantsByCity(city3);
 		assertEquals(0, restaurantCount.size());
 		
-//		if(restaurantCount.isEmpty()) {
-//			System.out.println("No Restaurants found in database");
-//			fail("No restaurants returned from restaurant db");
-//		}
-//		else {
-//			restlist = new ArrayList<Restaurant>(); 
-//			for(Restaurant r : restaurantCount) {
-//				restlist.add(r);
-//				System.out.println(r.getName() + ", " + r.getAddress() + ", " + r.getCity() + ", " + r.getZipCode()); 
-//			}
-//		}
+		if(restaurantCount.isEmpty()) {
+			System.out.println("No Restaurants found in database");
+			fail("No restaurants returned from restaurant db");
+		}
+		else {
+			restlist = new ArrayList<Restaurant>(); 
+			for(Restaurant r : restaurantCount) {
+				restlist.add(r);
+				System.out.println(r.getName() + ", " + r.getAddress() + ", " + r.getCity() + ", " + r.getZipCode()); 
+			}
+		}
 	}
 	
 	@Test 
@@ -296,7 +296,7 @@ public class DatabaseTests {
 			
 	}
 	
-	@Test
+	//@Test
 	public void getPriceOffMenuTest() throws Exception {
 		//Set up
 		Menu m = new Menu();
@@ -327,7 +327,7 @@ public class DatabaseTests {
 		//need another condition here for returns.	
 	}
 	
-	@Test
+	//@Test
 	public void createOrderInTableTest() {
 		
 		Order o = new Order();
@@ -364,5 +364,58 @@ public class DatabaseTests {
 	public void getAccountInfoTest() throws Exception {
 		
 	}
+	
+	
+	public void getRestaurantsByOwnerTest() throws Exception {
+		String OwnerName = "TheDonald";
+		String NonOwnerName = "Some bum off the street";
+		List<Restaurant>restaurantCount = new ArrayList<Restaurant>(); 
+		
+		System.out.println("*** Searching for Restaurants by Owner name ***");
+		
+		restaurantCount = db.getListOfRestaurantsByOwner(OwnerName);
+		assertEquals(1, restaurantCount.size());
+		
+		restaurantCount = db.getListOfRestaurantsByOwner(NonOwnerName);
+		assertNotEquals(2, restaurantCount.size()); 
+		
+		if(restaurantCount.isEmpty()) {
+			System.out.println("That user has no restaurants");
+			fail("Sorry for the confusion");
+		}
+		
+		else {
+			restlist = new ArrayList<Restaurant>(); 
+			for(Restaurant r : restaurantCount) {
+				restlist.add(r);
+				System.out.println(r.getName() + ", " + r.getAddress() + ", " + r.getCity() + ", " + r.getZipCode()); 
+			}
+		}
+	}
+	
+	public void getOrderByConfirmNumber() throws Exception {
+		
+	}
+	
+	public void deleteFromMenuTest() {
+		
+	}
+	
+	public void getOrdersFromRestaurantTest() throws Exception{
+		
+	}
+	
+	public void getOrderByPatronName() throws Exception{
+		
+	}
+	
+	public void UpdateOrderStatusTest() {
+		
+	}
+	
+	public void addToFavsTest() {
+		
+	}
 }
+
 
