@@ -362,7 +362,35 @@ public class DatabaseTests {
 	}
 
 	public void getAccountInfoTest() throws Exception {
-
+		String Username1 = "theDonald";
+		String Username2 = "theExpress";
+		String Username3 = "userGuy";
+		String Username4 = "anotherUser";
+		List<User> listofUsers = new ArrayList<User>(); 
+		
+		listofUsers = db.getAccountInfo(Username1);
+		assertEquals(1, listofUsers.size());
+		
+		listofUsers = db.getAccountInfo(Username2);
+		assertEquals(2, listofUsers.size());
+		
+		listofUsers = db.getAccountInfo(Username3);
+		assertEquals(3, listofUsers.size());
+		
+		listofUsers = db.getAccountInfo(Username4);
+		assertEquals(4, listofUsers.size());
+		
+		if(listofUsers.isEmpty()) {
+			System.out.println("There are no users to retrieve information for");
+			fail("We need more users!");
+		}
+		else {
+			userlist = new ArrayList<User>(); 
+			for(User u: listofUsers){
+				userlist.add(u);
+				System.out.println(u.getUserName() + "," + u.getUserId()+ ","+ u.getEmail() + "," + u.getFirstName() + "," + u.getLastName());
+			}
+		}
 	}
 
 
