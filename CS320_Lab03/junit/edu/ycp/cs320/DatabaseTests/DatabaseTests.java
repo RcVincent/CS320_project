@@ -492,12 +492,25 @@ public class DatabaseTests {
 	}
 
 	public void addToFavsTest() {
+		
 		User testUser = new User(); 
-		String restName = "Bakers Donuts"; 
+		String restName1 = "Bakers Donuts"; 
+		String restName2 = "Johnson";
+		String restName3 = "Toms grill";
+		String restName4 = "Trumps Steaks";
 		List<Restaurant> restList = new ArrayList<Restaurant>(); 
 		
-		restList = db.addToFavoriteRests(restName, testUser.getUserId());
-		assertEquals(1, restList.size());
+		restList = db.addToFavoriteRests(restName1, testUser.getUserId());
+		assertEquals(4, restList.size());
+		
+		restList = db.addToFavoriteRests(restName2, testUser.getUserId());
+		assertEquals(4, restList.size());
+		
+		restList = db.addToFavoriteRests(restName3, testUser.getUserId());
+		assertEquals(4, restList.size());
+		
+		restList = db.addToFavoriteRests(restName4, testUser.getUserId());
+		assertEquals(4, restList.size());
 		
 		if(restList.isEmpty()) {
 			System.out.println("Cannot add restaurant to favorites list");
