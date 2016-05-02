@@ -395,6 +395,23 @@ public class DatabaseTests {
 	
 	public void getOrderByConfirmNumber() throws Exception {
 		
+		Integer ConfirmNumber = 1345;
+		List<Order> orderList = new ArrayList<Order>(); 
+		
+		orderList = db.getOrderByConfirmationNumber(ConfirmNumber);
+		assertEquals(1, orderList.size());
+		
+		if(orderList.isEmpty()) {
+			System.out.println("There are no orders with this number");
+			fail("Re enter the order number");
+		}
+		else{
+			OrderList = new ArrayList<Order>(); 
+			for(Order o: orderList) {
+				OrderList.add(o);
+				System.out.println("Adding orders to the database");
+			}
+		}
 	}
 	
 	public void deleteFromMenuTest() {
