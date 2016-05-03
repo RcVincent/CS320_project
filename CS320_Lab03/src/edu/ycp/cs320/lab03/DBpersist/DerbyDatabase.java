@@ -12,7 +12,6 @@ import java.util.List;
 import edu.ycp.cs320.lab03.model.Favorites;
 import edu.ycp.cs320.lab03.model.Menu;
 import edu.ycp.cs320.lab03.model.Order;
-import edu.ycp.cs320.lab03.model.Patron;
 import edu.ycp.cs320.lab03.model.Restaurant;
 import edu.ycp.cs320.lab03.model.User;
 
@@ -450,7 +449,7 @@ public class DerbyDatabase implements IDatabase {
 	//Add item to menu
 	//************************
 	@Override
-	public List<Menu> addItemToMenu(final String item, final Double price, final String rest_name) {
+	public List<Menu> addItemToMenu(final String item, final String price, final String rest_name) {
 		return executeTransaction(new Transaction<List<Menu>>() {
 			@Override
 			public List<Menu> execute(Connection conn) throws SQLException {
@@ -478,7 +477,7 @@ public class DerbyDatabase implements IDatabase {
 							);
 					stmt2.setInt(1, rest_id);
 					stmt2.setString(2, item);
-					stmt2.setDouble(3, price);
+					stmt2.setString(3, price);
 					stmt2.executeUpdate();
 					
 					stmt3 = conn.prepareStatement(

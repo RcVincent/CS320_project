@@ -7,14 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import edu.ycp.cs320.lab03.controllers.AddItemToMenu;
 import edu.ycp.cs320.lab03.controllers.ViewMenuByRestaurantName;
 import edu.ycp.cs320.lab03.model.Menu;
 
 public class MenuServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ViewMenuByRestaurantName menu = null;
-	private AddItemToMenu add = null;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

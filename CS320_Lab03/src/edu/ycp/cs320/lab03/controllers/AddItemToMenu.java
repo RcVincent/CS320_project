@@ -13,8 +13,8 @@ public class AddItemToMenu {
 		db = DatabaseProvider.getInstance();
 	
 	}
-	public void AddItem(String item, Double price, String rest_name){
+	public void AddItem(String item, String newItemPrice, String rest_name){
 		
-		db.addItemToMenu(item, price, rest_name);
+		db.addItemToMenu(item, newItemPrice, rest_name);
 	}
 }

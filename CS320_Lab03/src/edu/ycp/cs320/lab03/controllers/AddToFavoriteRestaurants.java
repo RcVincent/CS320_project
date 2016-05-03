@@ -7,7 +7,6 @@ import edu.ycp.cs320.lab03.DBpersist.DatabaseProvider;
 import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;
 import edu.ycp.cs320.lab03.DBpersist.IDatabase;
 import edu.ycp.cs320.lab03.model.Favorites;
-import edu.ycp.cs320.lab03.model.Order;
 
 public class AddToFavoriteRestaurants {
 	private IDatabase db = null;
