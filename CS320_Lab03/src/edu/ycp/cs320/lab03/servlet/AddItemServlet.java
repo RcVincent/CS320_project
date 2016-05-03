@@ -35,14 +35,14 @@ public class AddItemServlet extends HttpServlet {
 		String message = null;
 		String itemToRemove = null;
 		String itemToAdd = null;
-		Double NewItemPrice = 0.00;
+		String NewItemPrice = req.getParameter("price");
 		String rest_name = (String)req.getSession().getAttribute("restaurant");
 		
 		itemToRemove = req.getParameter("itemToRemove");
 		itemToAdd = req.getParameter("item");
+		
 		if(itemToAdd!=null){	
 			add = new AddItemToMenu();
-			NewItemPrice = Double.parseDouble(req.getParameter("price"));
 			add.AddItem(itemToAdd, NewItemPrice, rest_name);
 			System.out.println("Success");
 			message = "Success";

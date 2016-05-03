@@ -13,7 +13,6 @@ import java.util.List;
 import edu.ycp.cs320.lab03.model.Favorites;
 import edu.ycp.cs320.lab03.model.Menu;
 import edu.ycp.cs320.lab03.model.Order;
-import edu.ycp.cs320.lab03.model.Patron;
 import edu.ycp.cs320.lab03.model.Restaurant;
 import edu.ycp.cs320.lab03.model.User;
 
@@ -303,7 +302,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt = conn.prepareStatement(
 							"delete from users " +
 									" where user_userName = ? " +
-									" and user_userpassWord = ? "
+									" and user_passWord = ? "
 							);
 					stmt.setString(1, name);
 					stmt.setString(2, pswd);
@@ -351,24 +350,26 @@ public class DerbyDatabase implements IDatabase {
 		return executeTransaction(new Transaction<List<User>>() {
 			@Override
 			public List<User> execute(Connection conn) throws SQLException {
-				Statement stmt = conn.createStatement();
-				PreparedStatement stmt1 = null;
+				
+				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null;
-				ResultSet resultSet1 = null;
+				
 				ResultSet resultSet2 = null;
 				
 				try {
 					
-					stmt1 = conn.prepareStatement(
+					stmt = conn.prepareStatement(
 							"update users " +
 									" set user_userName = ? " +
 									" where user_userName = ? " +
 									" and user_passWord = ? "
 							);
-					stmt1.setString(1, newName);
-					stmt1.setString(2, name);
-					stmt1.setString(3, pswd);
-					stmt1.executeUpdate();
+
+					stmt.setString(1, newName);
+					stmt.setString(2, name);
+					stmt.setString(3, pswd);
+					stmt.executeUpdate();
+					System.out.printf("Querry Completed: Update user's name");
 
 					// return all users and see that the one entered was deleted
 					
@@ -378,7 +379,10 @@ public class DerbyDatabase implements IDatabase {
 							);
 					//ensure new userName is in database
 					stmt2.setString(1, newName);
+
 					resultSet2 = stmt2.executeQuery();
+					System.out.printf("Where does the query die?");
+
 					List<User> result = new ArrayList<User>();
 					
 					Boolean found = false;
@@ -400,7 +404,7 @@ public class DerbyDatabase implements IDatabase {
 
 
 				} finally {
-					DBUtil.closeQuietly(resultSet1);
+					
 					DBUtil.closeQuietly(resultSet2);
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(stmt2);
@@ -453,7 +457,7 @@ public class DerbyDatabase implements IDatabase {
 	//Add item to menu
 	//************************
 	@Override
-	public List<Menu> addItemToMenu(final String item, final Double price, final String rest_name) {
+	public List<Menu> addItemToMenu(final String item, final String price, final String rest_name) {
 		return executeTransaction(new Transaction<List<Menu>>() {
 			@Override
 			public List<Menu> execute(Connection conn) throws SQLException {
@@ -481,7 +485,7 @@ public class DerbyDatabase implements IDatabase {
 							);
 					stmt2.setInt(1, rest_id);
 					stmt2.setString(2, item);
-					stmt2.setDouble(3, price);
+					stmt2.setString(3, price);
 					stmt2.executeUpdate();
 					
 					stmt3 = conn.prepareStatement(

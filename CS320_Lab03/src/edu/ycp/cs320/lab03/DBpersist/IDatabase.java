@@ -18,7 +18,7 @@ public interface IDatabase {
 
 	List<User> matchUsernameWithPassword(String name);
 	
-	List<User> getAccountInfo(String name);
+    List<User> getAccountInfo(String name);
 
 	List<User> addUserToDatabase(String name, String pswd, String email, String type, String first, String last);
 
@@ -26,7 +26,7 @@ public interface IDatabase {
 
 	List<User> changeUsername(String name, String newName, String pswd);
 
-	List<Menu> addItemToMenu(String item, Double price, String rest_id);
+	List<Menu> addItemToMenu(String item, String newItemPrice, String rest_id);
 
 	List<Restaurant> getListOfRestaurantsByOwner(String username);
 	
