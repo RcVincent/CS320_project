@@ -18,7 +18,7 @@ public interface IDatabase {
 
 	List<User> matchUsernameWithPassword(String name);
 	
-	List<User> getAccountInfo(String name);
+    List<User> getAccountInfo(String name);
 
 	List<User> addUserToDatabase(String name, String pswd, String email, String type, String first, String last);
 
