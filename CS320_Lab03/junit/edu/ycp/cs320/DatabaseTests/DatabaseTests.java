@@ -97,6 +97,7 @@ public class DatabaseTests {
 			}			
 		}
 	}
+	
 	@Test
 	public void getRestByName() throws Exception{
 		System.out.println("\n*** Testing getRestByName ***");
@@ -105,8 +106,8 @@ public class DatabaseTests {
 		restList = db.getRestByName(name);
 		// NOTE: this is a simple test to check if no results were found in the DB
 		if (restList.isEmpty()) {
-			System.out.println("No book found in library with title <" + name + ">");
-			fail("No book with title <" + name + "> returned from Library DB");
+			System.out.println("No Restaurant found with title <" + name + ">");
+			fail("No Restaurant with title <" + name + "> returned from  DB");
 		}
 		// NOTE: assembling the results into Author and Book lists so that they could be
 		//       inspected for correct content - well-formed objects with correct content
@@ -364,54 +365,39 @@ public class DatabaseTests {
 		String Username2 = "theExpress";
 		String Username3 = "userGuy";
 		String Username4 = "anotherUser";
-		List<User> listofUsers = new ArrayList<User>(); 
 		
-		listofUsers = db.getAccountInfo(Username1);
-		assertEquals(1, listofUsers.size());
 		
-		listofUsers = db.getAccountInfo(Username2);
-		assertEquals(2, listofUsers.size());
+		users = db.getAccountInfo(Username1);
+		users = db.getAccountInfo(Username2);
+		users = db.getAccountInfo(Username3);
+		users = db.getAccountInfo(Username4);
 		
-		listofUsers = db.getAccountInfo(Username3);
-		assertEquals(3, listofUsers.size());
-		
-		listofUsers = db.getAccountInfo(Username4);
-		assertEquals(4, listofUsers.size());
-		
-		if(listofUsers.isEmpty()) {
+		if(users.isEmpty()) {
 			System.out.println("There are no users to retrieve information for");
 			fail("We need more users!");
 		}
 		else {
 			//userlist = new ArrayList<User>(); 
-			for(User u: listofUsers){
+			for(User u: users){
 				//userlist.add(u);
 				System.out.println(u.getUserName() + "," + u.getUserId()+ ","+ u.getEmail() + "," + u.getFirstName() + "," + u.getLastName());
 			}
 		}
 	}
 
-
+	@Test
 	public void getRestaurantsByOwnerTest() throws Exception {
 		String OwnerName = "TheDonald";
-		String NonOwnerName = "Some bum off the street";
-		List<Restaurant>restaurantCount = new ArrayList<Restaurant>(); 
-
 		System.out.println("*** Searching for Restaurants by Owner name ***");
-
-		restaurantCount = db.getListOfRestaurantsByOwner(OwnerName);
-
-		restaurantCount = db.getListOfRestaurantsByOwner(NonOwnerName);
-
-		if(restaurantCount.isEmpty()) {
+		
+		restList = db.getListOfRestaurantsByOwner(OwnerName);
+		
+		if(restList.isEmpty()) {
 			System.out.println("That user has no restaurants");
 			fail("Sorry for the confusion");
 		}
-
 		else {
-			
-			for(Restaurant r : restaurantCount) {
-				//restlist.add(r);
+			for(Restaurant r : restList) {
 				System.out.println(r.getName() + ", " + r.getAddress() + ", " + r.getCity() + ", " + r.getZipCode()); 
 			}
 		}
@@ -420,18 +406,17 @@ public class DatabaseTests {
 	public void getOrderByConfirmNumber() throws Exception {
 
 		Integer ConfirmNumber = 1345;
-		List<Order> orderList = new ArrayList<Order>(); 
+		
 
-		orderList = db.getOrderByConfirmationNumber(ConfirmNumber);
-		assertEquals(1, orderList.size());
+		OrderList = db.getOrderByConfirmationNumber(ConfirmNumber);
 
-		if(orderList.isEmpty()) {
+		if(OrderList.isEmpty()) {
 			System.out.println("There are no orders with this number");
 			fail("Re enter the order number");
 		}
 		else{
-			OrderList = new ArrayList<Order>(); 
-			for(Order o: orderList) {
+			
+			for(Order o: OrderList) {
 				OrderList.add(o);
 				System.out.println("Adding orders to the database");
 			}
@@ -475,7 +460,7 @@ public class DatabaseTests {
 		}
 	}
 
-
+	@Test
 	public void getOrderByPatronName() throws Exception{
 		//Another one ill need to run the application to ensure the tests fully run. 
 		String patronName = "userGuy"; 
@@ -496,7 +481,8 @@ public class DatabaseTests {
 			}
 		}
 	}
-
+	
+	@Test
 	public void UpdateOrderStatusTest() {
 		Order testOrder = new Order(); 
 		if(OrderList.size() > 0) {
