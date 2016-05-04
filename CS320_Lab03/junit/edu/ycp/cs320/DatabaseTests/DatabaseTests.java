@@ -12,6 +12,7 @@ import org.junit.Test;
 import edu.ycp.cs320.lab03.DBpersist.DatabaseProvider;
 import edu.ycp.cs320.lab03.DBpersist.DerbyDatabase;
 import edu.ycp.cs320.lab03.DBpersist.IDatabase;
+import edu.ycp.cs320.lab03.model.Favorites;
 import edu.ycp.cs320.lab03.model.Menu;
 import edu.ycp.cs320.lab03.model.Order;
 import edu.ycp.cs320.lab03.model.Owner;
@@ -26,6 +27,7 @@ public class DatabaseTests {
 	List<User> userList = null;
 	List<User> users = null; 
 	List<Menu> menu = null;
+	List<Favorites> favList = null; 
 	
 	Menu m = null;
 	ArrayList<Order> OrderList = null; 
@@ -116,6 +118,7 @@ public class DatabaseTests {
 			}			
 		}
 	}
+	
 	@Test
 	public void getListOfRestaurantsByOwner() throws Exception{
 		System.out.println("\n*** Testing getListOfRestaurantsByOwner ***");
@@ -124,7 +127,7 @@ public class DatabaseTests {
 		restList = db.getListOfRestaurantsByOwner(username);
 		// NOTE: this is a simple test to check if no results were found in the DB
 		if (restList.isEmpty()) {
-			System.out.println("No book found in library with title <" + username + ">");
+			System.out.println("No restaurant found with owner name <" + username + ">");
 			fail("No book with title <" + username + "> returned from Library DB");
 		}
 		// NOTE: assembling the results into Author and Book lists so that they could be
@@ -138,6 +141,7 @@ public class DatabaseTests {
 			}			
 		}
 	}
+	
 	@Test
 	public void addUserToDatabase() throws Exception{
 		System.out.println("\n*** Testing addUserToDataBase ***");
@@ -149,10 +153,10 @@ public class DatabaseTests {
 		String email = "jNacho@aol.com";
 		String type = "patron";
 				
-		// insert new book (and possibly new author) into DB
+		// insert new user into DB
 		users = db.addUserToDatabase(name, pswd, email, type, first, last);
 
-		// check the return value - should be a book_id > 0
+		// check the return value
 		if (users.size() > 0)
 		{
 			// try to retrieve the book and author from the DB
@@ -160,8 +164,8 @@ public class DatabaseTests {
 			userList = db.getAccountInfo(name);
 			
 			if (userList.isEmpty()) {
-				System.out.println("No books found for author <" + last + ">");
-				fail("Failed to insert new book <" + name + "> into Library DB");
+				System.out.println("No users found for Lastname <" + last + ">");
+				fail("Failed to insert new book <" + name + "> into User DB");
 			}
 			// otherwise, the test was successful.  Now remove the book just inserted to return the DB
 			// to it's original state, except for using an author_id and a book_id
@@ -179,60 +183,50 @@ public class DatabaseTests {
 	public void MatchUsersWithPassword() throws Exception {
 		System.out.println("\n*** Testing MatchUsersWithPassword ***"); 
 		
-		String userPassword = "theDonald"; 
-		List<User> userList = db.matchUsernameWithPassword(userPassword); 
+		String userPassword = "pass"; 
+		userList = db.matchUsernameWithPassword(userPassword); 
 
 		if(userList.isEmpty()){
 			System.out.println("No users matched to these passwords");
 			fail("No users returned from the database");
 		}
 		else {
-			users = new ArrayList<User>(); 
-			for(User u : users) {
-				users.add(u); 
+			List<User> users = new ArrayList<User>(); 
+			for(User u : userList) {
+				User UsertoAdd = u;
+				users.add(UsertoAdd);
 				System.out.println(u.getUserName() + ", " + u.getFirstName() + ", " + u.getLastName());
+				
+				//add a delete condition here or wait?
 			}
 		}
 	}
 
-	@Test
+	
 	public void deleteUserFromDatabase() throws Exception {
 		System.out.println("\n *** Removing Users from Database ***");
-
-
-		//SetUp: copied from the test above to give us something to remove. 
-		User UserToBeEntered1 = new User(); 
-		User UserToBeEntered2 = new User();
-		User UserToBeEntered3 = new User(); 
-
-		//We need to set up these conditions for the removal function. 
-		UserToBeEntered1.setUserName("User1");
-		UserToBeEntered2.setUserName("User2");
-		UserToBeEntered3.setUserName("User3");
-
-		UserToBeEntered1.setPassWord("passWord");
-		UserToBeEntered2.setPassWord("Guest");
-		UserToBeEntered3.setPassWord("Admin"); 
-
-		//Need to add something in order to delete it. 
-		List<User> userlist = db.addUserToDatabase(UserToBeEntered1.getUserName(), UserToBeEntered1.getPassWord(), UserToBeEntered1.getEmail(), UserToBeEntered1.getAccountType(), UserToBeEntered1.getFirstName(), UserToBeEntered1.getLastName());	
-		userlist = db.addUserToDatabase(UserToBeEntered2.getUserName(), UserToBeEntered2.getPassWord(), UserToBeEntered2.getEmail(), UserToBeEntered2.getAccountType(), UserToBeEntered2.getFirstName(), UserToBeEntered2.getLastName());
-		userlist = db.addUserToDatabase(UserToBeEntered3.getUserName(), UserToBeEntered3.getPassWord(), UserToBeEntered3.getEmail(), UserToBeEntered3.getAccountType(), UserToBeEntered3.getFirstName(), UserToBeEntered3.getLastName());
-
-
-		//Test Cases
-		assertEquals(3, userlist.size()); //each time I run this test, at this point the number of users increases.
-
-		userlist = db.DeleteUserFromDatabase("User1", "passWord");
-		assertEquals(2, userlist.size()); 
-
-		userlist = db.DeleteUserFromDatabase("User2", "Guest");
-		assertEquals(1, userlist.size()); 
-
-		userlist = db.DeleteUserFromDatabase("User3", "Admin");
-		assertEquals(0, userlist.size()); 
-		//Hopefully the database gets deincrememnted like specified. Can't remove 
-		//two users at the same time(at least right now). 
+		String name = "userGuy"; 
+		String password = "admin"; 
+		String Fname = "John"; 
+		String Lname = "Doe";
+		String email = "jDoe@email.com"; 
+		String type = "Patron"; 
+		
+		//Add to delete something 
+		userList = db.addUserToDatabase(name, password, email, type, Fname, Lname); 
+		
+		//Can only delete when the list is populated 
+		if(userList.size() > 0) {
+			List<User> deletedUsers = db.DeleteUserFromDatabase(name, password);
+			
+			if(deletedUsers.isEmpty()) {
+				System.out.println("Could not remove users from the databse with name <"+ name +">" );
+				fail("No user(s) removed from the user database");
+			}
+			else {
+				System.out.println("User" + deletedUsers.get(0).getUserName() + "removed from the user database"); 
+			}
+		}
 	}
 
 	@Test
@@ -268,10 +262,10 @@ public class DatabaseTests {
 		String price = "3.50";
 		String restName = "Bakers Donuts";
 				
-		// insert new book (and possibly new author) into DB
+		// insert new item into the menu DB
 		menu = db.addItemToMenu(item, price, restName);
 
-		// check the return value - should be a book_id > 0
+		// check the return value - should be menu.size() > 0
 		if (menu.size() > 0)
 		{
 			// try to retrieve the book and author from the DB
@@ -321,55 +315,35 @@ public class DatabaseTests {
 	//@Test
 	public void getPriceOffMenuTest() throws Exception {
 		//Set up
-		Menu m = new Menu();
-		String item1 = "Pizza"; 
-		String item2 = "Hamburger";
-		String item3 = "Hit in Head";
+		String item = "Steak";
+		String price = "5.50"; 
+		String restName = "Trumps Steaks"; 
+		
+		menu = db.addItemToMenu(item, price, restName); 
+		
+		if (menu.size() > 0) {
+		
+			m = db.getPriceOfMenuItem(item);
 
-		m.addToMenu(item1, 7.99);
-		m.addToMenu(item2, 6.99);
-		m.addToMenu(item3, 0.99);
+			if (m == null) {
+				System.out.println("No items called <" + item + ">");
+				fail("Failed to insert items <" + item + "> into menu DB");
+			}
+			else {
+				System.out.println("The item" + item + "has a price of" + price); 
 
-		List<Menu> menulist = new ArrayList<Menu>();
-
-		//Operations and conditions 
-		menulist = (List<Menu>) db.getPriceOfMenuItem(item1); 
-		assertEquals(7.99, menulist.get(0).getItemPrice(item1), 0.001);
-
-		menulist = (List<Menu>) db.getPriceOfMenuItem(item2);
-		assertEquals(6.99, menulist.get(1).getItemPrice(item2), 0.001);
-
-		menulist = (List<Menu>) db.getPriceOfMenuItem(item3);
-		assertEquals(6.99, menulist.get(2).getItemPrice(item3), 0.001);
-
-		if(menulist.isEmpty()){
-			System.out.println("There is no menu present");
-			fail("This has gotten rather silly"); 
+				Menu delMenu = db.deleteFromMenu(item);	
+			}
+		
 		}
-		//need another condition here for returns.	
-	}
+	}		
+		
 
 	//@Test
 	public void createOrderInTableTest() {
 
-		Order o = new Order();
-		Order o2 = new Order();
-		Order o3 = new Order();
-		User p = new User(); 
-		User p2= new User(); 
-		Restaurant r = new Restaurant();  
-		Restaurant r2 = new Restaurant();  
-
-		List<Order> orderList = new ArrayList<Order>(); 
 		
-		//I will work on fixing these tests tomorrow - 5/2/2016
-		orderList = db.ceateOrderInTable(p.getUserId(), o.getorderNumber(), r.getMenu().getItem(), r.getMenu().getItemPrice(r.getMenu().getItem()));
-		assertEquals(1, orderList.size());
-		orderList = db.ceateOrderInTable(p.getUserId(), o2.getorderNumber(), r.getMenu().getItem(), r.getMenu().getItemPrice(r.getMenu().getItem()));
-		assertEquals(2, orderList.size());
-		orderList = db.ceateOrderInTable(p2.getUserId(), o3.getorderNumber(), r2.getMenu().getItem(), r2.getMenu().getItemPrice(r2.getMenu().getItem()));
-		assertEquals(1, orderList.size());
-
+/*
 		if(orderList.isEmpty()) {
 			System.out.println("Why is no one ordering anything!?");
 			fail("Manuel!!");
@@ -380,7 +354,7 @@ public class DatabaseTests {
 				System.out.println("Creating Orders"); 
 			}
 		}
-
+*/
 
 	}
 
@@ -408,9 +382,9 @@ public class DatabaseTests {
 			fail("We need more users!");
 		}
 		else {
-			userlist = new ArrayList<User>(); 
+			//userlist = new ArrayList<User>(); 
 			for(User u: listofUsers){
-				userlist.add(u);
+				//userlist.add(u);
 				System.out.println(u.getUserName() + "," + u.getUserId()+ ","+ u.getEmail() + "," + u.getFirstName() + "," + u.getLastName());
 			}
 		}
@@ -436,9 +410,9 @@ public class DatabaseTests {
 		}
 
 		else {
-			restlist = new ArrayList<Restaurant>(); 
+			
 			for(Restaurant r : restaurantCount) {
-				restlist.add(r);
+				//restlist.add(r);
 				System.out.println(r.getName() + ", " + r.getAddress() + ", " + r.getCity() + ", " + r.getZipCode()); 
 			}
 		}
@@ -473,7 +447,7 @@ public class DatabaseTests {
 		String Rest_ID = "Tom's Grill"; 
 		List<Menu> menulist = new ArrayList<Menu>(); 
 
-		menulist = db.addItemToMenu(item2, 4.99, Rest_ID);
+		//menulist = db.addItemToMenu(item2, 4.99, Rest_ID);
 
 		//This is more like a regular JUnit test. 
 		//The function looks like it returns items, not removes them.
@@ -542,37 +516,38 @@ public class DatabaseTests {
 		}
 	}
 
-	public void addToFavsTest() {
-		
+	@Test
+	public void addToFavsTest() {	
 		User testUser = new User(); 
 		String restName1 = "Bakers Donuts"; 
 		String restName2 = "Johnson";
 		String restName3 = "Toms grill";
 		String restName4 = "Trumps Steaks";
-		List<Restaurant> restList = new ArrayList<Restaurant>(); 
 		
-		restList = db.addToFavoriteRests(restName1, testUser.getUserId());
-		assertEquals(4, restList.size());
+		favList = db.addToFavoriteRests(restName1, testUser.getUserId());
+		favList = db.addToFavoriteRests(restName2, testUser.getUserId());
+		favList = db.addToFavoriteRests(restName3, testUser.getUserId());
+		favList = db.addToFavoriteRests(restName4, testUser.getUserId());
 		
-		restList = db.addToFavoriteRests(restName2, testUser.getUserId());
-		assertEquals(4, restList.size());
-		
-		restList = db.addToFavoriteRests(restName3, testUser.getUserId());
-		assertEquals(4, restList.size());
-		
-		restList = db.addToFavoriteRests(restName4, testUser.getUserId());
-		assertEquals(4, restList.size());
-		
-		if(restList.isEmpty()) {
-			System.out.println("Cannot add restaurant to favorites list");
+		if(favList.isEmpty()) {
+			System.out.println("Cannot add favorites: its empty.");
 			fail("Try searching again");
 		}
-		else 
-			restlist = new ArrayList<Restaurant>(); 
-			for(Restaurant r : restList) {
-				restlist.add(r);
+		else {
+			List<Favorites>  favs = new ArrayList<Favorites>();
+			for(Favorites f : favList) {
+				Favorites favToAdd = f; 
+				favs.add(favToAdd); 
 				System.out.println("Adding restaurant to user favorites");
 			}
+		}
+	}
+	
+	
+	public void getFromFavoritesTest() throws Exception {
+		int userId = 1234; 
+		favList = db.getFromFavorites(userId); 
+		//I will continue work on this tomorrow 
 	}
 }
 
