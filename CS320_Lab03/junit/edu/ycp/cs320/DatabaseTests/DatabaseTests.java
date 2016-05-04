@@ -550,7 +550,13 @@ public class DatabaseTests {
 		favList = db.getFromFavorites(userId); 
 		//I will continue work on this tomorrow 
 		if(favList.isEmpty()) {
-			
+			System.out.println("The favorites list is empty");
+			fail("Add some favorites");
+		}
+		else {
+			for(Favorites f: favList) {
+				System.out.println("User <" + f.getUserID() +"> has favorites <" + f.getFavID() + ">" );
+			}
 		}
 	}
 }
