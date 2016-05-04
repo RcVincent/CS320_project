@@ -314,7 +314,7 @@ public class DatabaseTests {
 		
 	}
 
-	//@Test
+	@Test
 	public void getPriceOffMenuTest() throws Exception {
 		//Set up
 		String item = "Steak";
@@ -328,7 +328,7 @@ public class DatabaseTests {
 			m = db.getPriceOfMenuItem(item);
 
 			if (m == null) {
-				System.out.println("No items called <" + item + ">");
+				System.out.println("No items on menu called <" + item + ">");
 				fail("Failed to insert items <" + item + "> into menu DB");
 			}
 			else {
@@ -341,7 +341,7 @@ public class DatabaseTests {
 	}		
 		
 
-	//@Test
+	
 	public void createOrderInTableTest() {
 
 		
@@ -359,7 +359,7 @@ public class DatabaseTests {
 */
 
 	}
-
+	@Test
 	public void getAccountInfoTest() throws Exception {
 		String Username1 = "theDonald";
 		String Username2 = "theExpress";
@@ -377,9 +377,7 @@ public class DatabaseTests {
 			fail("We need more users!");
 		}
 		else {
-			//userlist = new ArrayList<User>(); 
 			for(User u: users){
-				//userlist.add(u);
 				System.out.println(u.getUserName() + "," + u.getUserId()+ ","+ u.getEmail() + "," + u.getFirstName() + "," + u.getLastName());
 			}
 		}
@@ -402,7 +400,8 @@ public class DatabaseTests {
 			}
 		}
 	}
-
+	
+	@Test
 	public void getOrderByConfirmNumber() throws Exception {
 
 		Integer ConfirmNumber = 1345;
@@ -417,12 +416,12 @@ public class DatabaseTests {
 		else{
 			
 			for(Order o: OrderList) {
-				OrderList.add(o);
-				System.out.println("Adding orders to the database");
+		
+				System.out.println("Order for confirmation number <"+ConfirmNumber+ "> is <"+ o +">");
 			}
 		}
 	}
-
+	
 	public void deleteFromMenuTest() {
 		//Need to add something in order to remove it 
 		String item2 = "Special Brownies"; 
@@ -440,22 +439,19 @@ public class DatabaseTests {
 	}
 
 	public void getOrdersFromRestaurantTest() throws Exception{
-		//Need to run the application to see how many orders there are. 
 		String RestName = "Trump's Steaks"; 
-		List<Order> orderlist = new ArrayList<Order>(); 
 
-		orderlist = db.getOrdersByRestaurant(RestName); 
-		assertEquals(2, orderlist.size()); 
+		OrderList = db.getOrdersByRestaurant(RestName); 
 
-		if(orderlist.isEmpty()) {
+		if(OrderList.isEmpty()) {
 			System.out.println("There are no orders from that restaurant. Perhaps you can be the first");
 			fail("Order something, then this will be populated"); 
 		}
 		else {
-			OrderList = new ArrayList<Order>(); 
-			for (Order o: orderlist) {
-				OrderList.add(o);
-				System.out.println("Adding orders to the list");
+				
+			for (Order o: OrderList) {
+			
+				System.out.println("Orders for restaurant <"+ RestName +"> are <" + o +">");
 			}
 		}
 	}
