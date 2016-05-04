@@ -341,22 +341,32 @@ public class DatabaseTests {
 	}		
 		
 
-	
+	@Test
 	public void createOrderInTableTest() {
 
+		int patronID = 3; 
+		String rest = "Trumps Steaks";
+		int orderNumber = 102456; 
+		String item = "Steak"; 
+		String price = "5.99"; 
+		String status = "In Progress";
+		int quantity = 2; 
 		
-/*
-		if(orderList.isEmpty()) {
+		OrderList = db.ceateOrderInTable(patronID, rest, orderNumber, item, quantity, price, status);
+	
+		if(OrderList.isEmpty()) {
 			System.out.println("Why is no one ordering anything!?");
 			fail("Manuel!!");
 		}
 		else {
-			for (Order O: OrderList){
-				OrderList.add(O); 
-				System.out.println("Creating Orders"); 
+			List<Order> orders = new ArrayList<Order>();
+			for (Order o: OrderList){ 
+				Order orderToAdd = o; 
+				orders.add(orderToAdd);
+				System.out.println("Creating Order <" +orderToAdd+">"); 
 			}
 		}
-*/
+
 
 	}
 	@Test
@@ -416,28 +426,32 @@ public class DatabaseTests {
 		else{
 			
 			for(Order o: OrderList) {
-		
 				System.out.println("Order for confirmation number <"+ConfirmNumber+ "> is <"+ o +">");
 			}
 		}
 	}
 	
+	@Test
 	public void deleteFromMenuTest() {
 		//Need to add something in order to remove it 
 		String item2 = "Special Brownies"; 
-		Menu testMenu = new Menu(); 
-
-		String Rest_ID = "Tom's Grill"; 
-		List<Menu> menulist = new ArrayList<Menu>(); 
-
-		//menulist = db.addItemToMenu(item2, 4.99, Rest_ID);
-
-		//This is more like a regular JUnit test. 
-		//The function looks like it returns items, not removes them.
+		String newItemPrice = "12.99";
+		String restId = "Tom's Grill"; 
+		menu = db.addItemToMenu(item2, newItemPrice, restId);
+		
+		if(menu.size() > 0) { //means the menu is populated 
+			System.out.println("Removing item" +item2+ "from menu <" + m+ ">");
+			m = db.deleteFromMenu(item2);
+		}
+		else {
+			System.out.println("The menu is empty");
+			fail("Cannot remove something from an empty menu");
+		}
 		
 
 	}
-
+	
+	@Test
 	public void getOrdersFromRestaurantTest() throws Exception{
 		String RestName = "Trump's Steaks"; 
 
@@ -448,10 +462,12 @@ public class DatabaseTests {
 			fail("Order something, then this will be populated"); 
 		}
 		else {
-				
-			for (Order o: OrderList) {
 			
-				System.out.println("Orders for restaurant <"+ RestName +"> are <" + o +">");
+			List<Order> Orders = new ArrayList<Order>(); 
+			for (Order o: OrderList) {
+				Order OrderToAdd = o;
+				Orders.add(OrderToAdd);
+				System.out.println("Orders for restaurant <"+ RestName +"> are <" + OrderToAdd +">");
 			}
 		}
 	}
@@ -530,9 +546,12 @@ public class DatabaseTests {
 	
 	
 	public void getFromFavoritesTest() throws Exception {
-		int userId = 1234; 
+		int userId = 3; 
 		favList = db.getFromFavorites(userId); 
 		//I will continue work on this tomorrow 
+		if(favList.isEmpty()) {
+			
+		}
 	}
 }
 
